@@ -1,4 +1,5 @@
 import { assets } from "@/assets/assets";
+import { UserRoundSearch } from "lucide-react";
 import Image from "next/image";
 import React, { useEffect, useRef, useState } from "react";
 
@@ -47,7 +48,7 @@ export default function Navbar() {
           } `}
         >
           <li>
-            <a className="font-ovo" href="#top">
+            <a className="font-ovo" href="#home">
               Home
             </a>
           </li>
@@ -82,7 +83,7 @@ export default function Navbar() {
             className="hidden lg:flex items-center gap-3 px-10 py-2.5 border border-gray-500 rounded-full ,ml-4 font-ovo"
           >
             Contact
-            <Image src={assets.arrow_icon} alt="arrow" className="w-3" />
+            <UserRoundSearch color="black" alt="arrow" className="w-4" />
           </a>
 
           <button className="block md:hidden ml-3" onClick={openSideMenu}>
@@ -104,7 +105,7 @@ export default function Navbar() {
             />
           </div>
           <li>
-            <a className="font-ovo" onClick={closeSideMenu} href="#top">
+            <a className="font-ovo" onClick={closeSideMenu} href="#home">
               Home
             </a>
           </li>

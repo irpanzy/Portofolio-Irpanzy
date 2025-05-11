@@ -7,21 +7,30 @@ export default function About() {
     <div id="about" className="w-full px-[12%] py-10 scroll-mt-20">
       <h4 className="text-center mb-2 text-lg font-ovo">Introduction</h4>
       <h2 className="text-center text-5xl font-ovo">About Me</h2>
-      <div className="flex w-full flex-col lg:flex-row items-center gap-20 my-20">
-        <div className="w-64 sm:w-96 rounded-3xl max-w-none border">
-          <Image
-            src={assets.profile_img}
-            alt="user"
-            className="w-full rounded-3xl"
-          />
+      <div className="flex w-full flex-col lg:flex-row items-center gap-10 my-10">
+        <div className="flex-2">
+          <div className="w-72 sm:w-[350px] rounded-3xl max-w-none">
+            <Image
+              src={assets.user_image}
+              alt="user"
+              className="w-full rounded-3xl"
+            />
+          </div>
         </div>
         <div className="flex-1">
-          <p className="mb-10 max-w-2xl font-ovo">
-            I am a Computer Science student at Telkom University. I have a
-            passion for web development and I am always eager to learn new
-            technologies and frameworks.
+          <p className="mb-10 max-w-3xl font-ovo">
+            6th-semester Software Engineering student at Telkom University
+            Purwokerto, focusing on Fullstack Web Development. Experienced in
+            developing web and mobile applications, both frontend and backend.
+            Participated in the MSIB Kampus Merdeka program and built TiketGo, a
+            flight ticket booking website. Proficient in JavaScript, TypeScript,
+            Dart, and PHP, and skilled with React, Next.js, Express.js, Laravel,
+            and Flutter. Familiar with RESTful APIs, database design, and
+            management using MySQL and PostgreSQL. Comfortable with Git, GitHub,
+            and collaboration tools like ClickUp. Enthusiastic learner and
+            active team contributor.
           </p>
-          <ul className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-2xl">
+          <ul className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-3xl">
             {infoList.map(({ icon, iconDark, title, description }, index) => (
               <li
                 className="border-[0.5px] border-gray-400 p-6 rounded-xl cursor-pointer hover:bg-lightHover hover:-translate-y-1 duration-500 hover:shadow-black"
