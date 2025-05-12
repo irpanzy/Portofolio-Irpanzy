@@ -45,6 +45,7 @@ import postman from "./Postman.png";
 import postgre from "./Postgre.png";
 import mysql from "./Mysql.png";
 import prisma from "./Prisma.png";
+import github_animation from "./github-animation.png";
 
 export const assets = {
   user_image,
@@ -94,6 +95,7 @@ export const assets = {
   postgre,
   mysql,
   prisma,
+  github_animation,
 };
 
 export const workData = [
@@ -180,7 +182,7 @@ export const toolsData = [
   assets.postgre,
   assets.mysql,
   assets.git,
-  assets.github_logo_dark,
+  assets.github_animation,
   assets.postman,
   assets.prisma,
 ];
