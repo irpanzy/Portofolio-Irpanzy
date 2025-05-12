@@ -35,6 +35,16 @@ import right_arrow from "./right-arrow.png";
 import send_icon from "./send-icon.png";
 import right_arrow_bold from "./right-arrow-bold.png";
 import right_arrow_bold_dark from "./right-arrow-bold-dark.png";
+import github_logo_white from "./github-logo-white.png";
+import github_logo_dark from "./github-logo-dark.png";
+import linkedin_logo_blue from "./linkedin-logo-blue.png";
+import linkedin_logo_white from "./linkedin-logo-white.png";
+import instagram_logo_dark from "./instagram-logo-dark.png";
+import instagram_logo_white from "./instagram-logo-white.png";
+import postman from "./Postman.png";
+import postgre from "./Postgre.png";
+import mysql from "./Mysql.png";
+import prisma from "./Prisma.png";
 
 export const assets = {
   user_image,
@@ -74,28 +84,54 @@ export const assets = {
   send_icon,
   right_arrow_bold,
   right_arrow_bold_dark,
+  github_logo_white,
+  github_logo_dark,
+  linkedin_logo_blue,
+  linkedin_logo_white,
+  instagram_logo_dark,
+  instagram_logo_white,
+  postman,
+  postgre,
+  mysql,
+  prisma,
 };
 
 export const workData = [
   {
-    title: "Frontend project",
+    title: "Aizora",
     description: "Web Design",
-    bgImage: "/work-1.png",
+    bgImage: "/TiketGo.png",
+    link: "https://github.com/irpanzy/aizora",
   },
   {
-    title: "Geo based app",
+    title: "Save Money",
     description: "Mobile App",
-    bgImage: "/work-2.png",
+    bgImage: "/TiketGo.png",
+    link: "https://github.com/irpanzy/Save-Money",
   },
   {
-    title: "Photography site",
+    title: "Muria Cell",
+    description: "Web App Design",
+    bgImage: "/TiketGo.png",
+    link: "https://github.com/irpanzy/muriacellstore",
+  },
+  {
+    title: "TiketGo",
     description: "Web Design",
-    bgImage: "/work-3.png",
+    bgImage: "/TiketGo.png",
+    link: "https://github.com/irpanzy/FP-Binar-React-Front-End",
   },
   {
-    title: "UI/UX designing",
-    description: "UI/UX Design",
-    bgImage: "/work-4.png",
+    title: "Dashboard",
+    description: "Restful API",
+    bgImage: "/Dashboard.png",
+    link: "https://github.com/irpanzy/CLO2-TB-KPL",
+  },
+  {
+    title: "Portofolio",
+    description: "Web Design",
+    bgImage: "/portofolio.png",
+    link: "https://github.com/irpanzy/Portofolio-Irpanzy",
   },
 ];
 
@@ -103,27 +139,15 @@ export const serviceData = [
   {
     icon: assets.web_icon,
     title: "Web design",
-    description: "Web development is the process of building, programming...",
+    description:
+      "Web development is the process of building, programming and maintaining websites...",
     link: "",
   },
   {
     icon: assets.mobile_icon,
     title: "Mobile app",
     description:
-      "Mobile app development involves creating software for mobile devices...",
-    link: "",
-  },
-  {
-    icon: assets.ui_icon,
-    title: "UI/UX design",
-    description:
-      "UI/UX design focuses on creating a seamless user experience...",
-    link: "",
-  },
-  {
-    icon: assets.graphics_icon,
-    title: "Graphics design",
-    description: "Creative design solutions to enhance visual communication...",
+      "Mobile app development involves creating software for mobile devices such as smartphones and tablets...",
     link: "",
   },
 ];
@@ -140,7 +164,7 @@ export const infoList = [
     iconDark: assets.edu_icon_dark,
     title: "Education",
     description:
-      "Mahasiswa S1 Rekayasa Perangkat Lunak, Universitas Telkom Purwokerto",
+      "Undergraduate Student of Software Engineering, Telkom University Purwokerto",
   },
   {
     icon: assets.project_icon,
@@ -152,8 +176,11 @@ export const infoList = [
 
 export const toolsData = [
   assets.vscode,
-  assets.firebase,
-  assets.mongodb,
   assets.figma,
+  assets.postgre,
+  assets.mysql,
   assets.git,
+  assets.github_logo_dark,
+  assets.postman,
+  assets.prisma,
 ];
