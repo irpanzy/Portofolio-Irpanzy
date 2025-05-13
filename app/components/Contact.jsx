@@ -1,5 +1,3 @@
-import { assets } from "@/assets/assets";
-import Image from "next/image";
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import toast from "react-hot-toast";
@@ -127,7 +125,7 @@ export default function Contact({ isDarkMode }) {
           transition={{ duration: 0.3 }}
           type="submit"
           disabled={isLoading}
-          className={`py-2 px-8 w-max flex items-center justify-between gap-2 rounded-full mx-auto duration-500 ${
+          className={`py-3 px-10 w-max flex items-center justify-between gap-2 rounded-full mx-auto duration-500 ${
             isLoading
               ? "bg-gray-400 text-white cursor-not-allowed"
               : "bg-black/80 text-white hover:bg-black dark:bg-transparent dark:border-[0.5px] dark:hover:bg-darkHover"

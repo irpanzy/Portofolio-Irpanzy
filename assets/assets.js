@@ -46,6 +46,10 @@ import postgre from "./Postgre.png";
 import mysql from "./Mysql.png";
 import prisma from "./Prisma.png";
 import github_animation from "./github-animation.png";
+import supabase from "./Supabase.png";
+import sequelize from "./Sequelize.png";
+import swagger from "./Swagger.png";
+import laragon from "./Laragon.png";
 
 export const assets = {
   user_image,
@@ -96,20 +100,24 @@ export const assets = {
   mysql,
   prisma,
   github_animation,
+  supabase,
+  sequelize,
+  swagger,
+  laragon,
 };
 
 export const workData = [
   {
     title: "Portofolio",
     description: "Web Design (JavaScript - Next.js)",
-    bgImage: "/portofolio.png",
+    bgImage: "/Irpanzy.png",
     link: "https://github.com/irpanzy/Portofolio-Irpanzy",
   },
   {
     title: "Dashboard System",
     description: "Restful API (JavaScript - Express.js)",
     bgImage: "/Dashboard.png",
-    link: "https://github.com/irpanzy/CLO2-TB-KPL",
+    link: "https://github.com/irpanzy/Dashboard-Management-System",
   },
   {
     title: "Aizora",
@@ -126,12 +134,12 @@ export const workData = [
   {
     title: "Save Money",
     description: "Mobile App (Dart - Flutter)",
-    bgImage: "/TiketGo.png",
+    bgImage: "/SaveMoney.png",
     link: "https://github.com/irpanzy/Save-Money",
   },
   {
     title: "TiketGo",
-    description: "Web Design (React.js)",
+    description: "Web Design (JavaScript - React.js)",
     bgImage: "/TiketGo.png",
     link: "https://github.com/irpanzy/FP-Binar-React-Front-End",
   },
@@ -179,10 +187,14 @@ export const infoList = [
 export const toolsData = [
   assets.vscode,
   assets.figma,
-  assets.postgre,
-  assets.mysql,
   assets.git,
   assets.github_animation,
-  assets.postman,
+  assets.postgre,
+  assets.mysql,
+  assets.supabase,
   assets.prisma,
+  assets.sequelize,
+  assets.postman,
+  assets.swagger,
+  assets.laragon,
 ];
