@@ -3,6 +3,7 @@ import Image from "next/image";
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import toast from "react-hot-toast";
+import { Send } from "lucide-react";
 
 export default function Contact({ isDarkMode }) {
   const [result, setResult] = useState("");
@@ -134,7 +135,7 @@ export default function Contact({ isDarkMode }) {
         >
           {isLoading ? "Sending..." : "Submit Now"}
           {!isLoading && (
-            <Image src={assets.right_arrow_white} alt="arrow" className="w-4" />
+            <Send alt="arrow" className="w-4" />
           )}
         </motion.button>
       </motion.form>

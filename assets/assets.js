@@ -100,40 +100,40 @@ export const assets = {
 
 export const workData = [
   {
-    title: "Aizora",
-    description: "Web Design",
-    bgImage: "/TiketGo.png",
-    link: "https://github.com/irpanzy/aizora",
+    title: "Portofolio",
+    description: "Web Design (JavaScript - Next.js)",
+    bgImage: "/portofolio.png",
+    link: "https://github.com/irpanzy/Portofolio-Irpanzy",
   },
   {
-    title: "Save Money",
-    description: "Mobile App",
-    bgImage: "/TiketGo.png",
-    link: "https://github.com/irpanzy/Save-Money",
-  },
-  {
-    title: "Muria Cell",
-    description: "Web App Design",
-    bgImage: "/TiketGo.png",
-    link: "https://github.com/irpanzy/muriacellstore",
-  },
-  {
-    title: "TiketGo",
-    description: "Web Design",
-    bgImage: "/TiketGo.png",
-    link: "https://github.com/irpanzy/FP-Binar-React-Front-End",
-  },
-  {
-    title: "Dashboard",
-    description: "Restful API",
+    title: "Dashboard System",
+    description: "Restful API (JavaScript - Express.js)",
     bgImage: "/Dashboard.png",
     link: "https://github.com/irpanzy/CLO2-TB-KPL",
   },
   {
-    title: "Portofolio",
-    description: "Web Design",
-    bgImage: "/portofolio.png",
-    link: "https://github.com/irpanzy/Portofolio-Irpanzy",
+    title: "Aizora",
+    description: "Web Design (TypeScript - Next.js)",
+    bgImage: "/Aizora.png",
+    link: "https://github.com/irpanzy/aizora",
+  },
+  {
+    title: "Muria Cell",
+    description: "Web App Design (PHP - Laravel)",
+    bgImage: "/MuriaCell.png",
+    link: "https://github.com/irpanzy/muriacellstore",
+  },
+  {
+    title: "Save Money",
+    description: "Mobile App (Dart - Flutter)",
+    bgImage: "/TiketGo.png",
+    link: "https://github.com/irpanzy/Save-Money",
+  },
+  {
+    title: "TiketGo",
+    description: "Web Design (React.js)",
+    bgImage: "/TiketGo.png",
+    link: "https://github.com/irpanzy/FP-Binar-React-Front-End",
   },
 ];
 
