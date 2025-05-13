@@ -5,7 +5,7 @@ import React from "react";
 export default function Footer({ isDarkMode }) {
   return (
     <div>
-      <div className="mt-20">
+      <div className="py-6">
         <Image
           src={isDarkMode ? assets.logo_dark : assets.logo}
           alt="logo"
@@ -26,7 +26,7 @@ export default function Footer({ isDarkMode }) {
         </div>
       </div>
 
-      <div className="text-center sm:flex items-center justify-between border-t border-gray-400 mx-[10%] mt-12 py-6">
+      <div className="text-center sm:flex items-center justify-between border-t border-gray-400 mx-[10%] py-6">
         <p>
           &copy; {new Date().getFullYear()} Irfan Muria. All rights reserved
         </p>

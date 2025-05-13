@@ -10,7 +10,7 @@ export default function Work({ isDarkMode }) {
       whileInView={{ opacity: 1 }}
       transition={{ duration: 1 }}
       id="work"
-      className="w-full px-[12%] pt-6 scroll-mt-20"
+      className="w-full px-[12%] py-6 scroll-mt-20"
     >
       <motion.h4
         initial={{ opacity: 0, y: -20 }}
@@ -68,7 +68,7 @@ export default function Work({ isDarkMode }) {
         whileInView={{ opacity: 1 }}
         transition={{ duration: 0.5, delay: 1.1 }}
         href="https://github.com/irpanzy?tab=repositories"
-        className="w-max flex items-center justify-center gap-2 text-gray-700 border-[0.5px] border-gray-700 rounded-full py-2 px-10 mx-auto my-20 hover:bg-lightHover duration-500 dark:text-white dark:border-white dark:hover:bg-darkHover"
+        className="w-max flex items-center justify-center gap-2 text-gray-700 border-[0.5px] border-gray-700 rounded-full py-2 px-10 mx-auto mt-10 hover:bg-lightHover duration-500 dark:text-white dark:border-white dark:hover:bg-darkHover"
       >
         Show More
         <Image

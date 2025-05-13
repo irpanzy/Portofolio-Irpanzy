@@ -34,7 +34,9 @@ export default function Services({ isDarkMode }) {
         transition={{ duration: 0.5, delay: 0.7 }}
         className="text-center max-w-2xl mx-auto mt-5 mb-12 font-ovo"
       >
-        I am a Fullstack Web Developer based in Indonesia
+        I provide end-to-end web and mobile development solutions, combining
+        frontend, backend, and API integration to deliver functional and
+        user-focused applications.
       </motion.p>
       <motion.div
         initial={{ opacity: 0 }}
@@ -55,10 +57,6 @@ export default function Services({ isDarkMode }) {
             <p className="text-sm text-gray-600 leading-5 dark:text-white/80">
               {description}
             </p>
-            <a href={link} className="flex items-center gap-2 text-sm mt-5">
-              Read More
-              <Image src={assets.right_arrow} alt="arrow" className="w-4" />
-            </a>
           </motion.div>
         ))}
       </motion.div>
