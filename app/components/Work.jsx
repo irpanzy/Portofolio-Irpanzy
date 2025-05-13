@@ -26,7 +26,7 @@ export default function Work({ isDarkMode }) {
         transition={{ duration: 0.5, delay: 0.5 }}
         className="text-center text-5xl font-ovo"
       >
-        My Lates Work
+        My Latest Work
       </motion.h2>
       <motion.p
         initial={{ opacity: 0 }}
@@ -34,7 +34,9 @@ export default function Work({ isDarkMode }) {
         transition={{ duration: 0.5, delay: 0.7 }}
         className="text-center max-w-2xl mx-auto mt-5 mb-12 font-ovo"
       >
-        Welcome to my portofolio
+        A collection of selected projects I've worked on recently - showcasing
+        my experience in fullstack web development, RESTful API, and modern web
+        technologies.
       </motion.p>
       <motion.div
         initial={{ opacity: 0 }}

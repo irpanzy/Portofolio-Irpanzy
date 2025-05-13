@@ -12,8 +12,12 @@ const ovo = Ovo({
 });
 
 export const metadata = {
-  title: "Portofolio - Irfan Muria",
-  description: "Irfan Muria's Portofolio",
+  title: "Portofolio | Irfan Muria",
+  description:
+    "The professional portfolio of Irfan Muria – Fullstack Developer and tech enthusiast.",
+  icons: {
+    icon: "/Logo.png",
+  },
 };
 
 export default function RootLayout({ children }) {

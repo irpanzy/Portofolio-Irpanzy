@@ -63,7 +63,7 @@ export default function About({ isDarkMode }) {
             personal finance app built with Flutter, and a modern e-commerce
             platform using Next.js and Supabase. I'm proficient in JavaScript,
             TypeScript, Dart, PHP, and experienced with React, Next.js, Express,
-            Laravel, and Flutter. I'm also comfortable using RESTful APIs,
+            Laravel, and Flutter. I'm also comfortable using RESTful API,
             MySQL/PostgreSQL, Git, and collaboration tools like ClickUp. I
             thrive in team environments and always seek opportunities to learn
             and grow.

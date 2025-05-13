@@ -74,8 +74,9 @@ export default function Contact({ isDarkMode }) {
         transition={{ duration: 0.5, delay: 0.7 }}
         className="text-center max-w-2xl mx-auto mt-5 mb-12 font-ovo"
       >
-        I'd love to hear from you! Whether you have a question, a project idea,
-        or just want to say hello, feel free to reach out.
+        Have a project in mind or just want to say hi? Let’s connect and bring
+        your ideas to life. I'm always open to new collaborations and
+        opportunities.
       </motion.p>
 
       {/* Form */}
@@ -132,9 +133,7 @@ export default function Contact({ isDarkMode }) {
           }`}
         >
           {isLoading ? "Sending..." : "Submit Now"}
-          {!isLoading && (
-            <Send alt="arrow" className="w-4" />
-          )}
+          {!isLoading && <Send alt="arrow" className="w-4" />}
         </motion.button>
       </motion.form>
     </motion.div>
