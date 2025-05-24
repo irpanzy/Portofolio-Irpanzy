@@ -44,9 +44,9 @@ export default function Header() {
         transition={{ duration: 0.6, delay: 0.7 }}
         className="max-w-2xl mx-auto font-ovo"
       >
-        I'm a 6th-semester Software Engineering student at Telkom University,
-        passionate about building full-featured web and mobile apps. I have
-        hands-on experience with modern technologies like React, Next.js,
+        I'm a 6th-semester Software Engineering student at Telkom University
+        Purwokerto, passionate about building full-featured web and mobile apps.
+        I have hands-on experience with modern technologies like React, Next.js,
         Express.js, Flutter, and Laravel. I'm always eager to learn new tools,
         collaborate in teams, and bring ideas into functional products.
       </motion.p>

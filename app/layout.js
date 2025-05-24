@@ -31,7 +31,8 @@ export default function RootLayout({ children }) {
         <meta name="robots" content="index, follow" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-        {/* JSON-LD Structured Data */}
+        <link rel="icon" href="/Logo.png" type="image/png" />
+
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -45,13 +46,14 @@ export default function RootLayout({ children }) {
               description:
                 "The professional portfolio of Irfan Muria – Fullstack Developer and tech enthusiast.",
               sameAs: [
-                "https://github.com/irpanzy", 
-                "https://www.linkedin.com/in/irfanmuria", 
+                "https://github.com/irpanzy",
+                "https://www.linkedin.com/in/irfanmuria",
               ],
             }),
           }}
         />
       </head>
+
       <body
         className={`${outfit.className} ${ovo.className} antialiased leading-8 overflow-x-hidden dark:bg-darkTheme dark:text-white`}
       >
