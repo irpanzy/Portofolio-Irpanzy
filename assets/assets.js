@@ -67,6 +67,8 @@ import css from "./css.svg";
 import sassy_css from "./sassy-css.svg";
 import get_x from "./get-x.png";
 import xendit from "./xendit.png";
+import vite from "./vite.svg";
+import alpine_js from "./alpine-js.png";
 
 export const assets = {
   user_image,
@@ -138,44 +140,54 @@ export const assets = {
   sassy_css,
   get_x,
   xendit,
+  vite,
+  alpine_js,
 };
 
 export const workData = [
   {
     title: "Portofolio",
-    description: "Web Design (JavaScript - Next.js)",
+    description: "Web Design - JavaScript",
     bgImage: "/Irpanzy.png",
     link: "https://github.com/irpanzy/Portofolio-Irpanzy",
+    stack: "Next.js, Web3Forms, Tailwind CSS, Framer Motion, Lucide React",
   },
   {
     title: "Dashboard System",
-    description: "Restful API (JavaScript - Express.js)",
+    description: "Restful API - JavaScript",
     bgImage: "/Dashboard.png",
     link: "https://github.com/irpanzy/Dashboard-Management-System",
+    stack:
+      "Node.js, Express, EJS, PostgreSQL (Neon), Prisma ORM, Postman, ImageKit",
   },
   {
     title: "Aizora",
-    description: "Web Design (TypeScript - Next.js)",
+    description: "Web Design - TypeScript",
     bgImage: "/Aizora.png",
     link: "https://github.com/irpanzy/aizora",
+    stack:
+      "Next.js, PostgreSQL (Supabase), Prisma ORM, Lucia Auth, ShadCN UI, Tailwind CSS, Sassy CSS",
   },
   {
     title: "Muria Cell",
-    description: "Web App Design (PHP - Laravel)",
+    description: "Web App Design - PHP",
     bgImage: "/MuriaCell.png",
     link: "https://github.com/irpanzy/muriacellstore",
+    stack: "Laravel, Filament, Alpine.js, Livewire, Tailwind CSS",
   },
   {
     title: "Save Money",
-    description: "Mobile App (Dart - Flutter)",
+    description: "Mobile App - Dart",
     bgImage: "/SaveMoney.png",
     link: "https://github.com/irpanzy/Save-Money",
+    stack: "Flutter, SQFLite, GetX",
   },
   {
     title: "TiketGo",
-    description: "Web Design (JavaScript - React.js)",
+    description: "Web Design - JavaScript",
     bgImage: "/TiketGo.png",
     link: "https://github.com/irpanzy/FP-Binar-React-Front-End",
+    stack: "React, Node.js, Vite, Axios, Postman, Tailwind CSS",
   },
 ];
 
@@ -232,10 +244,6 @@ export const toolsData = [
     title: "CSS",
   },
   {
-    icon: assets.sassy_css,
-    title: "Sassy CSS",
-  },
-  {
     icon: assets.javascript,
     title: "JavaScript",
   },
@@ -281,7 +289,7 @@ export const toolsData = [
   },
   {
     icon: assets.sqlite,
-    title: "SQLite",
+    title: "SQFLite",
   },
   {
     icon: assets.get_x,
@@ -300,12 +308,16 @@ export const toolsData = [
     title: "Postman",
   },
   {
-    icon: assets.swagger,
-    title: "Swagger",
-  },
-  {
     icon: assets.react,
     title: "React",
+  },
+  {
+    icon: assets.vite,
+    title: "Vite",
+  },
+  {
+    icon: assets.alpine_js,
+    title: "Alpine.js",
   },
   {
     icon: assets.nodejs,
@@ -332,6 +344,10 @@ export const toolsData = [
     title: "Livewire",
   },
   {
+    icon: assets.sassy_css,
+    title: "Sassy CSS",
+  },
+  {
     icon: assets.tailwind,
     title: "Tailwind CSS",
   },
@@ -342,9 +358,5 @@ export const toolsData = [
   {
     icon: assets.framer_motion,
     title: "Framer Motion",
-  },
-  {
-    icon: assets.xendit,
-    title: "Xendit",
   },
 ];

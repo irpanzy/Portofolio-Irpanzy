@@ -63,9 +63,9 @@ export default function Navbar({ isDarkMode, setIsDarkMode }) {
           {[
             { id: "home", label: "Home" },
             { id: "about", label: "About Me" },
-            { id: "work", label: "My Work" },
+            { id: "work", label: "Projects" },
             { id: "services", label: "Services" },
-            { id: "contact", label: "Contact Me" },
+            { id: "contact", label: "Contact" },
           ].map(({ id, label }) => (
             <motion.li
               key={id}
@@ -107,10 +107,7 @@ export default function Navbar({ isDarkMode, setIsDarkMode }) {
             className="hidden lg:flex items-center gap-3 px-4 py-2 border border-gray-500 rounded-full ml-4 font-ovo transition-colors duration-300"
           >
             Say Hello
-            <Signature
-              color={isDarkMode ? "white" : "black"}
-              className="w-4"
-            />
+            <Signature color={isDarkMode ? "white" : "black"} className="w-4" />
           </motion.a>
 
           {/* Mobile Menu Button */}
@@ -150,9 +147,9 @@ export default function Navbar({ isDarkMode, setIsDarkMode }) {
           {[
             { id: "home", label: "Home" },
             { id: "about", label: "About Me" },
-            { id: "work", label: "My Work" },
+            { id: "work", label: "Projects" },
             { id: "services", label: "Services" },
-            { id: "contact", label: "Contact Me" },
+            { id: "contact", label: "Contact" },
           ].map(({ id, label }) => (
             <motion.li
               key={id}
@@ -163,7 +160,7 @@ export default function Navbar({ isDarkMode, setIsDarkMode }) {
               <a
                 href={`#${id}`}
                 onClick={closeSideMenu}
-                className="font-ovo transition-all duration-300 hover:text-sky-500 dark:hover:text-transparent dark:hover:bg-clip-text dark:hover:bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.8),rgba(255,255,255,0.2))]"
+                className="font-ovo transition-all duration-300 dark:hover:text-transparent dark:hover:bg-clip-text dark:hover:bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.8),rgba(255,255,255,0.2))]"
               >
                 {label}
               </a>

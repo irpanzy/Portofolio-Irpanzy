@@ -2,7 +2,7 @@ import { assets } from "@/assets/assets";
 import Image from "next/image";
 import React from "react";
 import { motion } from "motion/react";
-import { DownloadIcon } from "lucide-react";
+import { DownloadIcon, HandHeartIcon } from "lucide-react";
 
 export default function Header() {
   return (
@@ -28,7 +28,7 @@ export default function Header() {
         className="flex items-end gap-2 text-xl md:text-2xl mb-3 font-ovo"
       >
         Hi! I'm Irfan Muria
-        <Image src={assets.hand_icon} alt="hand" className="w-6 md:w-8" />
+        <HandHeartIcon className="w-6 h-6" />
       </motion.h3>
       <motion.h1
         initial={{ y: -30, opacity: 0 }}
@@ -44,9 +44,9 @@ export default function Header() {
         transition={{ duration: 0.6, delay: 0.7 }}
         className="max-w-2xl mx-auto font-ovo"
       >
-        I build modern fullstack apps with React, Node.js, Express, Next.js, Laravel,
-        and Flutter. Passionate about crafting scalable digital solutions and
-        growing through collaboration.
+        I build modern fullstack apps with React, Node.js, Express, Next.js,
+        Laravel, and Flutter. Passionate about crafting scalable digital
+        solutions and growing through collaboration.
       </motion.p>
       <div className="flex flex-col sm:flex-row items-center gap-4 mt-4">
         <motion.a
@@ -58,7 +58,7 @@ export default function Header() {
           href="https://drive.google.com/file/d/1GGRbxeSog_cFC8X6FWXmHKQhP0wpt62z/view?usp=sharing"
           target="_blank"
           rel="noopener noreferrer"
-          className="group px-10 py-3 border-[0.5px] rounded-full text-gray-700  border-gray-700 flex items-center gap-2 transition duration-300 ease-in-out hover:shadow-lg hover:bg-lightHover dark:hover:bg-darkHover"
+          className="group px-10 py-3 border-[0.5px] rounded-full border-gray-700 flex items-center gap-2 transition duration-300 ease-in-out hover:shadow-lg hover:bg-lightHover dark:hover:bg-darkHover"
         >
           My Resume
           <motion.div

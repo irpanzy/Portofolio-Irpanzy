@@ -18,7 +18,7 @@ export default function Services({ isDarkMode }) {
         transition={{ duration: 0.5, delay: 0.3 }}
         className="text-center mb-2 text-lg font-ovo"
       >
-        What I Offer
+        How I Can Help
       </motion.h4>
       <motion.h2
         initial={{ opacity: 0, y: -20 }}
@@ -26,7 +26,7 @@ export default function Services({ isDarkMode }) {
         transition={{ duration: 0.5, delay: 0.5 }}
         className="text-center text-5xl font-ovo"
       >
-        My Services
+        Let’s Build Something Great
       </motion.h2>
       <motion.p
         initial={{ opacity: 0 }}
@@ -34,9 +34,8 @@ export default function Services({ isDarkMode }) {
         transition={{ duration: 0.5, delay: 0.7 }}
         className="text-center max-w-2xl mx-auto mt-5 mb-12 font-ovo"
       >
-        I provide end-to-end web and mobile development solutions, combining
-        frontend, backend, and API integration to deliver functional and
-        user-focused applications.
+        Whether it’s a responsive website or a mobile app, I deliver digital
+        products that users love to interact with.
       </motion.p>
       <motion.div
         initial={{ opacity: 0 }}
@@ -48,7 +47,7 @@ export default function Services({ isDarkMode }) {
           <motion.div
             whileHover={{ scale: 1.05 }}
             key={index}
-            className="border bordder-gray-400 rounded-lg px-8 py-12 hover:shadow-black cursor-pointer hover:bg-lightHover hover:-translate-y-1 duration-500 dark:hover:bg-darkHover dark:hover:shadow-white"
+            className="border bordder-gray-400 rounded-lg px-8 py-12 hover:shadow-black hover:bg-lightHover hover:-translate-y-1 duration-500 dark:hover:bg-darkHover dark:hover:shadow-white cursor-default"
           >
             <Image src={icon} alt="service" className="w-10" />
             <h3 className="text-lg my-4 text-gray-700 dark:text-white">

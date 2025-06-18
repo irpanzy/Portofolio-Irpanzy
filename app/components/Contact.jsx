@@ -122,18 +122,29 @@ export default function Contact({ isDarkMode }) {
         ></motion.textarea>
 
         <motion.button
+          initial={{ y: 30, opacity: 0 }}
+          whileInView={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.5, delay: 0.5 }}
           whileHover={{ scale: isLoading ? 1 : 1.05 }}
-          transition={{ duration: 0.3 }}
+          whileTap={{ scale: isLoading ? 1 : 0.95 }}
           type="submit"
           disabled={isLoading}
-          className={`py-3 px-10 w-max flex items-center justify-between gap-2 rounded-full mx-auto duration-500 ${
+          className={`group px-10 py-3 border-[0.5px] rounded-full flex items-center gap-2 transition duration-300 ease-in-out mx-auto ${
             isLoading
               ? "bg-gray-400 text-white cursor-not-allowed"
-              : "bg-black/80 text-white hover:bg-black dark:bg-transparent dark:border-[0.5px] dark:hover:bg-darkHover"
+              : "border-gray-700 hover:shadow-lg hover:bg-lightHover dark:bg-transparent dark:border-gray-700 dark:hover:bg-darkHover"
           }`}
         >
           {isLoading ? "Sending..." : "Submit Now"}
-          {!isLoading && <Send alt="arrow" className="w-4" />}
+          {!isLoading && (
+            <motion.div
+              initial={false}
+              whileHover={{ rotate: 360 }}
+              transition={{ duration: 0.6, ease: "easeInOut" }}
+            >
+              <Send alt="arrow" className="w-4 group-hover:animate-pulse" />
+            </motion.div>
+          )}
         </motion.button>
       </motion.form>
     </motion.div>

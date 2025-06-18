@@ -66,7 +66,7 @@ export default function About({ isDarkMode }) {
             {infoList.map(({ icon, iconDark, title, description }, index) => (
               <motion.li
                 whileInView={{ scale: 1.05 }}
-                className="border-[0.5px] border-gray-400 p-6 rounded-xl cursor-pointer hover:bg-lightHover hover:-translate-y-1 duration-500 hover:shadow-black dark:border-white dark:hover:shadow-white dark:hover:bg-darkHover/50"
+                className="border-[0.5px] border-gray-400 p-6 rounded-xl hover:bg-lightHover hover:-translate-y-1 duration-500 hover:shadow-black dark:border-white dark:hover:shadow-white dark:hover:bg-darkHover/50 cursor-default"
                 key={index}
               >
                 <Image
@@ -104,7 +104,7 @@ export default function About({ isDarkMode }) {
               >
                 <motion.li
                   whileHover={{ scale: 1.05 }}
-                  className="flex items-center justify-center w-12 sm:w-14 aspect-square border border-gray-400 rounded-lg cursor-pointer hover:-translate-y-1 duration-500"
+                  className="flex items-center justify-center w-12 sm:w-14 aspect-square border border-gray-400 rounded-lg hover:-translate-y-1 duration-500 cursor-default"
                 >
                   <Image
                     src={tool.icon}
