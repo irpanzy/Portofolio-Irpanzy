@@ -51,7 +51,7 @@ import laravel from "./Laravel.png";
 import javascript from "./Javascript.png";
 import typescript from "./Typescript.svg";
 import dart from "./Dart.svg";
-import php from "./Php.svg";
+import php from "./php.png";
 import flutter from "./Flutter.svg";
 import nextjs from "./Next.js.png";
 import tailwind from "./Tailwind.svg";
@@ -180,7 +180,7 @@ export const workData = [
     description: "Mobile App - Dart",
     bgImage: "/SaveMoney.png",
     link: "https://github.com/irpanzy/Save-Money",
-    stack: "Flutter, SQFLite, GetX",
+    stack: "Flutter, SQLite, GetX",
   },
   {
     title: "TiketGo",
@@ -210,17 +210,17 @@ export const serviceData = [
 
 export const infoList = [
   {
-    icon: assets.code_icon,
-    iconDark: assets.code_icon_dark,
-    title: "Languages",
-    description: "JavaScript, TypeScript, PHP, Dart",
-  },
-  {
     icon: assets.edu_icon,
     iconDark: assets.edu_icon_dark,
     title: "Education",
     description:
       "Undergraduate Student of Software Engineering, Telkom University Purwokerto",
+  },
+  {
+    icon: assets.code_icon,
+    iconDark: assets.code_icon_dark,
+    title: "Languages",
+    description: "JavaScript, TypeScript, PHP, Dart",
   },
   {
     icon: assets.project_icon,
@@ -289,7 +289,7 @@ export const toolsData = [
   },
   {
     icon: assets.sqlite,
-    title: "SQFLite",
+    title: "SQLite",
   },
   {
     icon: assets.get_x,
@@ -306,6 +306,10 @@ export const toolsData = [
   {
     icon: assets.postman,
     title: "Postman",
+  },
+  {
+    icon: assets.swagger,
+    title: "Swagger",
   },
   {
     icon: assets.react,
@@ -358,5 +362,9 @@ export const toolsData = [
   {
     icon: assets.framer_motion,
     title: "Framer Motion",
+  },
+  {
+    icon: assets.xendit,
+    title: "Xendit",
   },
 ];

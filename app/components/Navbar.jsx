@@ -34,7 +34,7 @@ export default function Navbar({ isDarkMode, setIsDarkMode }) {
         initial={{ y: -60, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5 }}
-        className={`w-full fixed px-5 xl:px-[8%] py-4 flex items-center justify-between z-50 ${
+        className={`w-full fixed px-5 lg:px-[8%] py-4 flex items-center justify-between z-50 ${
           isScroll
             ? "bg-white bg-opacity-50 backdrop-blur-lg shadow-sm dark:bg-darkTheme dark:shadow-white/20"
             : ""
@@ -48,13 +48,13 @@ export default function Navbar({ isDarkMode, setIsDarkMode }) {
           <Image
             src={isDarkMode ? assets.logo_dark : assets.logo}
             alt="logo"
-            className="w-28 cursor-pointer mr-14"
+            className="w-28 cursor-pointer lg:mr-[60px]"
           />
         </motion.a>
 
         {/* Desktop Menu */}
         <ul
-          className={`hidden md:flex items-center gap-6 lg:gap-8 rounded-full px-10 py-3 ${
+          className={`hidden lg:flex items-center gap-6 lg:gap-8 rounded-full px-10 py-3 ${
             isScroll
               ? ""
               : "bg-white shadow-sm bg-opacity-50 dark:border dark:border-white/50 dark:bg-transparent"
@@ -112,7 +112,7 @@ export default function Navbar({ isDarkMode, setIsDarkMode }) {
 
           {/* Mobile Menu Button */}
           <motion.button
-            className="block md:hidden ml-3"
+            className="block lg:hidden ml-3"
             onClick={openSideMenu}
             whileTap={{ scale: 0.9 }}
           >
@@ -127,7 +127,7 @@ export default function Navbar({ isDarkMode, setIsDarkMode }) {
         {/* Mobile Menu */}
         <ul
           ref={sideMenuRef}
-          className="flex md:hidden flex-col gap-4 py-20 px-10 fixed -right-64 top-0 bottom-0 w-64 z-50 h-screen bg-rose-50 transition duration-500 dark:bg-darkHover dark:text-white"
+          className="flex lg:hidden flex-col gap-4 py-20 px-10 fixed -right-64 top-0 bottom-0 w-44 sm:w-56 md:w-72 z-50 h-screen bg-rose-50 transition duration-500 dark:bg-darkHover dark:text-white"
         >
           {/* Close Button */}
           <motion.div
