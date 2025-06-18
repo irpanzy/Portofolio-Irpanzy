@@ -49,6 +49,8 @@ export default function Work({ isDarkMode }) {
             whileHover={{ scale: 1.05 }}
             transition={{ duration: 0.3 }}
             key={index}
+            target="_blank"
+            rel="noopener noreferrer"
             className="aspect-[4/3] bg-no-repeat bg-cover bg-center rounded-lg relative cursor-pointer group"
             style={{ backgroundImage: `url(${project.bgImage})` }}
             href={project.link}
@@ -70,7 +72,9 @@ export default function Work({ isDarkMode }) {
         whileInView={{ opacity: 1 }}
         transition={{ duration: 0.5, delay: 1.1 }}
         href="https://github.com/irpanzy?tab=repositories"
-        className="w-max flex items-center justify-center gap-2 text-gray-700 border-[0.5px] border-gray-700 rounded-full py-2 px-10 mx-auto mt-10 hover:bg-lightHover duration-500 dark:text-white dark:border-white dark:hover:bg-darkHover"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="w-max flex items-center justify-center gap-2 text-gray-700 border-[0.5px] border-gray-700 rounded-full py-3 px-10 mx-auto mt-10 hover:bg-lightHover duration-500 dark:text-white dark:border-white dark:hover:bg-darkHover"
       >
         Show More
         <Image

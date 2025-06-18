@@ -54,7 +54,7 @@ export default function Services({ isDarkMode }) {
             <h3 className="text-lg my-4 text-gray-700 dark:text-white">
               {title}
             </h3>
-            <p className="text-sm text-gray-600 leading-5 dark:text-white/80">
+            <p className="text-sm text-gray-600 leading-5 dark:text-white/80 text-justify">
               {description}
             </p>
           </motion.div>

@@ -6,10 +6,7 @@ import edu_icon_dark from "./edu-icon-dark.png";
 import project_icon from "./project-icon.png";
 import project_icon_dark from "./project-icon-dark.png";
 import vscode from "./vscode.png";
-import firebase from "./firebase.png";
-import figma from "./figma.png";
 import git from "./git.png";
-import mongodb from "./mongodb.png";
 import right_arrow_white from "./right-arrow-white.png";
 import logo from "./logo.png";
 import logo_dark from "./logo_dark.png";
@@ -29,7 +26,6 @@ import close_black from "./close-black.png";
 import close_white from "./close-white.png";
 import web_icon from "./web-icon.png";
 import mobile_icon from "./mobile-icon.png";
-import ui_icon from "./ui-icon.png";
 import graphics_icon from "./graphics-icon.png";
 import right_arrow from "./right-arrow.png";
 import send_icon from "./send-icon.png";
@@ -50,6 +46,27 @@ import supabase from "./Supabase.png";
 import sequelize from "./Sequelize.png";
 import swagger from "./Swagger.png";
 import laragon from "./Laragon.png";
+import livewire from "./Livewire.png";
+import laravel from "./Laravel.png";
+import javascript from "./Javascript.png";
+import typescript from "./Typescript.svg";
+import dart from "./Dart.svg";
+import php from "./Php.svg";
+import flutter from "./Flutter.svg";
+import nextjs from "./Next.js.png";
+import tailwind from "./Tailwind.svg";
+import bootstrap from "./Bootstrap.svg";
+import express from "./Express.png";
+import nodejs from "./Node.js.svg";
+import react from "./React.js.svg";
+import framer_motion from "./framer-motion.svg";
+import sqlite from "./sqlite.svg";
+import neon from "./neon.png";
+import html from "./html.svg";
+import css from "./css.svg";
+import sassy_css from "./sassy-css.svg";
+import get_x from "./get-x.png";
+import xendit from "./xendit.png";
 
 export const assets = {
   user_image,
@@ -60,10 +77,7 @@ export const assets = {
   project_icon,
   project_icon_dark,
   vscode,
-  firebase,
-  figma,
   git,
-  mongodb,
   right_arrow_white,
   logo,
   logo_dark,
@@ -83,7 +97,6 @@ export const assets = {
   close_white,
   web_icon,
   mobile_icon,
-  ui_icon,
   graphics_icon,
   right_arrow,
   send_icon,
@@ -104,6 +117,27 @@ export const assets = {
   sequelize,
   swagger,
   laragon,
+  livewire,
+  laravel,
+  javascript,
+  typescript,
+  dart,
+  php,
+  flutter,
+  nextjs,
+  tailwind,
+  bootstrap,
+  express,
+  nodejs,
+  react,
+  framer_motion,
+  sqlite,
+  neon,
+  html,
+  css,
+  sassy_css,
+  get_x,
+  xendit,
 };
 
 export const workData = [
@@ -148,16 +182,16 @@ export const workData = [
 export const serviceData = [
   {
     icon: assets.web_icon,
-    title: "Web design",
+    title: "Web Design",
     description:
-      "Web development is the process of building, programming and maintaining websites...",
+      "I design and build modern, responsive websites that are optimized for both performance and user experience. I ensure every website is scalable, SEO-friendly, and visually appealing. My focus is not only on clean UI, but also on maintainable code and accessibility, so that your website performs well across all devices and screen sizes. From landing pages to full-stack web apps, I deliver solutions that are fast, functional, and aligned with business goals.",
     link: "",
   },
   {
     icon: assets.mobile_icon,
-    title: "Mobile app",
+    title: "Mobile App",
     description:
-      "Mobile app development involves creating software for mobile devices such as smartphones and tablets...",
+      "I develop cross-platform mobile applications using Flutter to deliver smooth, fast, and responsive experiences on both Android. My apps are designed with a user-first approach, ensuring intuitive navigation, modern design, and seamless interaction. From concept to deployment, I focus on performance, reliability, maintainability, and clean architecture to ensure long-term scalability and an optimal user experience.",
     link: "",
   },
 ];
@@ -185,16 +219,132 @@ export const infoList = [
 ];
 
 export const toolsData = [
-  assets.vscode,
-  assets.figma,
-  assets.git,
-  assets.github_animation,
-  assets.postgre,
-  assets.mysql,
-  assets.supabase,
-  assets.prisma,
-  assets.sequelize,
-  assets.postman,
-  assets.swagger,
-  assets.laragon,
+  {
+    icon: assets.vscode,
+    title: "VS Code",
+  },
+  {
+    icon: assets.html,
+    title: "HTML",
+  },
+  {
+    icon: assets.css,
+    title: "CSS",
+  },
+  {
+    icon: assets.sassy_css,
+    title: "Sassy CSS",
+  },
+  {
+    icon: assets.javascript,
+    title: "JavaScript",
+  },
+  {
+    icon: assets.typescript,
+    title: "TypeScript",
+  },
+  {
+    icon: assets.dart,
+    title: "Dart",
+  },
+  {
+    icon: assets.php,
+    title: "PHP",
+  },
+  {
+    icon: assets.laragon,
+    title: "Laragon",
+  },
+  {
+    icon: assets.git,
+    title: "Git",
+  },
+  {
+    icon: assets.github_animation,
+    title: "GitHub",
+  },
+  {
+    icon: assets.postgre,
+    title: "PostgreSQL",
+  },
+  {
+    icon: assets.mysql,
+    title: "MySQL",
+  },
+  {
+    icon: assets.supabase,
+    title: "Supabase",
+  },
+  {
+    icon: assets.neon,
+    title: "Neon",
+  },
+  {
+    icon: assets.sqlite,
+    title: "SQLite",
+  },
+  {
+    icon: assets.get_x,
+    title: "Get X",
+  },
+  {
+    icon: assets.prisma,
+    title: "Prisma",
+  },
+  {
+    icon: assets.sequelize,
+    title: "Sequelize",
+  },
+  {
+    icon: assets.postman,
+    title: "Postman",
+  },
+  {
+    icon: assets.swagger,
+    title: "Swagger",
+  },
+  {
+    icon: assets.react,
+    title: "React",
+  },
+  {
+    icon: assets.nodejs,
+    title: "Node.js",
+  },
+  {
+    icon: assets.express,
+    title: "Express",
+  },
+  {
+    icon: assets.nextjs,
+    title: "Next.js",
+  },
+  {
+    icon: assets.flutter,
+    title: "Flutter",
+  },
+  {
+    icon: assets.laravel,
+    title: "Laravel",
+  },
+  {
+    icon: assets.livewire,
+    title: "Livewire",
+  },
+  {
+    icon: assets.tailwind,
+    title: "Tailwind CSS",
+  },
+  {
+    icon: assets.bootstrap,
+    title: "Bootstrap",
+  },
+  {
+    icon: assets.framer_motion,
+    title: "Framer Motion",
+  },
+  {
+    icon: assets.xendit,
+    title: "Xendit",
+  },
 ];

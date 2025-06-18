@@ -54,19 +54,8 @@ export default function About({ isDarkMode }) {
           transition={{ duration: 0.6, delay: 0.8 }}
           className="flex-1"
         >
-          <p className="mb-10 max-w-3xl font-ovo">
-            I’m a 6th-semester Software Engineering student at Telkom University
-            Purwokerto with a strong passion for Fullstack Web Development. I’ve
-            built several web and mobile applications, and participated in the
-            Kampus Merdeka MSIB program at Binar Academy. Some of my key
-            projects include a flight ticket booking website (TiketGo), a
-            personal finance app built with Flutter, and a modern e-commerce
-            platform using Next.js and Supabase. I'm proficient in JavaScript,
-            TypeScript, Dart, PHP, and experienced with React, Next.js, Express,
-            Laravel, and Flutter. I'm also comfortable using RESTful API,
-            MySQL/PostgreSQL, Git, and collaboration tools like ClickUp. I
-            thrive in team environments and always seek opportunities to learn
-            and grow.
+          <p className="mb-10 max-w-3xl font-ovo text-justify">
+            I’m a 6th-semester Software Engineering student at Telkom University Purwokerto with hands-on experience in fullstack web and mobile development. I've worked on various projects, including a flight booking platform called TiketGo, a personal finance app built using Flutter, and a modern e-commerce website developed with Next.js and Supabase. I also utilize RESTful APIs, PostgreSQL or MySQL, Git, and project management tools like ClickUp. I enjoy working in collaborative environments and continuously seek opportunities to improve and make an impact.
           </p>
           <motion.ul
             initial={{ opacity: 0 }}
@@ -100,22 +89,36 @@ export default function About({ isDarkMode }) {
             transition={{ duration: 0.5, delay: 1.3 }}
             className="my-6 text-gray-700 font-ovo dark:text-white/80"
           >
-            Tools I Use
+            Tech Stack
           </motion.h4>
           <motion.ul
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             transition={{ duration: 0.6, delay: 1.5 }}
-            className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-6 gap-10"
+            className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-8 gap-10"
           >
             {toolsData.map((tool, index) => (
-              <motion.li
-                whileHover={{ scale: 1.05 }}
-                className="flex items-center justify-center w-12 sm:w-14 aspect-square border border-gray-400 rounded-lg cursor-pointer hover:-translate-y-1 duration-500"
+              <motion.div
                 key={index}
+                className="flex flex-col items-center justify-center gap-2"
               >
-                <Image src={tool} alt="Tool" className="w-5 sm:w-7" />
-              </motion.li>
+                <motion.li
+                  whileHover={{ scale: 1.05 }}
+                  className="flex items-center justify-center w-12 sm:w-14 aspect-square border border-gray-400 rounded-lg cursor-pointer hover:-translate-y-1 duration-500"
+                >
+                  <Image
+                    src={tool.icon}
+                    alt={tool.title}
+                    className="w-5 sm:w-7"
+                  />
+                </motion.li>
+                <span
+                  className="text-[10px] sm:text-xs text-center truncate max-w-[100px]"
+                  title={tool.title}
+                >
+                  {tool.title}
+                </span>
+              </motion.div>
             ))}
           </motion.ul>
         </motion.div>

@@ -1,14 +1,14 @@
 import { assets } from "@/assets/assets";
 import Image from "next/image";
-import { UserRoundSearch } from "lucide-react";
 import React from "react";
 import { motion } from "motion/react";
+import { DownloadIcon } from "lucide-react";
 
 export default function Header() {
   return (
     <div
       id="home"
-      className="w-11/12 max-w-3xl text-center mx-auto min-h-screen flex flex-col items-center justify-center gap-4 pt-[100px] sm:pt-[75px] pb-12 sm:pb-0"
+      className="w-9/12 max-w-3xl text-center min-h-dvh mx-auto flex flex-col items-center justify-center gap-4 pt-[75px] sm:pt-[75px]"
     >
       <motion.div
         initial={{ scale: 0 }}
@@ -44,23 +44,33 @@ export default function Header() {
         transition={{ duration: 0.6, delay: 0.7 }}
         className="max-w-2xl mx-auto font-ovo"
       >
-        I'm a 6th-semester Software Engineering student at Telkom University
-        Purwokerto, passionate about building full-featured web and mobile apps.
-        I have hands-on experience with modern technologies like React, Next.js,
-        Express.js, Flutter, and Laravel. I'm always eager to learn new tools,
-        collaborate in teams, and bring ideas into functional products.
+        I build modern fullstack apps with React, Node.js, Express, Next.js, Laravel,
+        and Flutter. Passionate about crafting scalable digital solutions and
+        growing through collaboration.
       </motion.p>
       <div className="flex flex-col sm:flex-row items-center gap-4 mt-4">
         <motion.a
           initial={{ y: 30, opacity: 0 }}
           whileInView={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.6, delay: 1.2 }}
-          href="/CV Irfan Muria.pdf"
-          download
-          className="px-10 py-3 border rounded-full border-gray-500 flex items-center gap-2 dark:bg-white dark:text-black"
+          transition={{ duration: 0.5, delay: 0.5 }}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          href="https://drive.google.com/file/d/1GGRbxeSog_cFC8X6FWXmHKQhP0wpt62z/view?usp=sharing"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="group px-10 py-3 border-[0.5px] rounded-full text-gray-700  border-gray-700 flex items-center gap-2 transition duration-300 ease-in-out hover:shadow-lg hover:bg-lightHover dark:hover:bg-darkHover"
         >
           My Resume
-          <Image src={assets.download_icon} alt="download" className="w-4" />
+          <motion.div
+            initial={false}
+            whileHover={{ rotate: 360 }}
+            transition={{ duration: 0.6, ease: "easeInOut" }}
+          >
+            <DownloadIcon
+              alt="download"
+              className="w-4 group-hover:animate-pulse"
+            />
+          </motion.div>
         </motion.a>
       </div>
     </div>
