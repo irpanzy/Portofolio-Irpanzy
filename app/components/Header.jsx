@@ -8,7 +8,7 @@ export default function Header() {
   return (
     <div
       id="home"
-      className="w-10/12 max-w-3xl text-center mx-auto flex flex-col items-center justify-center gap-4 pb-6 pt-[100px] sm:pt-[100px] lg:pt-[75px] lg:min-h-screen"
+      className="w-10/12 max-w-3xl text-center mx-auto flex flex-col items-center justify-center gap-4 pb-6 pt-[100px] xl:min-h-screen"
     >
       <motion.div
         initial={{ scale: 0 }}
