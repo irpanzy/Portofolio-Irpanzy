@@ -39,7 +39,7 @@ export default function About({ isDarkMode }) {
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6 }}
-            className="w-auto md:w-[250px] lg:w-[350px] rounded-3xl max-w-none"
+            className="w-auto md:w-[250px] lg:w-[335px]"
           >
             <Image
               src={assets.user_image}
@@ -55,15 +55,13 @@ export default function About({ isDarkMode }) {
           className="flex-1"
         >
           <p className="mb-10 max-w-3xl font-ovo text-justify">
-            I’m a 6th-semester Software Engineering student at Telkom University
-            Purwokerto with hands-on experience in fullstack web and mobile
-            development. I've worked on various projects, including a flight
-            booking platform called TiketGo, a personal finance app built using
-            Flutter, and a modern e-commerce website developed with Next.js and
-            Supabase. I also utilize RESTful APIs, PostgreSQL or MySQL, Git, and
-            project management tools like ClickUp. I enjoy working in
-            collaborative environments and continuously seek opportunities to
-            improve and make an impact.
+            7th Semester Student of Software Engineering Study Program at Telkom
+            University Purwokerto with a focus on Fullstack Web Development.
+            Experienced in building web and mobile applications, both frontend
+            and backend. Has participated in the MSIB Kampus Merdeka program and
+            worked on a ticket booking project called TiketGo. Familiar with
+            using React.js, Next.js, Express.js, Flutter, Laravel as well as
+            PostgreSQL and Git in project development.
           </p>
           <motion.ul
             initial={{ opacity: 0 }}
@@ -116,7 +114,11 @@ export default function About({ isDarkMode }) {
               whileHover={{ scale: 1.05 }}
               className="flex items-center justify-center w-12 sm:w-13 md:w-14 lg:w-15 aspect-square border border-gray-400 rounded-lg hover:-translate-y-1 duration-500 cursor-default hover:bg-lightHover dark:hover:bg-darkHover"
             >
-              <Image src={tool.icon} alt={tool.title} className="w-6 sm:w-7 md:w-8 lg:9" />
+              <Image
+                src={tool.icon}
+                alt={tool.title}
+                className="w-6 sm:w-7 md:w-8 lg:9"
+              />
             </motion.li>
             <span
               className="text-xs md:text-sm text-center truncate max-w-[100px]"

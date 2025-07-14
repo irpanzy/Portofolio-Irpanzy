@@ -69,6 +69,10 @@ import get_x from "./get-x.png";
 import xendit from "./xendit.png";
 import vite from "./vite.svg";
 import alpine_js from "./alpine-js.png";
+import react_router_v7 from "./react-router-v7.png";
+import axios from "./axios.png";
+import jwt from "./jwt.png";
+import redux from "./redux.png";
 
 export const assets = {
   user_image,
@@ -142,23 +146,42 @@ export const assets = {
   xendit,
   vite,
   alpine_js,
+  react_router_v7,
+  axios,
+  jwt,
+  redux
 };
 
 export const workData = [
+  {
+    title: "Sport Area",
+    description: "Web Design - JavaScript",
+    bgImage: "/SportArea.png",
+    link: "",
+    stack:
+      "React.js, Node.js, Express.js, Vite, PostgreSQL (Neon), Prisma ORM, React Router, Axios, JWT, Tailwind CSS",
+  },
+  {
+    title: "Serabi Lempit (CI/CD Pipeline)",
+    description: "CI/CD Workflow dan Publikasi NPM Package Otomatis",
+    bgImage: "/SerabiLempit.png",
+    link: "https://github.com/irpanzy/tubes-mkepl-serabi-lempit",
+    stack:
+      "Node.js, Express.js, PostgreSQL (Neon), Prisma ORM, Jest, GitHub Actions",
+  },
   {
     title: "Portofolio",
     description: "Web Design - JavaScript",
     bgImage: "/Irpanzy.png",
     link: "https://github.com/irpanzy/Portofolio-Irpanzy",
-    stack: "Next.js, Web3Forms, Tailwind CSS, Framer Motion, Lucide React",
+    stack: "Next.js, Web3Forms, Tailwind CSS, Framer Motion",
   },
   {
     title: "Dashboard System",
     description: "Restful API - JavaScript",
     bgImage: "/Dashboard.png",
     link: "https://github.com/irpanzy/Dashboard-Management-System",
-    stack:
-      "Node.js, Express, EJS, PostgreSQL (Neon), Prisma ORM, Postman, ImageKit",
+    stack: "Node.js, Express, EJS, PostgreSQL (Neon), Prisma ORM, ImageKit",
   },
   {
     title: "Aizora",
@@ -187,7 +210,7 @@ export const workData = [
     description: "Web Design - JavaScript",
     bgImage: "/TiketGo.png",
     link: "https://github.com/irpanzy/FP-Binar-React-Front-End",
-    stack: "React, Node.js, Vite, Axios, Postman, Tailwind CSS",
+    stack: "React, Node.js, Vite, Axios, Tailwind CSS",
   },
 ];
 
@@ -313,11 +336,23 @@ export const toolsData = [
   },
   {
     icon: assets.react,
-    title: "React",
+    title: "React.js",
   },
   {
     icon: assets.vite,
     title: "Vite",
+  },
+  {
+    icon: assets.react_router_v7,
+    title: "React Router",
+  },
+  {
+    icon: assets.axios,
+    title: "Axios",
+  },
+  {
+    icon: assets.redux,
+    title: "Redux",
   },
   {
     icon: assets.alpine_js,
@@ -329,7 +364,12 @@ export const toolsData = [
   },
   {
     icon: assets.express,
-    title: "Express",
+    title: "Express.js",
+  },
+  
+  {
+    icon: assets.jwt,
+    title: "JWT",
   },
   {
     icon: assets.nextjs,
@@ -362,9 +402,5 @@ export const toolsData = [
   {
     icon: assets.framer_motion,
     title: "Framer Motion",
-  },
-  {
-    icon: assets.xendit,
-    title: "Xendit",
   },
 ];

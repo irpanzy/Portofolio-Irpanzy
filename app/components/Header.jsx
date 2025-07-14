@@ -55,7 +55,7 @@ export default function Header() {
           transition={{ duration: 0.5, delay: 0.5 }}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
-          href="https://drive.google.com/file/d/1GGRbxeSog_cFC8X6FWXmHKQhP0wpt62z/view?usp=sharing"
+          href="https://drive.google.com/file/d/12bPFTozNx7s5lfRSvOQX6Lp86JFgKKAT/view?usp=drive_link"
           target="_blank"
           rel="noopener noreferrer"
           className="group px-10 py-3 border-[0.5px] rounded-full border-gray-700 flex items-center gap-2 transition duration-300 ease-in-out hover:shadow-lg hover:bg-lightHover dark:hover:bg-darkHover"
