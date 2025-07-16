@@ -149,7 +149,7 @@ export const assets = {
   react_router_v7,
   axios,
   jwt,
-  redux
+  redux,
 };
 
 export const workData = [
@@ -162,19 +162,19 @@ export const workData = [
       "React.js, Node.js, Express.js, Vite, PostgreSQL (Neon), Prisma ORM, React Router, Axios, JWT, Tailwind CSS",
   },
   {
-    title: "Serabi Lempit (CI/CD Pipeline)",
-    description: "CI/CD Workflow dan Publikasi NPM Package Otomatis",
-    bgImage: "/SerabiLempit.png",
-    link: "https://github.com/irpanzy/tubes-mkepl-serabi-lempit",
-    stack:
-      "Node.js, Express.js, PostgreSQL (Neon), Prisma ORM, Jest, GitHub Actions",
-  },
-  {
     title: "Portofolio",
     description: "Web Design - JavaScript",
     bgImage: "/Irpanzy.png",
     link: "https://github.com/irpanzy/Portofolio-Irpanzy",
     stack: "Next.js, Web3Forms, Tailwind CSS, Framer Motion",
+  },
+  {
+    title: "Serabi Lempit",
+    description: "CI/CD Workflow & NPM Package Publication",
+    bgImage: "/SerabiLempit.png",
+    link: "https://github.com/irpanzy/tubes-mkepl-serabi-lempit",
+    stack:
+      "Node.js, Express.js, PostgreSQL (Neon), Prisma ORM, Jest, GitHub Actions",
   },
   {
     title: "Dashboard System",
@@ -366,7 +366,7 @@ export const toolsData = [
     icon: assets.express,
     title: "Express.js",
   },
-  
+
   {
     icon: assets.jwt,
     title: "JWT",
