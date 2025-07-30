@@ -73,6 +73,8 @@ import react_router_v7 from "./react-router-v7.png";
 import axios from "./axios.png";
 import jwt from "./jwt.png";
 import redux from "./redux.png";
+import ejs from "./ejs.png";
+import zustand from "./zustand.png";
 
 export const assets = {
   user_image,
@@ -150,67 +152,158 @@ export const assets = {
   axios,
   jwt,
   redux,
+  ejs,
+  zustand,
 };
 
 export const workData = [
   {
+    title: "Vehicle Tracker Dashboard",
+    description:
+      "Responsive dashboard for vehicle tracking with real-time vehicle listing, telemetry details, and interactive UI.",
+    bgImage: "/projects/vehicle-tracker.png",
+    demoLink: "https://vehicle-tracker-dashboard.vercel.app",
+    githubLink: "https://github.com/irpanzy/vehicle-tracker-dashboard",
+    techStack: [
+      { title: "TypeScript", icon: assets.typescript },
+      { title: "React", icon: assets.react },
+      { title: "Vite", icon: assets.vite },
+      { title: "Axios", icon: assets.axios },
+      { title: "React Router v7", icon: assets.react_router_v7 },
+      { title: "Zustand", icon: assets.zustand },
+      { title: "Tailwind CSS", icon: assets.tailwind },
+      { title: "Framer Motion", icon: assets.framer_motion },
+    ],
+  },
+  {
     title: "Sport Area",
-    description: "Web Design - JavaScript",
-    bgImage: "/SportArea.png",
-    link: "",
-    stack:
-      "React.js, Node.js, Express.js, Vite, PostgreSQL (Neon), Prisma ORM, React Router, Axios, JWT, Tailwind CSS",
+    description:
+      "App for booking futsal and basketball courts. It provides features for checking availability, making reservations, and making payments with a responsive interface.",
+    bgImage: "/projects/sport-area.png",
+    demoLink: "https://book.solotechnopark.id",
+    githubLink: "",
+    techStack: [
+      { title: "JavaScript", icon: assets.javascript },
+      { title: "React", icon: assets.react },
+      { title: "Node.js", icon: assets.nodejs },
+      { title: "Express", icon: assets.express },
+      { title: "Vite", icon: assets.vite },
+      { title: "MySQL", icon: assets.mysql },
+      { title: "Prisma", icon: assets.prisma },
+      { title: "React Router v7", icon: assets.react_router_v7 },
+      { title: "Axios", icon: assets.axios },
+      { title: "JWT", icon: assets.jwt },
+      { title: "Tailwind CSS", icon: assets.tailwind },
+    ],
   },
   {
     title: "Portofolio",
-    description: "Web Design - JavaScript",
-    bgImage: "/Irpanzy.png",
-    link: "https://github.com/irpanzy/Portofolio-Irpanzy",
-    stack: "Next.js, Web3Forms, Tailwind CSS, Framer Motion",
+    description:
+      "A responsive portfolio website showcasing my journey as a Fullstack Web Developer, with a clean, professional design and smooth animations",
+    bgImage: "/projects/portofolio.png",
+    demoLink: "https://irpanzy.vercel.app",
+    githubLink: "https://github.com/irpanzy/Portofolio-Irpanzy",
+    techStack: [
+      { title: "JavaScript", icon: assets.javascript },
+      { title: "Next", icon: assets.nextjs },
+      { title: "Tailwind CSS", icon: assets.tailwind },
+      { title: "Framer Motion", icon: assets.framer_motion },
+    ],
   },
   {
     title: "Serabi Lempit",
-    description: "CI/CD Workflow & NPM Package Publication",
-    bgImage: "/SerabiLempit.png",
-    link: "https://github.com/irpanzy/tubes-mkepl-serabi-lempit",
-    stack:
-      "Node.js, Express.js, PostgreSQL (Neon), Prisma ORM, Jest, GitHub Actions",
+    description:
+      "A backend project that implements CI/CD workflow and publishes packages to NPM, as part of application development management and automation.",
+    bgImage: "/projects/serabi-lempit.png",
+    demoLink: "",
+    githubLink: "https://github.com/irpanzy/tubes-mkepl-serabi-lempit",
+    techStack: [
+      { title: "JavaScript", icon: assets.javascript },
+      { title: "Node.js", icon: assets.nodejs },
+      { title: "Express", icon: assets.express },
+      { title: "PostgreSQL", icon: assets.postgre },
+      { title: "Neon", icon: assets.neon },
+      { title: "Prisma", icon: assets.prisma },
+      { title: "GitHub", icon: assets.github_animation },
+    ],
   },
   {
     title: "Dashboard System",
-    description: "Restful API - JavaScript",
-    bgImage: "/Dashboard.png",
-    link: "https://github.com/irpanzy/Dashboard-Management-System",
-    stack: "Node.js, Express, EJS, PostgreSQL (Neon), Prisma ORM, ImageKit",
+    description:
+      "Web-based product and user management system with CRUD features, image upload, filter, pagination, and limit via API and user interface.",
+    bgImage: "/projects/sistem-management.png",
+    demoLink: "https://dashboard-management-system.vercel.app",
+    githubLink: "https://github.com/irpanzy/Dashboard-Management-System",
+    techStack: [
+      { title: "JavaScript", icon: assets.javascript },
+      { title: "Node.js", icon: assets.nodejs },
+      { title: "Express", icon: assets.express },
+      { title: "PostgreSQL", icon: assets.postgre },
+      { title: "Neon", icon: assets.neon },
+      { title: "Prisma", icon: assets.prisma },
+      { title: "EJS", icon: assets.ejs },
+    ],
   },
   {
     title: "Aizora",
-    description: "Web Design - TypeScript",
-    bgImage: "/Aizora.png",
-    link: "https://github.com/irpanzy/aizora",
-    stack:
-      "Next.js, PostgreSQL (Supabase), Prisma ORM, Lucia Auth, ShadCN UI, Tailwind CSS, Sassy CSS",
+    description:
+      "An e-commerce project for a clothing store with a modern interface and a fast, secure, and engaging shopping experience.",
+    bgImage: "/projects/aizora.png",
+    demoLink: "",
+    githubLink: "https://github.com/irpanzy/aizora",
+    techStack: [
+      { title: "TypeScript", icon: assets.typescript },
+      { title: "Next", icon: assets.nextjs },
+      { title: "PostgreSQL", icon: assets.postgre },
+      { title: "Supabase", icon: assets.supabase },
+      { title: "Prisma", icon: assets.prisma },
+      { title: "Tailwind CSS", icon: assets.tailwind },
+      { title: "Sassy CSS", icon: assets.sassy_css },
+    ],
   },
   {
     title: "Muria Cell",
-    description: "Web App Design - PHP",
-    bgImage: "/MuriaCell.png",
-    link: "https://github.com/irpanzy/muriacellstore",
-    stack: "Laravel, Filament, Alpine.js, Livewire, Tailwind CSS",
+    description:
+      "An e-commerce website for mobile phone stores that provides comprehensive solutions for product management, transactions, and customer service.",
+    bgImage: "/projects/muria-cell.png",
+    demoLink: "",
+    githubLink: "https://github.com/irpanzy/muriacellstore",
+    techStack: [
+      { title: "Laravel", icon: assets.laravel },
+      { title: "PHP", icon: assets.php },
+      { title: "Alpine.js", icon: assets.alpine_js },
+      { title: "Livewire", icon: assets.livewire },
+      { title: "Tailwind CSS", icon: assets.tailwind },
+    ],
   },
   {
     title: "Save Money",
-    description: "Mobile App - Dart",
-    bgImage: "/SaveMoney.png",
-    link: "https://github.com/irpanzy/Save-Money",
-    stack: "Flutter, SQLite, GetX",
+    description:
+      "A financial record application for recording daily income and expenses, as well as displaying weekly, monthly, and annual financial reports.",
+    bgImage: "/projects/save-money.png",
+    demoLink: "",
+    githubLink: "https://github.com/irpanzy/Save-Money",
+    techStack: [
+      { title: "Flutter", icon: assets.flutter },
+      { title: "Dart", icon: assets.dart },
+      { title: "SQLite", icon: assets.sqlite },
+      { title: "Get X", icon: assets.get_x },
+    ],
   },
   {
     title: "TiketGo",
-    description: "Web Design - JavaScript",
-    bgImage: "/TiketGo.png",
-    link: "https://github.com/irpanzy/FP-Binar-React-Front-End",
-    stack: "React, Node.js, Vite, Axios, Tailwind CSS",
+    description:
+      "A flight ticket booking application designed to provide a fast, easy, and responsive user experience.",
+    bgImage: "/projects/tiket-go.png",
+    demoLink: "http://tiketgo.vercel.app",
+    githubLink: "https://github.com/irpanzy/FP-Binar-React-Front-End",
+    techStack: [
+      { title: "React", icon: assets.react },
+      { title: "Node.js", icon: assets.nodejs },
+      { title: "Vite", icon: assets.vite },
+      { title: "Axios", icon: assets.axios },
+      { title: "Tailwind CSS", icon: assets.tailwind },
+    ],
   },
 ];
 
@@ -265,6 +358,10 @@ export const toolsData = [
   {
     icon: assets.css,
     title: "CSS",
+  },
+  {
+    icon: assets.ejs,
+    title: "EJS",
   },
   {
     icon: assets.javascript,
@@ -336,7 +433,7 @@ export const toolsData = [
   },
   {
     icon: assets.react,
-    title: "React.js",
+    title: "React",
   },
   {
     icon: assets.vite,
@@ -344,7 +441,7 @@ export const toolsData = [
   },
   {
     icon: assets.react_router_v7,
-    title: "React Router",
+    title: "React Router v7",
   },
   {
     icon: assets.axios,
@@ -353,6 +450,10 @@ export const toolsData = [
   {
     icon: assets.redux,
     title: "Redux",
+  },
+  {
+    icon: assets.zustand,
+    title: "Zustand",
   },
   {
     icon: assets.alpine_js,
@@ -364,16 +465,15 @@ export const toolsData = [
   },
   {
     icon: assets.express,
-    title: "Express.js",
+    title: "Express",
   },
-
   {
     icon: assets.jwt,
     title: "JWT",
   },
   {
     icon: assets.nextjs,
-    title: "Next.js",
+    title: "Next",
   },
   {
     icon: assets.flutter,
