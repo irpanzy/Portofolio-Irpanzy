@@ -19,6 +19,15 @@ export default function Navbar({ isDarkMode, setIsDarkMode }) {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const navigationItems = [
+    { id: "home", label: "Home" },
+    { id: "about", label: "About Me" },
+    { id: "experience", label: "Experience" },
+    { id: "work", label: "Projects" },
+    { id: "services", label: "Services" },
+    { id: "contact", label: "Contact" },
+  ];
+
   return (
     <>
       {/* Background Header Color */}
@@ -58,13 +67,7 @@ export default function Navbar({ isDarkMode, setIsDarkMode }) {
               : "bg-white shadow-sm bg-opacity-50 dark:border dark:border-white/50 dark:bg-transparent"
           }`}
         >
-          {[
-            { id: "home", label: "Home" },
-            { id: "about", label: "About Me" },
-            { id: "work", label: "Projects" },
-            { id: "services", label: "Services" },
-            { id: "contact", label: "Contact" },
-          ].map(({ id, label }) => (
+          {navigationItems.map(({ id, label }) => (
             <motion.li
               key={id}
               whileHover={{ scale: 1.1 }}
@@ -142,7 +145,7 @@ export default function Navbar({ isDarkMode, setIsDarkMode }) {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ duration: 0.4 }}
-              className="lg:hidden flex flex-col gap-4 py-20 px-10 fixed right-0 top-0 bottom-0 w-48 sm:w-56 md:w-64 z-50 h-screen bg-rose-50 dark:bg-darkHover dark:text-white shadow-lg"
+              className="lg:hidden flex flex-col gap-4 py-20 px-10 fixed right-0 top-0 bottom-0 w-56 sm:w-64 md:w-72 z-50 h-screen bg-rose-50 dark:bg-darkHover dark:text-white shadow-lg"
             >
               {/* Close Button */}
               <motion.div
@@ -159,13 +162,7 @@ export default function Navbar({ isDarkMode, setIsDarkMode }) {
               </motion.div>
 
               {/* Menu Items */}
-              {[
-                { id: "home", label: "Home" },
-                { id: "about", label: "About Me" },
-                { id: "work", label: "Projects" },
-                { id: "services", label: "Services" },
-                { id: "contact", label: "Contact" },
-              ].map(({ id, label }) => (
+              {navigationItems.map(({ id, label }) => (
                 <motion.li
                   key={id}
                   whileHover={{ scale: 1.05 }}

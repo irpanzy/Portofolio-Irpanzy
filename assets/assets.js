@@ -1,80 +1,82 @@
-import user_image from "./user-image.png";
-import code_icon from "./code-icon.png";
-import code_icon_dark from "./code-icon-dark.png";
-import edu_icon from "./edu-icon.png";
-import edu_icon_dark from "./edu-icon-dark.png";
-import project_icon from "./project-icon.png";
-import project_icon_dark from "./project-icon-dark.png";
-import vscode from "./vscode.png";
-import git from "./git.png";
-import right_arrow_white from "./right-arrow-white.png";
-import logo from "./logo.png";
-import logo_dark from "./logo_dark.png";
-import mail_icon from "./mail_icon.png";
-import mail_icon_dark from "./mail_icon_dark.png";
-import profile_img from "./profile-img.png";
-import download_icon from "./download-icon.png";
-import hand_icon from "./hand-icon.png";
-import header_bg_color from "./header-bg-color.png";
-import moon_icon from "./moon_icon.png";
-import sun_icon from "./sun_icon.png";
-import arrow_icon from "./arrow-icon.png";
-import arrow_icon_dark from "./arrow-icon-dark.png";
-import menu_black from "./menu-black.png";
-import menu_white from "./menu-white.png";
-import close_black from "./close-black.png";
-import close_white from "./close-white.png";
-import web_icon from "./web-icon.png";
-import mobile_icon from "./mobile-icon.png";
-import graphics_icon from "./graphics-icon.png";
-import right_arrow from "./right-arrow.png";
-import send_icon from "./send-icon.png";
-import right_arrow_bold from "./right-arrow-bold.png";
-import right_arrow_bold_dark from "./right-arrow-bold-dark.png";
-import github_logo_white from "./github-logo-white.png";
-import github_logo_dark from "./github-logo-dark.png";
-import linkedin_logo_blue from "./linkedin-logo-blue.png";
-import linkedin_logo_white from "./linkedin-logo-white.png";
-import instagram_logo_dark from "./instagram-logo-dark.png";
-import instagram_logo_white from "./instagram-logo-white.png";
-import postman from "./Postman.png";
-import postgre from "./Postgre.png";
-import mysql from "./Mysql.png";
-import prisma from "./Prisma.png";
-import github_animation from "./github-animation.png";
-import supabase from "./Supabase.png";
-import sequelize from "./Sequelize.png";
-import swagger from "./Swagger.png";
-import laragon from "./Laragon.png";
-import livewire from "./Livewire.png";
-import laravel from "./Laravel.png";
-import javascript from "./Javascript.png";
-import typescript from "./Typescript.svg";
-import dart from "./Dart.svg";
-import php from "./php.png";
-import flutter from "./Flutter.svg";
-import nextjs from "./Next.js.png";
-import tailwind from "./Tailwind.svg";
-import bootstrap from "./Bootstrap.svg";
-import express from "./Express.png";
-import nodejs from "./Node.js.svg";
-import react from "./React.js.svg";
-import framer_motion from "./framer-motion.svg";
-import sqlite from "./sqlite.svg";
-import neon from "./neon.png";
-import html from "./html.svg";
-import css from "./css.svg";
-import sassy_css from "./sassy-css.svg";
-import get_x from "./get-x.png";
-import xendit from "./xendit.png";
-import vite from "./vite.svg";
-import alpine_js from "./alpine-js.png";
-import react_router_v7 from "./react-router-v7.png";
-import axios from "./axios.png";
-import jwt from "./jwt.png";
-import redux from "./redux.png";
-import ejs from "./ejs.png";
-import zustand from "./zustand.png";
+import user_image from "./icons/user-image.png";
+import code_icon from "./icons/code-icon.png";
+import code_icon_dark from "./icons/code-icon-dark.png";
+import edu_icon from "./icons/edu-icon.png";
+import edu_icon_dark from "./icons/edu-icon-dark.png";
+import project_icon from "./icons/project-icon.png";
+import project_icon_dark from "./icons/project-icon-dark.png";
+import vscode from "./images/vscode.png";
+import git from "./images/git.png";
+import right_arrow_white from "./icons/right-arrow-white.png";
+import logo from "./images/logo.png";
+import logo_dark from "./images/logo_dark.png";
+import mail_icon from "./icons/mail_icon.png";
+import mail_icon_dark from "./icons/mail_icon_dark.png";
+import profile_img from "./images/profile-img.png";
+import download_icon from "./icons/download-icon.png";
+import hand_icon from "./icons/hand-icon.png";
+import header_bg_color from "./icons/header-bg-color.png";
+import moon_icon from "./icons/moon_icon.png";
+import sun_icon from "./icons/sun_icon.png";
+import arrow_icon from "./icons/arrow-icon.png";
+import arrow_icon_dark from "./icons/arrow-icon-dark.png";
+import menu_black from "./icons/menu-black.png";
+import menu_white from "./icons/menu-white.png";
+import close_black from "./icons/close-black.png";
+import close_white from "./icons/close-white.png";
+import web_icon from "./icons/web-icon.png";
+import mobile_icon from "./icons/mobile-icon.png";
+import graphics_icon from "./icons/graphics-icon.png";
+import right_arrow from "./icons/right-arrow.png";
+import send_icon from "./icons/send-icon.png";
+import right_arrow_bold from "./icons/right-arrow-bold.png";
+import right_arrow_bold_dark from "./icons/right-arrow-bold-dark.png";
+import github_logo_white from "./icons/github-logo-white.png";
+import github_logo_dark from "./icons/github-logo-dark.png";
+import linkedin_logo_blue from "./images/linkedin-logo-blue.png";
+import linkedin_logo_white from "./images/linkedin-logo-white.png";
+import instagram_logo_dark from "./images/instagram-logo-dark.png";
+import instagram_logo_white from "./images/instagram-logo-white.png";
+import postman from "./images/postman.png";
+import postgre from "./images/postgre.png";
+import mysql from "./images/mysql.png";
+import prisma from "./images/prisma.png";
+import github_animation from "./icons/github-animation.png";
+import supabase from "./images/supabase.png";
+import sequelize from "./images/sequelize.png";
+import swagger from "./images/swagger.png";
+import laragon from "./images/laragon.png";
+import livewire from "./images/livewire.png";
+import laravel from "./images/laravel.png";
+import javascript from "./images/javascript.png";
+import typescript from "./images/typescript.svg";
+import dart from "./images/dart.svg";
+import php from "./images/php.png";
+import flutter from "./images/flutter.svg";
+import nextjs from "./images/next.js.png";
+import tailwind from "./images/tailwind.svg";
+import bootstrap from "./images/bootstrap.svg";
+import express from "./images/express.png";
+import nodejs from "./images/node.js.svg";
+import react from "./images/react.js.svg";
+import framer_motion from "./images/framer-motion.svg";
+import sqlite from "./images/sqlite.svg";
+import neon from "./images/neon.png";
+import html from "./images/html.svg";
+import css from "./images/css.svg";
+import sassy_css from "./images/sassy-css.svg";
+import get_x from "./images/get-x.png";
+import xendit from "./images/xendit.png";
+import vite from "./images/vite.svg";
+import alpine_js from "./images/alpine-js.png";
+import react_router_v7 from "./images/react-router-v7.png";
+import axios from "./images/axios.png";
+import jwt from "./images/jwt.png";
+import redux from "./images/redux.png";
+import ejs from "./images/ejs.png";
+import zustand from "./images/zustand.png";
+import solotechnopark from "./images/solo-technopark.png";
+import widyarobotics from "./images/widya-robotics.png";
 
 export const assets = {
   user_image,
@@ -154,7 +156,35 @@ export const assets = {
   redux,
   ejs,
   zustand,
+  solotechnopark,
+  widyarobotics,
 };
+
+export const experienceData = [
+  {
+    company: "Widya Robotics",
+    position: "Frontend Engineer",
+    location: "Sleman, Yogyakarta, Indonesia",
+    period: "August 2025 - Present",
+    logo: assets.widyarobotics,
+    responsibilities: ["Coming soon"],
+  },
+  {
+    company: "Solo Technopark",
+    position: "IT Officer",
+    location: "Surakarta, Central Java, Indonesia",
+    period: "June 2025 - August 2025",
+    logo: assets.solotechnopark,
+    responsibilities: [
+      "Designing a user interface (UI) that is responsive and easy to use by users and admins",
+      "Creating reservation, login, registration, report, field gallery, and booking management pages",
+      "Developing backend API using Express.js with JWT authentication features, booking data management, users, and booking status",
+      "Integrating frontend and backend through RESTful API with Axios",
+      "Implementing filter, search, and report export features into PDF format",
+      "Managing application status on the frontend side, as well as displaying data in real time such as booking status and field schedules",
+    ],
+  },
+];
 
 export const workData = [
   {
@@ -284,8 +314,8 @@ export const workData = [
     demoLink: "",
     githubLink: "https://github.com/irpanzy/Save-Money",
     techStack: [
-      { title: "Flutter", icon: assets.flutter },
       { title: "Dart", icon: assets.dart },
+      { title: "Flutter", icon: assets.flutter },
       { title: "SQLite", icon: assets.sqlite },
       { title: "Get X", icon: assets.get_x },
     ],
@@ -298,6 +328,7 @@ export const workData = [
     demoLink: "http://tiketgo.vercel.app",
     githubLink: "https://github.com/irpanzy/FP-Binar-React-Front-End",
     techStack: [
+      { title: "JavaScript", icon: assets.javascript },
       { title: "React", icon: assets.react },
       { title: "Node.js", icon: assets.nodejs },
       { title: "Vite", icon: assets.vite },

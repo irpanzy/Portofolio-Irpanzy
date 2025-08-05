@@ -7,6 +7,7 @@ import Header from "./components/Header";
 import Navbar from "./components/Navbar";
 import Services from "./components/Services";
 import Work from "./components/Work";
+import Experience from "./components/Experience";
 import { Toaster } from "react-hot-toast";
 
 export default function Home() {
@@ -33,11 +34,13 @@ export default function Home() {
       localStorage.theme = "";
     }
   }, [isDarkMode]);
+
   return (
     <>
       <Navbar isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} />
       <Header isDarkMode={isDarkMode} />
       <About isDarkMode={isDarkMode} />
+      <Experience isDarkMode={isDarkMode} />
       <Work isDarkMode={isDarkMode} />
       <Services isDarkMode={isDarkMode} />
       <Contact isDarkMode={isDarkMode} />
