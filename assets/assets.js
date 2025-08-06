@@ -1,4 +1,4 @@
-import user_image from "./icons/user-image.png";
+import user_image from "./images/user-image.png";
 import code_icon from "./icons/code-icon.png";
 import code_icon_dark from "./icons/code-icon-dark.png";
 import edu_icon from "./icons/edu-icon.png";
@@ -77,6 +77,7 @@ import ejs from "./images/ejs.png";
 import zustand from "./images/zustand.png";
 import solotechnopark from "./images/solo-technopark.png";
 import widyarobotics from "./images/widya-robotics.png";
+import binaracademy from "./images/binar-academy.png";
 
 export const assets = {
   user_image,
@@ -158,6 +159,7 @@ export const assets = {
   zustand,
   solotechnopark,
   widyarobotics,
+  binaracademy,
 };
 
 export const experienceData = [
@@ -182,6 +184,20 @@ export const experienceData = [
       "Integrating frontend and backend through RESTful API with Axios",
       "Implementing filter, search, and report export features into PDF format",
       "Managing application status on the frontend side, as well as displaying data in real time such as booking status and field schedules",
+    ],
+  },
+  {
+    company: "Binar Academy",
+    position: "FullStack Web Development",
+    location: "Remote",
+    period: "September 2024 - December 2024",
+    logo: assets.binaracademy,
+    responsibilities: [
+      "Participated in an intensive program combining theory and hands-on practice.",
+      "Received guidance through mentoring and effective team collaboration.",
+      "Successfully completed a team project with optimal results.",
+      "Learned and implemented modern technologies such as Node.js, React, TailwindCSS, and Sequelize.",
+      "Built fullstack features such as CRUD API and integrated frontend and backend systems.",
     ],
   },
 ];

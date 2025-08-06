@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "motion/react";
-import { MapPin, Calendar, BriefcaseBusiness } from "lucide-react";
+import { MapPin, Calendar, Building2 } from "lucide-react";
 import { experienceData } from "@/assets/assets";
 import Image from "next/image";
 
@@ -11,7 +11,7 @@ export default function Experience({ isDarkMode }) {
       whileInView={{ opacity: 1 }}
       transition={{ duration: 1 }}
       id="experience"
-      className="w-full px-[12%] py-6 scroll-mt-20"
+      className="w-full px-4 md:px-12 py-8 scroll-mt-20"
     >
       <motion.h4
         initial={{ opacity: 0, y: -20 }}
@@ -25,7 +25,7 @@ export default function Experience({ isDarkMode }) {
         initial={{ opacity: 0, y: -20 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.5 }}
-        className="text-center text-5xl font-ovo"
+        className="text-center text-4xl md:text-5xl font-ovo"
       >
         Work Experience
       </motion.h2>
@@ -33,7 +33,7 @@ export default function Experience({ isDarkMode }) {
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         transition={{ duration: 0.5, delay: 0.7 }}
-        className="text-center max-w-2xl mx-auto mt-5 mb-12 font-ovo"
+        className="text-center max-w-3xl mx-auto mt-5 mb-12 font-ovo text-sm md:text-base text-gray-600 dark:text-gray-300"
       >
         Real-world experience building scalable applications and working with
         modern web technologies in professional environments.
@@ -43,7 +43,7 @@ export default function Experience({ isDarkMode }) {
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         transition={{ duration: 0.6, delay: 0.9 }}
-        className="max-w-4xl mx-auto"
+        className="max-w-5xl mx-auto space-y-8"
       >
         {experienceData.map((experience, index) => (
           <motion.div
@@ -62,7 +62,7 @@ export default function Experience({ isDarkMode }) {
               className="bg-white dark:bg-darkHover/30 p-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 border border-gray-200 dark:border-gray-600"
             >
               {/* Header */}
-              <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-4">
+              <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-4 gap-4">
                 <div className="flex items-start gap-4">
                   {/* Company Logo */}
                   {experience.logo && (
@@ -90,14 +90,14 @@ export default function Experience({ isDarkMode }) {
                       {experience.position}
                     </h3>
                     <div className="flex items-center gap-2 text-[#77BEF0] font-medium mt-1">
-                      <BriefcaseBusiness className="w-4 h-4" />
+                      <Building2 className="w-4 h-4" />
                       <span>{experience.company}</span>
                     </div>
                   </div>
                 </div>
 
                 {/* Period and Location */}
-                <div className="flex flex-col md:items-end mt-2 md:mt-0 gap-1 md:ml-4">
+                <div className="flex flex-col md:items-end gap-1 md:ml-4 mt-2 md:mt-0">
                   <div className="flex items-center gap-2 text-gray-600 dark:text-gray-300 text-sm">
                     <Calendar className="w-4 h-4" />
                     <span>{experience.period}</span>
