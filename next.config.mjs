@@ -13,9 +13,6 @@ const nextConfig = {
     removeConsole: process.env.NODE_ENV === 'production',
   },
   
-  // Modern JavaScript tanpa transpilasi berlebihan
-  swcMinify: true,
-  
   // Kompresi
   compress: true,
   

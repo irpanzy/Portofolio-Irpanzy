@@ -13,14 +13,14 @@ export default function Experience({ isDarkMode }) {
       id="experience"
       className="w-full px-4 md:px-12 py-8 scroll-mt-20"
     >
-      <motion.h4
+      <motion.p
         initial={{ opacity: 0, y: -20 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.3 }}
         className="text-center mb-2 text-lg font-ovo"
       >
         Professional Journey
-      </motion.h4>
+      </motion.p>
       <motion.h2
         initial={{ opacity: 0, y: -20 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -112,9 +112,9 @@ export default function Experience({ isDarkMode }) {
 
               {/* Responsibilities */}
               <div>
-                <h4 className="font-medium text-gray-700 dark:text-gray-200 mb-3">
+                <p className="font-medium text-gray-700 dark:text-gray-200 mb-3">
                   Key Responsibilities:
-                </h4>
+                </p>
                 <motion.ul className="space-y-2 text-gray-600 dark:text-gray-300 text-sm leading-relaxed">
                   {experience.responsibilities.map((responsibility, idx) => (
                     <motion.li

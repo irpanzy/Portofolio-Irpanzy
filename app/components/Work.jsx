@@ -13,14 +13,14 @@ export default function Work({ isDarkMode }) {
       id="work"
       className="w-full px-[12%] py-6 scroll-mt-20"
     >
-      <motion.h4
+      <motion.p
         initial={{ opacity: 0, y: -20 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.3 }}
         className="text-center mb-2 text-lg font-ovo"
       >
         A Glimpse of My Journey
-      </motion.h4>
+      </motion.p>
       <motion.h2
         initial={{ opacity: 0, y: -20 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -107,9 +107,9 @@ export default function Work({ isDarkMode }) {
             {/* Konten Card */}
             <div className="p-4 bg-white dark:bg-gray-50 flex flex-col flex-grow">
               <div className="flex-grow">
-                <h2 className="font-semibold text-black text-lg mb-2 leading-tight">
+                <h3 className="font-semibold text-black text-lg mb-2 leading-tight">
                   {project.title}
-                </h2>
+                </h3>
                 <p className="text-sm text-gray-700 mb-4 leading-relaxed text-justify">
                   {project.description}
                 </p>

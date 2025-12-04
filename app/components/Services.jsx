@@ -12,21 +12,21 @@ export default function Services({ isDarkMode }) {
       id="services"
       className="w-full px-[12%] py-6 scroll-mt-20"
     >
-      <motion.h4
+      <motion.p
         initial={{ opacity: 0, y: -20 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.3 }}
         className="text-center mb-2 text-lg font-ovo"
       >
         How I Can Help
-      </motion.h4>
+      </motion.p>
       <motion.h2
         initial={{ opacity: 0, y: -20 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.5 }}
         className="text-center text-5xl font-ovo"
       >
-        Let’s Build Something Great
+        Let's Build Something Great
       </motion.h2>
       <motion.p
         initial={{ opacity: 0 }}

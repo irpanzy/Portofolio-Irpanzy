@@ -12,14 +12,14 @@ export default function About({ isDarkMode }) {
       whileInView={{ opacity: 1 }}
       transition={{ duration: 1 }}
     >
-      <motion.h4
+      <motion.p
         initial={{ opacity: 0, y: -20 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.3 }}
         className="text-center mb-2 text-lg font-ovo"
       >
         Introduction
-      </motion.h4>
+      </motion.p>
       <motion.h2
         initial={{ opacity: 0, y: -20 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -86,9 +86,9 @@ export default function About({ isDarkMode }) {
                   height={28}
                   loading="lazy"
                 />
-                <h3 className="my-4 font-semibold text-gray-700 dark:text-white">
+                <h4 className="my-4 font-semibold text-gray-700 dark:text-white">
                   {title}
-                </h3>
+                </h4>
                 <p className="text-gray-600 text-sm dark:text-white/80">
                   {description}
                 </p>
@@ -97,14 +97,14 @@ export default function About({ isDarkMode }) {
           </motion.ul>
         </motion.div>
       </motion.div>
-      <motion.h4
+      <motion.h3
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 1.3 }}
         className="my-6 ml-2 font-ovo"
       >
         Tech Stack
-      </motion.h4>
+      </motion.h3>
       <motion.ul
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
@@ -112,11 +112,11 @@ export default function About({ isDarkMode }) {
         className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-10 gap-7 sm:gap-8 md:gap-9 lg:gap-10"
       >
         {toolsData.map((tool, index) => (
-          <motion.div
+          <motion.li
             key={index}
             className="flex flex-col items-center justify-center gap-1 md:gap-2"
           >
-            <motion.li
+            <motion.div
               whileHover={{ scale: 1.05 }}
               className="flex items-center justify-center w-12 sm:w-13 md:w-14 lg:w-15 aspect-square border border-gray-400 rounded-lg hover:-translate-y-1 duration-500 cursor-default hover:bg-lightHover dark:hover:bg-darkHover"
             >
@@ -128,14 +128,14 @@ export default function About({ isDarkMode }) {
                 height={32}
                 loading="lazy"
               />
-            </motion.li>
+            </motion.div>
             <span
               className="text-xs md:text-sm text-center truncate max-w-[100px]"
               title={tool.title}
             >
               {tool.title}
             </span>
-          </motion.div>
+          </motion.li>
         ))}
       </motion.ul>
     </motion.div>
