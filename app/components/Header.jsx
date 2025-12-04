@@ -1,7 +1,7 @@
 import { assets } from "@/assets/assets";
 import Image from "next/image";
 import React from "react";
-import { motion } from "motion/react";
+import { m } from "framer-motion";
 import { DownloadIcon, HandHeartIcon } from "lucide-react";
 
 export default function Header() {
@@ -10,22 +10,23 @@ export default function Header() {
       id="home"
       className="w-10/12 max-w-3xl text-center mx-auto flex flex-col items-center justify-center gap-4 pb-6 pt-[100px] xl:min-h-screen"
     >
-      <motion.div
+      <m.div
         initial={{ scale: 0 }}
         whileInView={{ scale: 1 }}
         transition={{ duration: 0.8, type: "spring", stiffness: 100 }}
       >
         <Image
           src={assets.profile_img}
-          className="rounded-full w-32"
+          className="rounded-full"
           alt="Irfan Muria Profile"
           width={128}
           height={128}
           priority
           quality={85}
+          style={{ width: '128px', height: '128px' }}
         />
-      </motion.div>
-      <motion.p
+      </m.div>
+      <m.p
         initial={{ y: -20, opacity: 0 }}
         whileInView={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, delay: 0.3 }}
@@ -33,16 +34,16 @@ export default function Header() {
       >
         Hello! I'm Irfan Muria
         <HandHeartIcon className="w-6 h-6" />
-      </motion.p>
-      <motion.h1
+      </m.p>
+      <m.h1
         initial={{ y: -30, opacity: 0 }}
         whileInView={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.8, delay: 0.4 }}
         className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-ovo"
       >
         Fullstack Web Developer Enthusiast
-      </motion.h1>
-      <motion.p
+      </m.h1>
+      <m.p
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         transition={{ duration: 0.6, delay: 0.7 }}
@@ -51,9 +52,9 @@ export default function Header() {
         I build modern fullstack apps with React, Node.js, Express, Next.js,
         Laravel, and Flutter. Passionate about crafting scalable digital
         solutions and growing through collaboration.
-      </motion.p>
+      </m.p>
       <div className="flex flex-col sm:flex-row items-center gap-4 mt-4">
-        <motion.a
+        <m.a
           initial={{ y: 30, opacity: 0 }}
           whileInView={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.5 }}
@@ -65,7 +66,7 @@ export default function Header() {
           className="group px-10 py-3 border-[0.5px] rounded-full border-gray-700 flex items-center gap-2 transition duration-300 ease-in-out hover:shadow-lg hover:bg-lightHover dark:hover:bg-darkHover"
         >
           My Resume
-          <motion.div
+          <m.div
             initial={false}
             whileHover={{ rotate: 360 }}
             transition={{ duration: 0.6, ease: "easeInOut" }}
@@ -74,9 +75,10 @@ export default function Header() {
               alt="download"
               className="w-4 group-hover:animate-pulse"
             />
-          </motion.div>
-        </motion.a>
+          </m.div>
+        </m.a>
       </div>
     </div>
   );
 }
+

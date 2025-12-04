@@ -1,35 +1,35 @@
 import { assets, workData } from "@/assets/assets";
 import Image from "next/image";
 import React from "react";
-import { motion } from "motion/react";
+import { m } from "framer-motion";
 import { CircleArrowOutUpRight, ExternalLink, Github, Eye } from "lucide-react";
 
 export default function Work({ isDarkMode }) {
   return (
-    <motion.div
+    <m.div
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       transition={{ duration: 1 }}
       id="work"
       className="w-full px-[12%] py-6 scroll-mt-20"
     >
-      <motion.p
+      <m.p
         initial={{ opacity: 0, y: -20 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.3 }}
         className="text-center mb-2 text-lg font-ovo"
       >
         A Glimpse of My Journey
-      </motion.p>
-      <motion.h2
+      </m.p>
+      <m.h2
         initial={{ opacity: 0, y: -20 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.5 }}
         className="text-center text-5xl font-ovo"
       >
         What I've Built
-      </motion.h2>
-      <motion.p
+      </m.h2>
+      <m.p
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         transition={{ duration: 0.5, delay: 0.7 }}
@@ -38,29 +38,35 @@ export default function Work({ isDarkMode }) {
         A showcase of real-world projects built with modern web technologies -
         from Fullstack applications to scalable backend systems and RESTful
         APIs.
-      </motion.p>
-      <motion.div
+      </m.p>
+      <m.div
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         transition={{ duration: 0.6, delay: 0.9 }}
         className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 my-10 gap-6 dark:text-black"
       >
         {workData.map((project, index) => (
-          <motion.div
+          <m.div
             whileHover={{ scale: 1.05 }}
             transition={{ duration: 0.3 }}
             key={index}
             className="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 group flex flex-col"
           >
             {/* Gambar Header */}
-            <div
-              className="aspect-[4/3] bg-no-repeat bg-cover bg-center relative cursor-pointer overflow-hidden"
-              style={{ backgroundImage: `url(${project.bgImage})` }}
-            >
+            <div className="aspect-[4/3] relative cursor-pointer overflow-hidden">
+              <Image
+                src={project.bgImage}
+                alt={project.title}
+                fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                className="object-cover"
+                loading="lazy"
+                quality={75}
+              />
               <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition duration-300 z-0" />
               <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-3 z-10">
                 {project.demoLink && (
-                  <motion.a
+                  <m.a
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
                     href={project.demoLink}
@@ -71,10 +77,10 @@ export default function Work({ isDarkMode }) {
                   >
                     <Eye className="w-4 h-4" />
                     Live Preview
-                  </motion.a>
+                  </m.a>
                 )}
                 {project.githubLink && (
-                  <motion.a
+                  <m.a
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
                     href={project.githubLink}
@@ -85,10 +91,10 @@ export default function Work({ isDarkMode }) {
                   >
                     <Github className="w-4 h-4" />
                     GitHub
-                  </motion.a>
+                  </m.a>
                 )}
                 {!project.demoLink && !project.githubLink && project.link && (
-                  <motion.a
+                  <m.a
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
                     href={project.link}
@@ -99,7 +105,7 @@ export default function Work({ isDarkMode }) {
                   >
                     <ExternalLink className="w-4 h-4" />
                     View Project
-                  </motion.a>
+                  </m.a>
                 )}
               </div>
             </div>
@@ -130,7 +136,8 @@ export default function Work({ isDarkMode }) {
                             alt={tech.title}
                             width={16}
                             height={16}
-                            className="w-4 h-4 object-contain flex-shrink-0"
+                            className="object-contain flex-shrink-0"
+                            style={{ width: '16px', height: '16px' }}
                           />
                           <span className="text-gray-700 font-medium">
                             {tech.title}
@@ -142,10 +149,10 @@ export default function Work({ isDarkMode }) {
                 )}
               </div>
             </div>
-          </motion.div>
+          </m.div>
         ))}
-      </motion.div>
-      <motion.a
+      </m.div>
+      <m.a
         initial={{ y: 30, opacity: 0 }}
         whileInView={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5, delay: 0.5 }}
@@ -157,14 +164,15 @@ export default function Work({ isDarkMode }) {
         className="group w-max flex items-center justify-center gap-2 border-[0.5px] border-gray-700 rounded-full py-3 px-10 mx-auto mt-10 transition duration-300 ease-in-out hover:shadow-lg hover:bg-lightHover dark:text-white dark:border-white dark:hover:bg-darkHover"
       >
         Show More
-        <motion.div
+        <m.div
           initial={false}
           whileHover={{ rotate: 360 }}
           transition={{ duration: 0.6, ease: "easeInOut" }}
         >
           <CircleArrowOutUpRight className="w-4 group-hover:animate-pulse" />
-        </motion.div>
-      </motion.a>
-    </motion.div>
+        </m.div>
+      </m.a>
+    </m.div>
   );
 }
+

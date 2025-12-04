@@ -2,7 +2,7 @@ import { assets } from "@/assets/assets";
 import { Signature } from "lucide-react";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, m } from "framer-motion";
 
 export default function Navbar({ isDarkMode, setIsDarkMode }) {
   const [isScroll, setIsScroll] = useState(false);
@@ -42,7 +42,7 @@ export default function Navbar({ isDarkMode, setIsDarkMode }) {
       </div>
 
       {/* Navbar */}
-      <motion.nav
+      <m.nav
         initial={{ y: -60, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5 }}
@@ -53,7 +53,7 @@ export default function Navbar({ isDarkMode, setIsDarkMode }) {
         }`}
       >
         {/* Logo */}
-        <motion.a
+        <m.a
           href="#top"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
@@ -61,12 +61,13 @@ export default function Navbar({ isDarkMode, setIsDarkMode }) {
           <Image
             src={isDarkMode ? assets.logo_dark : assets.logo}
             alt="logo"
-            className="w-28 cursor-pointer xl:mr-[60px]"
+            className="cursor-pointer xl:mr-[60px]"
             width={112}
             height={40}
             priority
+            style={{ width: 'auto', height: '40px' }}
           />
-        </motion.a>
+        </m.a>
 
         {/* Desktop Menu */}
         <ul
@@ -77,7 +78,7 @@ export default function Navbar({ isDarkMode, setIsDarkMode }) {
           }`}
         >
           {navigationItems.map(({ id, label }) => (
-            <motion.li
+            <m.li
               key={id}
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
@@ -89,14 +90,14 @@ export default function Navbar({ isDarkMode, setIsDarkMode }) {
               >
                 {label}
               </a>
-            </motion.li>
+            </m.li>
           ))}
         </ul>
 
         {/* Right-side Controls */}
         <div className="flex items-center gap-4">
           {/* Dark Mode Toggle */}
-          <motion.button
+          <m.button
             whileTap={{ rotate: 90 }}
             whileHover={{ scale: 1.1 }}
             transition={{ duration: 0.3 }}
@@ -107,10 +108,10 @@ export default function Navbar({ isDarkMode, setIsDarkMode }) {
               alt="toggle"
               className="w-6"
             />
-          </motion.button>
+          </m.button>
 
           {/* Contact Button (Desktop) */}
-          <motion.a
+          <m.a
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             transition={{ type: "spring", stiffness: 300 }}
@@ -119,10 +120,10 @@ export default function Navbar({ isDarkMode, setIsDarkMode }) {
           >
             Say Hello
             <Signature color={isDarkMode ? "white" : "black"} className="w-4" />
-          </motion.a>
+          </m.a>
 
           {/* Mobile Menu Button */}
-          <motion.button
+          <m.button
             className="block xl:hidden ml-3"
             onClick={openSideMenu}
             whileTap={{ scale: 0.9 }}
@@ -132,15 +133,15 @@ export default function Navbar({ isDarkMode, setIsDarkMode }) {
               alt="menu"
               className="w-6"
             />
-          </motion.button>
+          </m.button>
         </div>
-      </motion.nav>
+      </m.nav>
 
       {/* Backdrop (optional, bisa klik untuk tutup) */}
       <AnimatePresence>
         {isMenuOpen && (
           <>
-            <motion.div
+            <m.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 0.5 }}
               exit={{ opacity: 0 }}
@@ -149,7 +150,7 @@ export default function Navbar({ isDarkMode, setIsDarkMode }) {
               onClick={closeSideMenu}
             />
             {/* Mobile Menu */}
-            <motion.div
+            <m.div
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
@@ -157,7 +158,7 @@ export default function Navbar({ isDarkMode, setIsDarkMode }) {
               className="xl:hidden flex flex-col gap-4 py-20 px-10 fixed right-0 top-0 bottom-0 w-56 sm:w-64 md:w-72 z-50 h-screen bg-rose-50 dark:bg-darkHover dark:text-white shadow-lg"
             >
               {/* Close Button */}
-              <motion.div
+              <m.div
                 className="absolute right-[21px] top-[34px] cursor-pointer"
                 onClick={closeSideMenu}
                 whileHover={{ scale: 1.2 }}
@@ -168,11 +169,11 @@ export default function Navbar({ isDarkMode, setIsDarkMode }) {
                   alt="close"
                   className="w-5"
                 />
-              </motion.div>
+              </m.div>
 
               {/* Menu Items */}
               {navigationItems.map(({ id, label }) => (
-                <motion.li
+                <m.li
                   key={id}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
@@ -185,12 +186,13 @@ export default function Navbar({ isDarkMode, setIsDarkMode }) {
                   >
                     {label}
                   </a>
-                </motion.li>
+                </m.li>
               ))}
-            </motion.div>
+            </m.div>
           </>
         )}
       </AnimatePresence>
     </>
   );
 }
+

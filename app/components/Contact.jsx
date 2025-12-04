@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import toast from "react-hot-toast";
 import { Send } from "lucide-react";
 
@@ -44,7 +44,7 @@ export default function Contact({ isDarkMode }) {
   };
 
   return (
-    <motion.div
+    <m.div
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       transition={{ duration: 1 }}
@@ -52,23 +52,23 @@ export default function Contact({ isDarkMode }) {
       className="w-full px-[12%] py-6 scroll-mt-20 bg-[url('/footer-bg-color.png')] bg-no-repeat bg-center bg-[length:90%_auto] dark:bg-none"
     >
       {/* Judul */}
-      <motion.p
+      <m.p
         initial={{ opacity: 0, y: -20 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.3 }}
         className="text-center mb-2 text-lg font-ovo"
       >
         Connect With Me
-      </motion.p>
-      <motion.h2
+      </m.p>
+      <m.h2
         initial={{ opacity: 0, y: -20 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.5 }}
         className="text-center text-5xl font-ovo"
       >
         Get In Touch
-      </motion.h2>
-      <motion.p
+      </m.h2>
+      <m.p
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         transition={{ duration: 0.5, delay: 0.7 }}
@@ -77,10 +77,10 @@ export default function Contact({ isDarkMode }) {
         Have a project in mind or just want to say hi? Let’s connect and bring
         your ideas to life. I'm always open to new collaborations and
         opportunities.
-      </motion.p>
+      </m.p>
 
       {/* Form */}
-      <motion.form
+      <m.form
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         transition={{ duration: 0.5, delay: 0.9 }}
@@ -88,7 +88,7 @@ export default function Contact({ isDarkMode }) {
         className="max-w-2xl mx-auto"
       >
         <div className="grid grid-cols-auto gap-6 mt-10 mb-8">
-          <motion.input
+          <m.input
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 1.1 }}
@@ -98,7 +98,7 @@ export default function Contact({ isDarkMode }) {
             name="name"
             className="flex-1 p-3 outline-none border-[0.5px] border-gray-400 rounded-md bg-white dark:bg-darkHover/30 dark:border-white/90"
           />
-          <motion.input
+          <m.input
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 1.1 }}
@@ -110,7 +110,7 @@ export default function Contact({ isDarkMode }) {
           />
         </div>
 
-        <motion.textarea
+        <m.textarea
           initial={{ y: 100, opacity: 0 }}
           whileInView={{ y: 0, opacity: 1 }}
           transition={{ delay: 1.3, duration: 0.6 }}
@@ -119,9 +119,9 @@ export default function Contact({ isDarkMode }) {
           placeholder="Enter your message"
           required
           className="w-full p-4 outline-none border-[0.5px] border-gray-400 rounded-md bg-white mb-6 dark:bg-darkHover/30 dark:border-white/90"
-        ></motion.textarea>
+        ></m.textarea>
 
-        <motion.button
+        <m.button
           initial={{ y: 30, opacity: 0 }}
           whileInView={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.5 }}
@@ -137,16 +137,17 @@ export default function Contact({ isDarkMode }) {
         >
           {isLoading ? "Sending..." : "Submit Now"}
           {!isLoading && (
-            <motion.div
+            <m.div
               initial={false}
               whileHover={{ rotate: 360 }}
               transition={{ duration: 0.6, ease: "easeInOut" }}
             >
               <Send alt="arrow" className="w-4 group-hover:animate-pulse" />
-            </motion.div>
+            </m.div>
           )}
-        </motion.button>
-      </motion.form>
-    </motion.div>
+        </m.button>
+      </m.form>
+    </m.div>
   );
 }
+

@@ -22,6 +22,9 @@ export const metadata = {
   icons: {
     icon: "/Logo.png",
   },
+  other: {
+    'fetchpriority': 'high',
+  },
 };
 
 export default function RootLayout({ children }) {

@@ -1,35 +1,35 @@
 import React from "react";
-import { motion } from "motion/react";
+import { m } from "framer-motion";
 import { MapPin, Calendar, Building2 } from "lucide-react";
 import { experienceData } from "@/assets/assets";
 import Image from "next/image";
 
 export default function Experience({ isDarkMode }) {
   return (
-    <motion.div
+    <m.div
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       transition={{ duration: 1 }}
       id="experience"
       className="w-full px-4 md:px-12 py-8 scroll-mt-20"
     >
-      <motion.p
+      <m.p
         initial={{ opacity: 0, y: -20 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.3 }}
         className="text-center mb-2 text-lg font-ovo"
       >
         Professional Journey
-      </motion.p>
-      <motion.h2
+      </m.p>
+      <m.h2
         initial={{ opacity: 0, y: -20 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.5 }}
-        className="text-center text-4xl md:text-5xl font-ovo"
+        className="text-center text-5xl md:text-5xl font-ovo"
       >
         Work Experience
-      </motion.h2>
-      <motion.p
+      </m.h2>
+      <m.p
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         transition={{ duration: 0.5, delay: 0.7 }}
@@ -37,16 +37,16 @@ export default function Experience({ isDarkMode }) {
       >
         Real-world experience building scalable applications and working with
         modern web technologies in professional environments.
-      </motion.p>
+      </m.p>
 
-      <motion.div
+      <m.div
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         transition={{ duration: 0.6, delay: 0.9 }}
         className="max-w-5xl mx-auto space-y-8"
       >
         {experienceData.map((experience, index) => (
-          <motion.div
+          <m.div
             key={index}
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -57,7 +57,7 @@ export default function Experience({ isDarkMode }) {
             <div className="absolute w-4 h-4 bg-[#77BEF0] rounded-full -left-2 top-0 border-4 border-white dark:border-darkTheme"></div>
 
             {/* Experience Card */}
-            <motion.div
+            <m.div
               whileHover={{ scale: 1.02 }}
               className="bg-white dark:bg-darkHover/30 p-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 border border-gray-200 dark:border-gray-600"
             >
@@ -66,7 +66,7 @@ export default function Experience({ isDarkMode }) {
                 <div className="flex items-start gap-4">
                   {/* Company Logo */}
                   {experience.logo && (
-                    <motion.div
+                    <m.div
                       initial={{ opacity: 0, scale: 0.8 }}
                       whileInView={{ opacity: 1, scale: 1 }}
                       transition={{ duration: 0.5, delay: 1.1 }}
@@ -78,11 +78,12 @@ export default function Experience({ isDarkMode }) {
                           alt={`${experience.company} logo`}
                           width={48}
                           height={48}
-                          className="w-full h-full object-contain"
+                          className="object-contain"
                           loading="lazy"
+                          style={{ width: '100%', height: '100%' }}
                         />
                       </div>
-                    </motion.div>
+                    </m.div>
                   )}
 
                   {/* Position and Company Info */}
@@ -115,9 +116,9 @@ export default function Experience({ isDarkMode }) {
                 <p className="font-medium text-gray-700 dark:text-gray-200 mb-3">
                   Key Responsibilities:
                 </p>
-                <motion.ul className="space-y-2 text-gray-600 dark:text-gray-300 text-sm leading-relaxed">
+                <m.ul className="space-y-2 text-gray-600 dark:text-gray-300 text-sm leading-relaxed">
                   {experience.responsibilities.map((responsibility, idx) => (
-                    <motion.li
+                    <m.li
                       key={idx}
                       initial={{ opacity: 0, x: -20 }}
                       whileInView={{ opacity: 1, x: 0 }}
@@ -126,14 +127,15 @@ export default function Experience({ isDarkMode }) {
                     >
                       <div className="w-1.5 h-1.5 bg-[#77BEF0] rounded-full mt-2 flex-shrink-0"></div>
                       <span className="text-justify">{responsibility}</span>
-                    </motion.li>
+                    </m.li>
                   ))}
-                </motion.ul>
+                </m.ul>
               </div>
-            </motion.div>
-          </motion.div>
+            </m.div>
+          </m.div>
         ))}
-      </motion.div>
-    </motion.div>
+      </m.div>
+    </m.div>
   );
 }
+

@@ -1,14 +1,28 @@
 "use client";
 import { useEffect, useState } from "react";
-import About from "./components/About";
-import Contact from "./components/Contact";
-import Footer from "./components/Footer";
+import dynamic from "next/dynamic";
 import Header from "./components/Header";
 import Navbar from "./components/Navbar";
-import Services from "./components/Services";
-import Work from "./components/Work";
-import Experience from "./components/Experience";
+import MotionProvider from "./components/MotionProvider";
 import { Toaster } from "react-hot-toast";
+
+// Dynamic imports untuk komponen below the fold
+const About = dynamic(() => import("./components/About"), {
+  loading: () => <div className="min-h-screen" />,
+});
+const Experience = dynamic(() => import("./components/Experience"), {
+  loading: () => <div className="min-h-screen" />,
+});
+const Work = dynamic(() => import("./components/Work"), {
+  loading: () => <div className="min-h-screen" />,
+});
+const Services = dynamic(() => import("./components/Services"), {
+  loading: () => <div className="min-h-screen" />,
+});
+const Contact = dynamic(() => import("./components/Contact"), {
+  loading: () => <div className="min-h-screen" />,
+});
+const Footer = dynamic(() => import("./components/Footer"));
 
 export default function Home() {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -36,7 +50,7 @@ export default function Home() {
   }, [isDarkMode]);
 
   return (
-    <>
+    <MotionProvider>
       <Navbar isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} />
       <main>
         <Header isDarkMode={isDarkMode} />
@@ -74,6 +88,6 @@ export default function Home() {
           },
         }}
       />
-    </>
+    </MotionProvider>
   );
 }

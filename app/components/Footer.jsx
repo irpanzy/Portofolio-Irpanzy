@@ -9,10 +9,11 @@ export default function Footer({ isDarkMode }) {
         <Image
           src={isDarkMode ? assets.logo_dark : assets.logo}
           alt="logo"
-          className="w-36 mx-auto mb-2"
+          className="mx-auto mb-2"
           width={144}
           height={48}
           loading="lazy"
+          style={{ width: 'auto', height: '48px' }}
         />
         <div className="w-max flex items-center gap-2 mx-auto">
           <a
@@ -22,10 +23,11 @@ export default function Footer({ isDarkMode }) {
             <Image
               src={isDarkMode ? assets.mail_icon_dark : assets.mail_icon}
               alt="email"
-              className="w-6"
+              className=""
               width={24}
               height={24}
               loading="lazy"
+              style={{ width: '24px', height: '24px' }}
             />
             irfanmuria04@gmail.com
           </a>
@@ -46,10 +48,11 @@ export default function Footer({ isDarkMode }) {
                     : assets.github_logo_dark
                 }
                 alt="github"
-                className="w-10"
+                className=""
                 width={40}
                 height={40}
                 loading="lazy"
+                style={{ width: '40px', height: '40px' }}
               />
             </a>
           </li>
@@ -62,10 +65,11 @@ export default function Footer({ isDarkMode }) {
                     : assets.linkedin_logo_blue
                 }
                 alt="linkedin"
-                className="w-10"
+                className=""
                 width={40}
                 height={40}
                 loading="lazy"
+                style={{ width: '40px', height: '40px' }}
               />
             </a>
           </li>
@@ -78,10 +82,11 @@ export default function Footer({ isDarkMode }) {
                     : assets.instagram_logo_dark
                 }
                 alt="instagram"
-                className="w-10"
+                className=""
                 width={40}
                 height={40}
                 loading="lazy"
+                style={{ width: '40px', height: '40px' }}
               />{" "}
             </a>
           </li>
@@ -90,3 +95,4 @@ export default function Footer({ isDarkMode }) {
     </div>
   );
 }
+

@@ -27,6 +27,13 @@ const config = {
   },
   darkMode: "selector",
   plugins: [],
+  // Optimasi untuk production
+  future: {
+    hoverOnlyWhenSupported: true,
+  },
+  corePlugins: {
+    preflight: true,
+  },
 };
 
 export default config;

@@ -6,6 +6,9 @@ const nextConfig = {
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
     minimumCacheTTL: 60,
+    dangerouslyAllowSVG: true,
+    contentDispositionType: 'attachment',
+    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   },
   
   // Optimasi production build
@@ -19,10 +22,13 @@ const nextConfig = {
   // Optimasi untuk performa
   reactStrictMode: true,
   
-  // Optimasi bundling
+  // Optimasi bundling dan code splitting
   experimental: {
-    optimizePackageImports: ['framer-motion', 'lucide-react'],
+    optimizePackageImports: ['framer-motion', 'lucide-react', 'react-hot-toast'],
   },
+  
+  // Optimasi untuk production
+  poweredByHeader: false,
 };
 
 export default nextConfig;
