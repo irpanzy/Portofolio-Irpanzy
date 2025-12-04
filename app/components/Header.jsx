@@ -22,6 +22,7 @@ export default function Header() {
           width={128}
           height={128}
           priority
+          fetchPriority="high"
           quality={85}
           style={{ width: '128px', height: '128px' }}
         />

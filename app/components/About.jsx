@@ -121,16 +121,15 @@ export default function About({ isDarkMode }) {
           >
             <m.div
               whileHover={{ scale: 1.05 }}
-              className="flex items-center justify-center w-12 sm:w-13 md:w-14 lg:w-15 aspect-square border border-gray-400 rounded-lg hover:-translate-y-1 duration-500 cursor-default hover:bg-lightHover dark:hover:bg-darkHover"
+              className="flex items-center justify-center w-12 sm:w-13 md:w-14 lg:w-15 aspect-square border border-gray-400 rounded-lg hover:-translate-y-1 duration-500 cursor-default hover:bg-lightHover dark:hover:bg-darkHover p-2"
             >
               <Image
                 src={tool.icon}
                 alt={tool.title}
-                className=""
-                width={32}
-                height={32}
+                className="w-full h-full object-contain"
+                width={48}
+                height={48}
                 loading="lazy"
-                style={{ width: '32px', height: '32px' }}
               />
             </m.div>
             <span

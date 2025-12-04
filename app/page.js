@@ -6,23 +6,30 @@ import Navbar from "./components/Navbar";
 import MotionProvider from "./components/MotionProvider";
 import { Toaster } from "react-hot-toast";
 
-// Dynamic imports untuk komponen below the fold
+// Dynamic imports untuk komponen below the fold dengan ssr: false untuk non-critical
 const About = dynamic(() => import("./components/About"), {
   loading: () => <div className="min-h-screen" />,
+  ssr: true,
 });
 const Experience = dynamic(() => import("./components/Experience"), {
   loading: () => <div className="min-h-screen" />,
+  ssr: false,
 });
 const Work = dynamic(() => import("./components/Work"), {
   loading: () => <div className="min-h-screen" />,
+  ssr: false,
 });
 const Services = dynamic(() => import("./components/Services"), {
   loading: () => <div className="min-h-screen" />,
+  ssr: false,
 });
 const Contact = dynamic(() => import("./components/Contact"), {
   loading: () => <div className="min-h-screen" />,
+  ssr: false,
 });
-const Footer = dynamic(() => import("./components/Footer"));
+const Footer = dynamic(() => import("./components/Footer"), {
+  ssr: false,
+});
 
 export default function Home() {
   const [isDarkMode, setIsDarkMode] = useState(false);

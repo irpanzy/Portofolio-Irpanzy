@@ -29,6 +29,21 @@ const nextConfig = {
   
   // Optimasi untuk production
   poweredByHeader: false,
+  
+  // Headers untuk DNS prefetch
+  async headers() {
+    return [
+      {
+        source: '/:path*',
+        headers: [
+          {
+            key: 'X-DNS-Prefetch-Control',
+            value: 'on'
+          },
+        ],
+      },
+    ]
+  },
 };
 
 export default nextConfig;

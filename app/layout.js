@@ -6,6 +6,8 @@ const outfit = Outfit({
   weight: ["400", "500", "600", "700"],
   display: 'swap',
   preload: true,
+  adjustFontFallback: true,
+  fallback: ['system-ui', 'arial'],
 });
 
 const ovo = Ovo({
@@ -13,6 +15,8 @@ const ovo = Ovo({
   weight: ["400"],
   display: 'swap',
   preload: true,
+  adjustFontFallback: true,
+  fallback: ['Georgia', 'serif'],
 });
 
 export const metadata = {
@@ -38,7 +42,9 @@ export default function RootLayout({ children }) {
         <meta name="robots" content="index, follow" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         
-        {/* Preconnect untuk CDN eksternal jika ada */}
+        {/* DNS Prefetch & Preconnect untuk fonts */}
+        <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+        <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
 
