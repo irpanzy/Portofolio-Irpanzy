@@ -45,6 +45,9 @@ export default function About({ isDarkMode }) {
               src={assets.user_image}
               alt="user"
               className="w-full rounded-3xl"
+              width={335}
+              height={335}
+              quality={85}
             />
           </motion.div>
         </div>
@@ -79,6 +82,9 @@ export default function About({ isDarkMode }) {
                   src={isDarkMode ? iconDark : icon}
                   alt={title}
                   className="w-7 mt-3"
+                  width={28}
+                  height={28}
+                  loading="lazy"
                 />
                 <h3 className="my-4 font-semibold text-gray-700 dark:text-white">
                   {title}
@@ -118,6 +124,9 @@ export default function About({ isDarkMode }) {
                 src={tool.icon}
                 alt={tool.title}
                 className="w-6 sm:w-7 md:w-8 lg:9"
+                width={32}
+                height={32}
+                loading="lazy"
               />
             </motion.li>
             <span

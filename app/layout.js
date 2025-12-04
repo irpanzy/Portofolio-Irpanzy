@@ -4,11 +4,15 @@ import "./globals.css";
 const outfit = Outfit({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
+  display: 'swap',
+  preload: true,
 });
 
 const ovo = Ovo({
   subsets: ["latin"],
   weight: ["400"],
+  display: 'swap',
+  preload: true,
 });
 
 export const metadata = {
@@ -30,6 +34,10 @@ export default function RootLayout({ children }) {
         />
         <meta name="robots" content="index, follow" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        
+        {/* Preconnect untuk CDN eksternal jika ada */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
 
         <link rel="icon" href="/Logo.png" type="image/png" />
 

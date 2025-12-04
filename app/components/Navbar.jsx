@@ -32,7 +32,13 @@ export default function Navbar({ isDarkMode, setIsDarkMode }) {
     <>
       {/* Background Header Color */}
       <div className="fixed top-0 right-0 w-11/12 -z-10 translate-y-[-80%] dark:hidden">
-        <Image src={assets.header_bg_color} className="w-full" alt="header" />
+        <Image 
+          src={assets.header_bg_color} 
+          className="w-full" 
+          alt="header background" 
+          priority 
+          quality={75}
+        />
       </div>
 
       {/* Navbar */}
@@ -56,6 +62,9 @@ export default function Navbar({ isDarkMode, setIsDarkMode }) {
             src={isDarkMode ? assets.logo_dark : assets.logo}
             alt="logo"
             className="w-28 cursor-pointer xl:mr-[60px]"
+            width={112}
+            height={40}
+            priority
           />
         </motion.a>
 

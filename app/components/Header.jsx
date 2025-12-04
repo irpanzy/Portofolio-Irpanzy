@@ -18,7 +18,11 @@ export default function Header() {
         <Image
           src={assets.profile_img}
           className="rounded-full w-32"
-          alt="header"
+          alt="Irfan Muria Profile"
+          width={128}
+          height={128}
+          priority
+          quality={85}
         />
       </motion.div>
       <motion.h3

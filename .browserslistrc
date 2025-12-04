@@ -1,0 +1,10 @@
+# Modern browsers yang support ES6+ tanpa transpilasi berlebihan
+# Ini mengurangi ukuran bundle JavaScript
+
+>0.2%
+not dead
+not op_mini all
+chrome >= 90
+firefox >= 88
+safari >= 14
+edge >= 90

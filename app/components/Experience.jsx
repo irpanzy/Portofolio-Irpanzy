@@ -79,6 +79,7 @@ export default function Experience({ isDarkMode }) {
                           width={48}
                           height={48}
                           className="w-full h-full object-contain"
+                          loading="lazy"
                         />
                       </div>
                     </motion.div>

@@ -10,6 +10,9 @@ export default function Footer({ isDarkMode }) {
           src={isDarkMode ? assets.logo_dark : assets.logo}
           alt="logo"
           className="w-36 mx-auto mb-2"
+          width={144}
+          height={48}
+          loading="lazy"
         />
         <div className="w-max flex items-center gap-2 mx-auto">
           <a
@@ -20,6 +23,9 @@ export default function Footer({ isDarkMode }) {
               src={isDarkMode ? assets.mail_icon_dark : assets.mail_icon}
               alt="email"
               className="w-6"
+              width={24}
+              height={24}
+              loading="lazy"
             />
             irfanmuria04@gmail.com
           </a>
@@ -41,6 +47,9 @@ export default function Footer({ isDarkMode }) {
                 }
                 alt="github"
                 className="w-10"
+                width={40}
+                height={40}
+                loading="lazy"
               />
             </a>
           </li>
@@ -54,6 +63,9 @@ export default function Footer({ isDarkMode }) {
                 }
                 alt="linkedin"
                 className="w-10"
+                width={40}
+                height={40}
+                loading="lazy"
               />
             </a>
           </li>
@@ -67,6 +79,9 @@ export default function Footer({ isDarkMode }) {
                 }
                 alt="instagram"
                 className="w-10"
+                width={40}
+                height={40}
+                loading="lazy"
               />{" "}
             </a>
           </li>
