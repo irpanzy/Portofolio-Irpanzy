@@ -55,13 +55,13 @@ export default function Navbar({ isDarkMode, setIsDarkMode }) {
           <Image
             src={isDarkMode ? assets.logo_dark : assets.logo}
             alt="logo"
-            className="w-28 cursor-pointer lg:mr-[60px]"
+            className="w-28 cursor-pointer xl:mr-[60px]"
           />
         </motion.a>
 
         {/* Desktop Menu */}
         <ul
-          className={`hidden lg:flex items-center gap-6 lg:gap-8 rounded-full px-10 py-3 ${
+          className={`hidden xl:flex items-center gap-6 xl:gap-8 rounded-full px-10 py-3 ${
             isScroll
               ? ""
               : "bg-white shadow-sm bg-opacity-50 dark:border dark:border-white/50 dark:bg-transparent"
@@ -106,7 +106,7 @@ export default function Navbar({ isDarkMode, setIsDarkMode }) {
             whileTap={{ scale: 0.95 }}
             transition={{ type: "spring", stiffness: 300 }}
             href="#contact"
-            className="hidden lg:flex items-center gap-3 px-4 py-2 border border-gray-500 rounded-full ml-4 font-ovo transition-colors duration-300"
+            className="hidden xl:flex items-center gap-3 px-4 py-2 border border-gray-500 rounded-full ml-4 font-ovo transition-colors duration-300"
           >
             Say Hello
             <Signature color={isDarkMode ? "white" : "black"} className="w-4" />
@@ -114,7 +114,7 @@ export default function Navbar({ isDarkMode, setIsDarkMode }) {
 
           {/* Mobile Menu Button */}
           <motion.button
-            className="block lg:hidden ml-3"
+            className="block xl:hidden ml-3"
             onClick={openSideMenu}
             whileTap={{ scale: 0.9 }}
           >
@@ -136,7 +136,7 @@ export default function Navbar({ isDarkMode, setIsDarkMode }) {
               animate={{ opacity: 0.5 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.3 }}
-              className="fixed inset-0 bg-black z-40 lg:hidden"
+              className="fixed inset-0 bg-black z-40 xl:hidden"
               onClick={closeSideMenu}
             />
             {/* Mobile Menu */}
@@ -145,7 +145,7 @@ export default function Navbar({ isDarkMode, setIsDarkMode }) {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ duration: 0.4 }}
-              className="lg:hidden flex flex-col gap-4 py-20 px-10 fixed right-0 top-0 bottom-0 w-56 sm:w-64 md:w-72 z-50 h-screen bg-rose-50 dark:bg-darkHover dark:text-white shadow-lg"
+              className="xl:hidden flex flex-col gap-4 py-20 px-10 fixed right-0 top-0 bottom-0 w-56 sm:w-64 md:w-72 z-50 h-screen bg-rose-50 dark:bg-darkHover dark:text-white shadow-lg"
             >
               {/* Close Button */}
               <motion.div
