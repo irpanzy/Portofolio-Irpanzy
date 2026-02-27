@@ -57,27 +57,21 @@ export default function About({ isDarkMode }) {
           whileInView={{ opacity: 1 }}
           transition={{ duration: 0.6, delay: 0.8 }}
           className="flex-1"
-          style={{ willChange: 'opacity' }}
+          style={{ willChange: "opacity" }}
         >
           <p className="mb-10 max-w-3xl font-ovo text-justify">
-            7th Semester Student of Software Engineering Study Program at Telkom
-            University Purwokerto with a focus on Fullstack Web Development.
-            Experienced in building web and mobile applications, both frontend
-            and backend. Has participated in the MSIB Kampus Merdeka program and
-            worked on a ticket booking project called TiketGo. Familiar with
-            using React.js, Next.js, Express.js, Flutter, Laravel as well as
-            PostgreSQL and Git in project development.
+            8th Semester Student of Software Engineering Study Program at Telkom University Purwokerto with a focus on Fullstack Web Development. Experienced in building web and mobile applications, both frontend and backend. Participated in MSIB Kampus Merdeka Batch 7 and was selected for Magang Berdampak Program Batch 1, where I contributed to developing a vehicle tracker system for real-time monitoring and reporting. Also worked on a ticket booking project called TiketGo. Familiar with using React.js, Next.js, Express.js, Flutter, Laravel as well as PostgreSQL and Git in project development.
           </p>
           <m.ul
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 1 }}
-            className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6 max-w-3xl"
+            className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6"
           >
             {infoList.map(({ icon, iconDark, title, description }, index) => (
               <m.li
                 whileInView={{ scale: 1.05 }}
-                className="border-[0.5px] border-gray-400 p-4 sm:p-5 md:p-6 lg:p-7 rounded-xl hover:bg-lightHover hover:-translate-y-1 duration-500 hover:shadow-black dark:border-white dark:hover:shadow-white dark:hover:bg-darkHover/50 cursor-default text-sm sm:text-base md:text-[15px] lg:text-base max-w-full sm:max-w-sm md:max-w-md lg:max-w-lg"
+                className="border-[0.5px] border-gray-400 p-4 sm:p-5 md:p-6 lg:p-7 rounded-xl hover:bg-lightHover hover:-translate-y-1 duration-500 hover:shadow-black dark:border-white dark:hover:shadow-white dark:hover:bg-darkHover/50 cursor-default text-sm sm:text-base md:text-[15px] lg:text-base"
                 key={index}
               >
                 <Image
@@ -87,7 +81,7 @@ export default function About({ isDarkMode }) {
                   width={28}
                   height={28}
                   loading="lazy"
-                  style={{ width: '28px', height: 'auto' }}
+                  style={{ width: "28px", height: "auto" }}
                 />
                 <p className="my-4 font-semibold text-gray-700 dark:text-white">
                   {title}
@@ -112,16 +106,16 @@ export default function About({ isDarkMode }) {
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         transition={{ duration: 0.6, delay: 1.5 }}
-        className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-10 gap-7 sm:gap-8 md:gap-9 lg:gap-10"
+        className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-10 gap-4 sm:gap-6 md:gap-8 lg:gap-10"
       >
         {toolsData.map((tool, index) => (
           <m.li
             key={index}
-            className="flex flex-col items-center justify-center gap-1 md:gap-2"
+            className="flex flex-col items-center justify-center gap-2"
           >
             <m.div
               whileHover={{ scale: 1.05 }}
-              className="flex items-center justify-center w-12 sm:w-13 md:w-14 lg:w-15 aspect-square border border-gray-400 rounded-lg hover:-translate-y-1 duration-500 cursor-default hover:bg-lightHover dark:hover:bg-darkHover p-2"
+              className="flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 md:w-14 md:h-14 lg:w-16 lg:h-16 border border-gray-400 rounded-lg hover:-translate-y-1 duration-500 cursor-default hover:bg-lightHover dark:hover:bg-darkHover p-2"
             >
               <Image
                 src={tool.icon}
@@ -144,4 +138,3 @@ export default function About({ isDarkMode }) {
     </m.div>
   );
 }
-
