@@ -64,7 +64,8 @@ export default function Work({ isDarkMode }) {
                 quality={75}
               />
               <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition duration-300 z-0" />
-              <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-3 z-10">
+              {/* Overlay - Always visible on mobile, hover on desktop */}
+              <div className="absolute inset-0 bg-black/60 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-3 z-10">
                 {project.demoLink && (
                   <m.a
                     whileHover={{ scale: 1.1 }}
@@ -137,7 +138,7 @@ export default function Work({ isDarkMode }) {
                             width={16}
                             height={16}
                             className="object-contain flex-shrink-0"
-                            style={{ width: '16px', height: '16px' }}
+                            style={{ width: "16px", height: "16px" }}
                           />
                           <span className="text-gray-700 font-medium">
                             {tech.title}
@@ -175,4 +176,3 @@ export default function Work({ isDarkMode }) {
     </m.div>
   );
 }
-
