@@ -4,19 +4,19 @@ import "./globals.css";
 const outfit = Outfit({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
-  display: 'swap',
+  display: "swap",
   preload: true,
   adjustFontFallback: true,
-  fallback: ['system-ui', 'arial'],
+  fallback: ["system-ui", "arial"],
 });
 
 const ovo = Ovo({
   subsets: ["latin"],
   weight: ["400"],
-  display: 'swap',
+  display: "swap",
   preload: true,
   adjustFontFallback: true,
-  fallback: ['Georgia', 'serif'],
+  fallback: ["Georgia", "serif"],
 });
 
 export const metadata = {
@@ -27,13 +27,13 @@ export const metadata = {
     icon: "/Logo.png",
   },
   other: {
-    'fetchpriority': 'high',
+    fetchpriority: "high",
   },
 };
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className="scroll-smooth">
+    <html lang="en" className="scroll-smooth" suppressHydrationWarning>
       <head>
         <meta
           name="google-site-verification"
@@ -41,12 +41,16 @@ export default function RootLayout({ children }) {
         />
         <meta name="robots" content="index, follow" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        
+
         {/* DNS Prefetch & Preconnect untuk fonts */}
         <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
         <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
+        />
 
         <link rel="icon" href="/Logo.png" type="image/png" />
 
@@ -73,6 +77,7 @@ export default function RootLayout({ children }) {
 
       <body
         className={`${outfit.className} ${ovo.className} antialiased leading-8 overflow-x-hidden dark:bg-darkTheme dark:text-white`}
+        suppressHydrationWarning
       >
         {children}
       </body>

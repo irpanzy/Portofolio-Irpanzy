@@ -6,7 +6,6 @@ import Navbar from "./components/Navbar";
 import MotionProvider from "./components/MotionProvider";
 import { Toaster } from "react-hot-toast";
 
-// Dynamic imports untuk komponen below the fold dengan ssr: false untuk non-critical
 const About = dynamic(() => import("./components/About"), {
   loading: () => <div className="min-h-screen" />,
   ssr: true,
@@ -33,8 +32,10 @@ const Footer = dynamic(() => import("./components/Footer"), {
 
 export default function Home() {
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
     if (
       localStorage.theme === "dark" ||
       (!("theme" in localStorage) &&
@@ -55,6 +56,10 @@ export default function Home() {
       localStorage.theme = "";
     }
   }, [isDarkMode]);
+
+  if (!mounted) {
+    return null;
+  }
 
   return (
     <MotionProvider>
