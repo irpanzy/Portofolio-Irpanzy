@@ -167,7 +167,7 @@ export const experienceData = [
     company: "Widya Robotics",
     position: "Frontend Engineer",
     location: "Sleman, Yogyakarta, Indonesia",
-    period: "August 2025 - Present",
+    period: "August 2025 - December 2025",
     logo: assets.widyarobotics,
     responsibilities: [
       "Engineered UI components for vehicle management, reporting, and dashboard monitoring using React and TypeScript.",
