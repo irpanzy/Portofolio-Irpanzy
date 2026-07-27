@@ -1,5 +1,11 @@
-import { Outfit, Ovo } from "next/font/google";
+import { Outfit, Ovo, Geist } from "next/font/google";
+import type { ReactNode } from "react";
+import ReactQueryProvider from "./providers/ReactQueryProvider";
+import { Toaster } from "react-hot-toast";
 import "./globals.css";
+import { cn } from "@/lib/utils";
+
+const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
 
 const outfit = Outfit({
   subsets: ["latin"],
@@ -31,9 +37,13 @@ export const metadata = {
   },
 };
 
-export default function RootLayout({ children }) {
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en" className="scroll-smooth" suppressHydrationWarning>
+    <html
+      lang="en"
+      className={cn("scroll-smooth", "font-sans", geist.variable)}
+      suppressHydrationWarning
+    >
       <head>
         <meta
           name="google-site-verification"
@@ -76,10 +86,13 @@ export default function RootLayout({ children }) {
       </head>
 
       <body
-        className={`${outfit.className} ${ovo.className} antialiased leading-8 overflow-x-hidden dark:bg-darkTheme dark:text-white`}
+        className={`${outfit.className} ${ovo.className} overflow-x-hidden leading-8 antialiased dark:bg-darkTheme dark:text-white`}
         suppressHydrationWarning
       >
-        {children}
+        <ReactQueryProvider>
+          {children}
+          <Toaster position="top-right" />
+        </ReactQueryProvider>
       </body>
     </html>
   );

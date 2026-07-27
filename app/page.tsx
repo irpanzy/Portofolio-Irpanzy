@@ -65,7 +65,7 @@ export default function Home() {
     <MotionProvider>
       <Navbar isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} />
       <main>
-        <Header isDarkMode={isDarkMode} />
+        <Header />
         <About isDarkMode={isDarkMode} />
         <Experience isDarkMode={isDarkMode} />
         <Work isDarkMode={isDarkMode} />

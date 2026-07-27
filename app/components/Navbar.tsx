@@ -4,7 +4,12 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { AnimatePresence, m } from "framer-motion";
 
-export default function Navbar({ isDarkMode, setIsDarkMode }) {
+interface NavbarProps {
+  isDarkMode: boolean;
+  setIsDarkMode: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export default function Navbar({ isDarkMode, setIsDarkMode }: NavbarProps) {
   const [isScroll, setIsScroll] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -31,12 +36,12 @@ export default function Navbar({ isDarkMode, setIsDarkMode }) {
   return (
     <>
       {/* Background Header Color */}
-      <div className="fixed top-0 right-0 w-11/12 -z-10 translate-y-[-80%] dark:hidden">
-        <Image 
-          src={assets.header_bg_color} 
-          className="w-full" 
-          alt="header background" 
-          priority 
+      <div className="fixed right-0 top-0 -z-10 w-11/12 translate-y-[-80%] dark:hidden">
+        <Image
+          src={assets.header_bg_color}
+          className="w-full"
+          alt="header background"
+          priority
           quality={75}
         />
       </div>
@@ -46,9 +51,9 @@ export default function Navbar({ isDarkMode, setIsDarkMode }) {
         initial={{ y: -60, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5 }}
-        className={`w-full fixed px-5 lg:px-[8%] py-4 flex items-center justify-between z-50 ${
+        className={`fixed z-50 flex w-full items-center justify-between px-5 py-4 lg:px-[8%] ${
           isScroll
-            ? "bg-white bg-opacity-50 backdrop-blur-lg shadow-sm dark:bg-darkTheme dark:shadow-white/20"
+            ? "bg-white bg-opacity-50 shadow-sm backdrop-blur-lg dark:bg-darkTheme dark:shadow-white/20"
             : ""
         }`}
       >
@@ -65,16 +70,16 @@ export default function Navbar({ isDarkMode, setIsDarkMode }) {
             width={112}
             height={40}
             priority
-            style={{ width: 'auto', height: '40px' }}
+            style={{ width: "auto", height: "40px" }}
           />
         </m.a>
 
         {/* Desktop Menu */}
         <ul
-          className={`hidden xl:flex items-center gap-6 xl:gap-8 rounded-full px-10 py-3 ${
+          className={`hidden items-center gap-6 rounded-full px-10 py-3 xl:flex xl:gap-8 ${
             isScroll
               ? ""
-              : "bg-white shadow-sm bg-opacity-50 dark:border dark:border-white/50 dark:bg-transparent"
+              : "bg-white bg-opacity-50 shadow-sm dark:border dark:border-white/50 dark:bg-transparent"
           }`}
         >
           {navigationItems.map(({ id, label }) => (
@@ -101,7 +106,7 @@ export default function Navbar({ isDarkMode, setIsDarkMode }) {
             whileTap={{ rotate: 90 }}
             whileHover={{ scale: 1.1 }}
             transition={{ duration: 0.3 }}
-            onClick={() => setIsDarkMode((prev) => !prev)}
+            onClick={() => setIsDarkMode((prev: boolean) => !prev)}
           >
             <Image
               src={isDarkMode ? assets.sun_icon : assets.moon_icon}
@@ -116,7 +121,7 @@ export default function Navbar({ isDarkMode, setIsDarkMode }) {
             whileTap={{ scale: 0.95 }}
             transition={{ type: "spring", stiffness: 300 }}
             href="#contact"
-            className="hidden xl:flex items-center gap-3 px-4 py-2 border border-gray-500 rounded-full ml-4 font-ovo transition-colors duration-300"
+            className="ml-4 hidden items-center gap-3 rounded-full border border-gray-500 px-4 py-2 font-ovo transition-colors duration-300 xl:flex"
           >
             Say Hello
             <Signature color={isDarkMode ? "white" : "black"} className="w-4" />
@@ -124,7 +129,7 @@ export default function Navbar({ isDarkMode, setIsDarkMode }) {
 
           {/* Mobile Menu Button */}
           <m.button
-            className="block xl:hidden ml-3"
+            className="ml-3 block xl:hidden"
             onClick={openSideMenu}
             whileTap={{ scale: 0.9 }}
           >
@@ -146,7 +151,7 @@ export default function Navbar({ isDarkMode, setIsDarkMode }) {
               animate={{ opacity: 0.5 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.3 }}
-              className="fixed inset-0 bg-black z-40 xl:hidden"
+              className="fixed inset-0 z-40 bg-black xl:hidden"
               onClick={closeSideMenu}
             />
             {/* Mobile Menu */}
@@ -155,7 +160,7 @@ export default function Navbar({ isDarkMode, setIsDarkMode }) {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ duration: 0.4 }}
-              className="xl:hidden flex flex-col gap-4 py-20 px-10 fixed right-0 top-0 bottom-0 w-56 sm:w-64 md:w-72 z-50 h-screen bg-rose-50 dark:bg-darkHover dark:text-white shadow-lg"
+              className="fixed bottom-0 right-0 top-0 z-50 flex h-screen w-56 flex-col gap-4 bg-rose-50 px-10 py-20 shadow-lg sm:w-64 md:w-72 xl:hidden dark:bg-darkHover dark:text-white"
             >
               {/* Close Button */}
               <m.div
@@ -195,4 +200,3 @@ export default function Navbar({ isDarkMode, setIsDarkMode }) {
     </>
   );
 }
-

@@ -2,7 +2,11 @@ import { assets } from "@/assets/assets";
 import Image from "next/image";
 import React from "react";
 
-export default function Footer({ isDarkMode }) {
+interface FooterProps {
+  isDarkMode: boolean;
+}
+
+export default function Footer({ isDarkMode }: FooterProps) {
   return (
     <div>
       <div className="py-6">
@@ -13,9 +17,9 @@ export default function Footer({ isDarkMode }) {
           width={144}
           height={48}
           loading="lazy"
-          style={{ width: 'auto', height: '48px' }}
+          style={{ width: "auto", height: "48px" }}
         />
-        <div className="w-max flex items-center gap-2 mx-auto">
+        <div className="mx-auto flex w-max items-center gap-2">
           <a
             href="mailto:irfanmuria04@gmail.com"
             className="flex items-center gap-2"
@@ -27,18 +31,18 @@ export default function Footer({ isDarkMode }) {
               width={24}
               height={24}
               loading="lazy"
-              style={{ width: '24px', height: '24px' }}
+              style={{ width: "24px", height: "24px" }}
             />
             irfanmuria04@gmail.com
           </a>
         </div>
       </div>
 
-      <div className="text-center sm:flex items-center justify-between border-t border-gray-400 mx-[10%] py-6">
+      <div className="mx-[10%] items-center justify-between border-t border-gray-400 py-6 text-center sm:flex">
         <p>
           &copy; {new Date().getFullYear()} Irfan Muria. All rights reserved
         </p>
-        <ul className="flex items-center gap-5 justify-center mt-4 sm:mt-0">
+        <ul className="mt-4 flex items-center justify-center gap-5 sm:mt-0">
           <li>
             <a target="_blank" href="https://github.com/irpanzy">
               <Image
@@ -52,7 +56,7 @@ export default function Footer({ isDarkMode }) {
                 width={40}
                 height={40}
                 loading="lazy"
-                style={{ width: '40px', height: '40px' }}
+                style={{ width: "40px", height: "40px" }}
               />
             </a>
           </li>
@@ -69,7 +73,7 @@ export default function Footer({ isDarkMode }) {
                 width={40}
                 height={40}
                 loading="lazy"
-                style={{ width: '40px', height: '40px' }}
+                style={{ width: "40px", height: "40px" }}
               />
             </a>
           </li>
@@ -86,7 +90,7 @@ export default function Footer({ isDarkMode }) {
                 width={40}
                 height={40}
                 loading="lazy"
-                style={{ width: '40px', height: '40px' }}
+                style={{ width: "40px", height: "40px" }}
               />{" "}
             </a>
           </li>
@@ -95,4 +99,3 @@ export default function Footer({ isDarkMode }) {
     </div>
   );
 }
-
