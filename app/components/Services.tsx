@@ -1,7 +1,7 @@
 "use client";
 
 import { useServices } from "@/hooks/useApi";
-import Image from "next/image";
+import { DynamicIcon } from "@/lib/iconUtils";
 import React from "react";
 import { m } from "framer-motion";
 
@@ -74,14 +74,13 @@ export default function Services({ isDarkMode }: ServicesProps) {
               key={service._id}
               className="group cursor-default rounded-lg border border-gray-400 p-6 transition-all duration-500 hover:-translate-y-1 hover:bg-lightHover hover:shadow-black dark:border-white dark:hover:bg-darkHover/50 dark:hover:shadow-white"
             >
-              <Image
-                src={service.icon}
-                alt={service.title}
-                width={40}
-                height={40}
-                className="mb-4"
-                loading="lazy"
-              />
+              <div className="mb-4">
+                <DynamicIcon
+                  iconName={service.icon}
+                  className="h-10 w-10"
+                  size={40}
+                />
+              </div>
               <h3 className="my-4 font-ovo text-lg font-semibold text-gray-700 dark:text-white">
                 {service.title}
               </h3>

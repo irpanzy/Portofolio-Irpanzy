@@ -2,7 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Critical CSS - Above the fold optimization */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  overflow-x: hidden;
+}
+
 @layer base {
   :root {
     --background: oklch(1 0 0);
@@ -102,7 +113,6 @@
   }
 }
 
-/* Performance optimizations */
 @layer utilities {
   .will-change-transform {
     will-change: transform;

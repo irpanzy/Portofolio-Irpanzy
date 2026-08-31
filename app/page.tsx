@@ -4,11 +4,14 @@ import dynamic from "next/dynamic";
 import Header from "./components/Header";
 import Navbar from "./components/Navbar";
 import MotionProvider from "./components/MotionProvider";
-import { Toaster } from "react-hot-toast";
 
 const About = dynamic(() => import("./components/About"), {
   loading: () => <div className="min-h-screen" />,
   ssr: true,
+});
+const Education = dynamic(() => import("./components/Education"), {
+  loading: () => <div className="min-h-screen" />,
+  ssr: false,
 });
 const Experience = dynamic(() => import("./components/Experience"), {
   loading: () => <div className="min-h-screen" />,
@@ -18,7 +21,7 @@ const Work = dynamic(() => import("./components/Work"), {
   loading: () => <div className="min-h-screen" />,
   ssr: false,
 });
-const Services = dynamic(() => import("./components/Services"), {
+const Skills = dynamic(() => import("./components/Skills"), {
   loading: () => <div className="min-h-screen" />,
   ssr: false,
 });
@@ -36,30 +39,30 @@ export default function Home() {
 
   useEffect(() => {
     setMounted(true);
-    if (
-      localStorage.theme === "dark" ||
-      (!("theme" in localStorage) &&
-        window.matchMedia("(prefers-color-scheme: dark)").matches)
-    ) {
+    const savedTheme = localStorage.getItem("theme");
+    const prefersDark = window.matchMedia(
+      "(prefers-color-scheme: dark)"
+    ).matches;
+
+    if (savedTheme === "dark" || (!savedTheme && prefersDark)) {
       setIsDarkMode(true);
+      document.documentElement.classList.add("dark");
     } else {
       setIsDarkMode(false);
+      document.documentElement.classList.remove("dark");
     }
   }, []);
 
   useEffect(() => {
+    if (!mounted) return;
     if (isDarkMode) {
       document.documentElement.classList.add("dark");
-      localStorage.theme = "dark";
+      localStorage.setItem("theme", "dark");
     } else {
       document.documentElement.classList.remove("dark");
-      localStorage.theme = "";
+      localStorage.setItem("theme", "light");
     }
-  }, [isDarkMode]);
-
-  if (!mounted) {
-    return null;
-  }
+  }, [isDarkMode, mounted]);
 
   return (
     <MotionProvider>
@@ -67,39 +70,13 @@ export default function Home() {
       <main>
         <Header />
         <About isDarkMode={isDarkMode} />
+        <Education isDarkMode={isDarkMode} />
         <Experience isDarkMode={isDarkMode} />
         <Work isDarkMode={isDarkMode} />
-        <Services isDarkMode={isDarkMode} />
+        <Skills isDarkMode={isDarkMode} />
         <Contact isDarkMode={isDarkMode} />
       </main>
       <Footer isDarkMode={isDarkMode} />
-
-      <Toaster
-        position="top-center"
-        reverseOrder={false}
-        toastOptions={{
-          style: {
-            background: isDarkMode ? "#1f2937" : "#fff",
-            color: isDarkMode ? "#f9fafb" : "#111827",
-            border: isDarkMode ? "1px solid #374151" : "1px solid #e5e7eb",
-            borderRadius: "8px",
-            padding: "12px 16px",
-            fontFamily: "inherit",
-          },
-          success: {
-            iconTheme: {
-              primary: "#22c55e",
-              secondary: "#fff",
-            },
-          },
-          error: {
-            iconTheme: {
-              primary: "#ef4444",
-              secondary: "#fff",
-            },
-          },
-        }}
-      />
     </MotionProvider>
   );
 }

@@ -2,40 +2,61 @@
 
 import React, { useState } from "react";
 import { m } from "framer-motion";
+import { toast } from "@/hooks/use-toast";
 import { Send } from "lucide-react";
-import { useContactSubmit } from "@/hooks/useApi";
+import axios from "axios";
 
 interface ContactProps {
-  isDarkMode: boolean;
+  isDarkMode?: boolean;
 }
 
 export default function Contact({ isDarkMode }: ContactProps) {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    message: "",
-  });
+  const [result, setResult] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const accessKey = process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY;
 
-  const { mutate, isPending, isSuccess } = useContactSubmit();
+  const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setIsLoading(true);
+    setResult("");
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+    const target = event.currentTarget;
+    const formData = new FormData(target);
+    if (accessKey) {
+      formData.append("access_key", accessKey);
+    }
 
-    mutate(formData, {
-      onSuccess: () => {
-        // Reset form
-        setFormData({ name: "", email: "", message: "" });
-      },
-    });
-  };
+    try {
+      const response = await axios.post(
+        "https://api.web3forms.com/submit",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Accept: "application/json",
+          },
+        }
+      );
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    setFormData((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
+      if (response.data?.success) {
+        toast.success("Form submitted successfully!");
+        setResult("Form Submitted Successfully");
+        target.reset();
+      } else {
+        const errorMsg = response.data?.message || "Submission failed";
+        toast.error("Submission failed: " + errorMsg);
+        setResult(errorMsg);
+      }
+    } catch (err: any) {
+      const message =
+        err.response?.data?.message ||
+        err.message ||
+        "An error occurred. Please try again.";
+      toast.error(message);
+      setResult("An error occurred.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -44,9 +65,8 @@ export default function Contact({ isDarkMode }: ContactProps) {
       whileInView={{ opacity: 1 }}
       transition={{ duration: 1 }}
       id="contact"
-      className="w-full scroll-mt-20 bg-[url('/footer-bg-color.png')] bg-[length:90%_auto] bg-center bg-no-repeat px-[12%] py-6 dark:bg-none"
+      className="w-full scroll-mt-20 bg-[url('/footer-bg-color.png')] bg-[length:90%_auto] bg-center bg-no-repeat px-[12%] py-6 font-outfit dark:bg-none"
     >
-      {/* Judul */}
       <m.p
         initial={{ opacity: 0, y: -20 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -67,19 +87,18 @@ export default function Contact({ isDarkMode }: ContactProps) {
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         transition={{ duration: 0.5, delay: 0.7 }}
-        className="mx-auto mb-12 mt-5 max-w-2xl text-center font-ovo"
+        className="mx-auto mb-12 mt-5 max-w-2xl text-center font-ovo text-gray-600 dark:text-gray-300"
       >
         Have a project in mind or just want to say hi? Let&apos;s connect and
         bring your ideas to life. I&apos;m always open to new collaborations and
         opportunities.
       </m.p>
 
-      {/* Form */}
       <m.form
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         transition={{ duration: 0.5, delay: 0.9 }}
-        onSubmit={handleSubmit}
+        onSubmit={onSubmit}
         className="mx-auto max-w-2xl"
       >
         <div className="mb-8 mt-10 grid grid-cols-auto gap-6">
@@ -91,9 +110,7 @@ export default function Contact({ isDarkMode }: ContactProps) {
             placeholder="Enter your name"
             required
             name="name"
-            value={formData.name}
-            onChange={handleChange}
-            disabled={isPending}
+            disabled={isLoading}
             className="flex-1 rounded-md border-[0.5px] border-gray-400 bg-white p-3 outline-none dark:border-white/90 dark:bg-darkHover/30"
           />
           <m.input
@@ -104,9 +121,7 @@ export default function Contact({ isDarkMode }: ContactProps) {
             placeholder="Enter your email"
             required
             name="email"
-            value={formData.email}
-            onChange={handleChange}
-            disabled={isPending}
+            disabled={isLoading}
             className="flex-1 rounded-md border-[0.5px] border-gray-400 bg-white p-3 outline-none dark:border-white/90 dark:bg-darkHover/30"
           />
         </div>
@@ -119,9 +134,7 @@ export default function Contact({ isDarkMode }: ContactProps) {
           name="message"
           placeholder="Enter your message"
           required
-          value={formData.message}
-          onChange={handleChange}
-          disabled={isPending}
+          disabled={isLoading}
           className="mb-6 w-full rounded-md border-[0.5px] border-gray-400 bg-white p-4 outline-none dark:border-white/90 dark:bg-darkHover/30"
         ></m.textarea>
 
@@ -129,18 +142,18 @@ export default function Contact({ isDarkMode }: ContactProps) {
           initial={{ y: 30, opacity: 0 }}
           whileInView={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.5 }}
-          whileHover={{ scale: isPending ? 1 : 1.05 }}
-          whileTap={{ scale: isPending ? 1 : 0.95 }}
+          whileHover={{ scale: isLoading ? 1 : 1.05 }}
+          whileTap={{ scale: isLoading ? 1 : 0.95 }}
           type="submit"
-          disabled={isPending}
+          disabled={isLoading}
           className={`group mx-auto flex items-center gap-2 rounded-full border-[0.5px] px-10 py-3 transition duration-300 ease-in-out ${
-            isPending
+            isLoading
               ? "cursor-not-allowed bg-gray-400 text-white"
               : "border-gray-700 hover:bg-lightHover hover:shadow-lg dark:border-gray-700 dark:bg-transparent dark:hover:bg-darkHover"
           }`}
         >
-          {isPending ? "Sending..." : isSuccess ? "Sent!" : "Submit Now"}
-          {!isPending && (
+          {isLoading ? "Sending..." : "Submit Now"}
+          {!isLoading && (
             <m.div
               initial={false}
               whileHover={{ rotate: 360 }}

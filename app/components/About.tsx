@@ -1,10 +1,9 @@
 "use client";
 
-import { assets } from "@/assets/assets";
-import { useAbout, useTechStack } from "@/hooks/useApi";
-import Image from "next/image";
+import { useAbout } from "@/hooks/useApi";
 import React from "react";
 import { m } from "framer-motion";
+import { Code2, Server, Cloud } from "lucide-react";
 
 interface AboutProps {
   isDarkMode: boolean;
@@ -12,46 +11,11 @@ interface AboutProps {
 
 export default function About({ isDarkMode }: AboutProps) {
   const { data: about, isLoading: isLoadingAbout } = useAbout();
-  const { data: techStack, isLoading: isLoadingTechStack } = useTechStack();
-
-  // Fallback info list if API data not available
-  const defaultInfoList = [
-    {
-      icon: assets.edu_icon,
-      iconDark: assets.edu_icon_dark,
-      title: "Education",
-      description:
-        "Undergraduate Student of Software Engineering, Telkom University Purwokerto",
-    },
-    {
-      icon: assets.code_icon,
-      iconDark: assets.code_icon_dark,
-      title: "Languages",
-      description: "JavaScript, TypeScript, PHP, Dart",
-    },
-    {
-      icon: assets.project_icon,
-      iconDark: assets.project_icon_dark,
-      title: "Projects",
-      description: "Built more than 5 projects",
-    },
-  ];
-
-  // Use API data if available, otherwise use fallback
-  const infoList =
-    about?.infoList && about.infoList.length > 0
-      ? about.infoList.map((item) => ({
-          icon: item.icon,
-          iconDark: item.iconDark,
-          title: item.title,
-          description: item.description,
-        }))
-      : defaultInfoList;
 
   return (
     <m.div
       id="about"
-      className="w-full scroll-mt-20 px-[12%] py-6"
+      className="w-full scroll-mt-20 px-4 py-8 md:px-12 lg:px-[12%]"
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       transition={{ duration: 1 }}
@@ -72,147 +36,131 @@ export default function About({ isDarkMode }: AboutProps) {
       >
         About Me
       </m.h2>
+
+      {/* Bio / Description Card */}
       <m.div
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        transition={{ duration: 0.8 }}
-        className="my-10 flex w-full flex-col items-center gap-10 md:flex-row"
-      >
-        <div className="flex-2">
-          <m.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6 }}
-            className="w-auto md:w-[250px] lg:w-[335px]"
-          >
-            <Image
-              src={about?.profileImage || assets.user_image}
-              alt="Profile"
-              className="rounded-3xl"
-              width={335}
-              height={335}
-              quality={85}
-              sizes="(max-width: 768px) 100vw, (max-width: 1024px) 250px, 335px"
-            />
-          </m.div>
-        </div>
-        <m.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.8 }}
-          className="flex-1"
-          style={{ willChange: "opacity" }}
-        >
-          {isLoadingAbout ? (
-            <div className="mb-10 max-w-3xl animate-pulse">
-              <div className="mb-2 h-4 rounded bg-gray-300 dark:bg-gray-700"></div>
-              <div className="mb-2 h-4 rounded bg-gray-300 dark:bg-gray-700"></div>
-              <div className="h-4 w-3/4 rounded bg-gray-300 dark:bg-gray-700"></div>
-            </div>
-          ) : (
-            <p className="mb-10 max-w-3xl text-justify font-ovo">
-              {about?.bio ||
-                "8th Semester Student of Software Engineering Study Program at Telkom University Purwokerto with a focus on Fullstack Web Development. Experienced in building web and mobile applications, both frontend and backend."}
-            </p>
-          )}
-
-          <m.ul
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 1 }}
-            className="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3"
-          >
-            {infoList.map(({ icon, iconDark, title, description }, index) => {
-              // Check if icon is a string (emoji or URL) or StaticImageData
-              const currentIcon = isDarkMode ? iconDark : icon;
-              const isEmoji =
-                typeof currentIcon === "string" && currentIcon.length <= 4;
-
-              return (
-                <m.li
-                  whileInView={{ scale: 1.05 }}
-                  className="cursor-default rounded-xl border-[0.5px] border-gray-400 p-4 text-sm duration-500 hover:-translate-y-1 hover:bg-lightHover hover:shadow-black sm:p-5 sm:text-base md:p-6 md:text-[15px] lg:p-7 lg:text-base dark:border-white dark:hover:bg-darkHover/50 dark:hover:shadow-white"
-                  key={index}
-                >
-                  {isEmoji ? (
-                    <span className="mt-3 text-3xl">{currentIcon}</span>
-                  ) : (
-                    <Image
-                      src={currentIcon}
-                      alt={title}
-                      className="mt-3"
-                      width={28}
-                      height={28}
-                      loading="lazy"
-                      style={{ width: "28px", height: "auto" }}
-                    />
-                  )}
-                  <p className="my-4 font-semibold text-gray-700 dark:text-white">
-                    {title}
-                  </p>
-                  <p className="text-sm text-gray-600 dark:text-white/80">
-                    {description}
-                  </p>
-                </m.li>
-              );
-            })}
-          </m.ul>
-        </m.div>
-      </m.div>
-
-      <m.h3
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: 25 }}
         whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 1.3 }}
-        className="my-6 ml-2 font-ovo"
+        transition={{ duration: 0.8, delay: 0.6 }}
+        className="mx-auto my-10 max-w-4xl"
       >
-        Tech Stack
-      </m.h3>
+        {isLoadingAbout ? (
+          <div className="rounded-3xl border border-gray-200 bg-white/60 p-8 backdrop-blur-sm dark:border-gray-800 dark:bg-gray-900/40">
+            <div className="animate-pulse space-y-4">
+              <div className="flex items-center gap-2">
+                <div className="h-3 w-3 rounded-full bg-gray-300 dark:bg-gray-700" />
+                <div className="h-3 w-3 rounded-full bg-gray-300 dark:bg-gray-700" />
+                <div className="h-3 w-3 rounded-full bg-gray-300 dark:bg-gray-700" />
+                <div className="ml-2 h-4 w-32 rounded bg-gray-300 dark:bg-gray-700" />
+              </div>
+              <div className="h-5 w-48 rounded-full bg-gray-300 dark:bg-gray-700" />
+              <div className="space-y-2 pt-2">
+                <div className="h-4 rounded bg-gray-300 dark:bg-gray-700" />
+                <div className="h-4 rounded bg-gray-300 dark:bg-gray-700" />
+                <div className="h-4 w-5/6 rounded bg-gray-300 dark:bg-gray-700" />
+              </div>
+            </div>
+          </div>
+        ) : (
+          <div className="group relative rounded-3xl bg-gradient-to-b from-[#77BEF0]/20 via-purple-500/10 to-transparent p-[1px] shadow-lg transition-all duration-300 hover:shadow-2xl hover:shadow-purple-500/10">
+            <div className="relative overflow-hidden rounded-[23px] border border-gray-200/80 bg-white/80 p-6 backdrop-blur-xl sm:p-8 md:p-10 dark:border-white/10 dark:bg-[#1a0033]/70">
+              {/* Ambient Glows */}
+              <div className="pointer-events-none absolute -right-20 -top-20 h-56 w-56 rounded-full bg-[#77BEF0]/10 blur-3xl" />
+              <div className="pointer-events-none absolute -bottom-20 -left-20 h-56 w-56 rounded-full bg-purple-500/10 blur-3xl" />
 
-      {isLoadingTechStack ? (
-        <div className="grid grid-cols-4 gap-4 sm:grid-cols-5 sm:gap-6 md:grid-cols-6 md:gap-8 lg:grid-cols-10 lg:gap-10">
-          {Array.from({ length: 10 }).map((_, i) => (
-            <div
-              key={i}
-              className="flex h-16 w-16 animate-pulse items-center justify-center rounded-lg bg-gray-300 dark:bg-gray-700"
-            />
-          ))}
-        </div>
-      ) : (
-        <m.ul
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 1.5 }}
-          className="grid grid-cols-4 gap-4 sm:grid-cols-5 sm:gap-6 md:grid-cols-6 md:gap-8 lg:grid-cols-10 lg:gap-10"
-        >
-          {techStack?.map((tool, index) => (
-            <m.li
-              key={tool._id || index}
-              className="flex flex-col items-center justify-center gap-2"
-            >
-              <m.div
-                whileHover={{ scale: 1.05 }}
-                className="flex h-12 w-12 cursor-default items-center justify-center rounded-lg border border-gray-400 p-2 duration-500 hover:-translate-y-1 hover:bg-lightHover sm:h-14 sm:w-14 md:h-14 md:w-14 lg:h-16 lg:w-16 dark:hover:bg-darkHover"
-              >
-                <Image
-                  src={tool.icon}
-                  alt={tool.title}
-                  className="h-full w-full object-contain"
-                  width={48}
-                  height={48}
-                  loading="lazy"
-                />
-              </m.div>
-              <span
-                className="max-w-[100px] truncate text-center text-xs md:text-sm"
-                title={tool.title}
-              >
-                {tool.title}
-              </span>
-            </m.li>
-          ))}
-        </m.ul>
-      )}
+              {/* Card Top Bar */}
+              <div className="mb-6 flex flex-wrap items-center justify-between gap-3 border-b border-gray-200/60 pb-4 dark:border-white/10">
+                <div className="flex items-center gap-2">
+                  <div className="flex gap-1.5">
+                    <span className="h-3 w-3 rounded-full bg-rose-400/80" />
+                    <span className="h-3 w-3 rounded-full bg-amber-400/80" />
+                    <span className="h-3 w-3 rounded-full bg-emerald-400/80" />
+                  </div>
+                  <span className="ml-2 font-outfit text-xs font-medium text-gray-500 dark:text-gray-400">
+                    profile ~ bio.md
+                  </span>
+                </div>
+
+                <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/20 bg-emerald-50/80 px-3 py-1 font-outfit text-xs font-medium text-emerald-600 dark:bg-emerald-950/40 dark:text-emerald-400">
+                  <span className="relative flex h-2 w-2">
+                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+                    <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
+                  </span>
+                  Open to Opportunities
+                </div>
+              </div>
+
+              {/* Headline / Summary */}
+              {about?.summary && (
+                <div className="mb-4">
+                  <span className="inline-block rounded-lg bg-[#77BEF0]/15 px-3.5 py-1 font-outfit text-xs font-semibold uppercase tracking-wider text-[#388dc8] sm:text-sm dark:bg-[#77BEF0]/20 dark:text-[#90cdf4]">
+                    {about.summary}
+                  </span>
+                </div>
+              )}
+
+              {/* Bio Paragraphs */}
+              <div className="space-y-4 text-justify font-outfit text-base leading-relaxed text-gray-700 sm:text-lg sm:leading-loose dark:text-gray-200">
+                {(
+                  about?.bio ||
+                  "I'm a passionate fullstack developer with experience in building modern web and mobile applications. I love learning new technologies, crafting scalable architectures, and solving complex real-world problems through clean code."
+                )
+                  .split("\n\n")
+                  .map((paragraph, idx) => (
+                    <p key={idx} className="tracking-wide">
+                      {paragraph}
+                    </p>
+                  ))}
+              </div>
+
+              {/* Key Highlight Badges / Quick Stats */}
+              <div className="mt-8 grid grid-cols-1 gap-3 border-t border-gray-200/60 pt-6 sm:grid-cols-2 lg:grid-cols-3 dark:border-white/10">
+                <div className="flex items-center gap-3 rounded-xl border border-gray-200/60 bg-gray-50/70 p-3 transition-colors hover:border-[#77BEF0] dark:border-white/5 dark:bg-white/5">
+                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-blue-500/10 text-blue-500 dark:bg-blue-500/20 dark:text-blue-400">
+                    <Code2 className="h-4.5 w-4.5" />
+                  </div>
+                  <div className="min-w-0">
+                    <p className="font-outfit text-xs text-gray-500 dark:text-gray-400">
+                      Core Focus
+                    </p>
+                    <p className="truncate font-outfit text-xs font-semibold text-gray-800 dark:text-gray-200">
+                      Backend &amp; Full-Stack
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-3 rounded-xl border border-gray-200/60 bg-gray-50/70 p-3 transition-colors hover:border-purple-400 dark:border-white/5 dark:bg-white/5">
+                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-purple-500/10 text-purple-500 dark:bg-purple-500/20 dark:text-purple-400">
+                    <Server className="h-4.5 w-4.5" />
+                  </div>
+                  <div className="min-w-0">
+                    <p className="font-outfit text-xs text-gray-500 dark:text-gray-400">
+                      Architecture
+                    </p>
+                    <p className="truncate font-outfit text-xs font-semibold text-gray-800 dark:text-gray-200">
+                      Scalable RESTful APIs
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-3 rounded-xl border border-gray-200/60 bg-gray-50/70 p-3 transition-colors hover:border-emerald-400 sm:col-span-2 lg:col-span-1 dark:border-white/5 dark:bg-white/5">
+                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-emerald-500/10 text-emerald-500 dark:bg-emerald-500/20 dark:text-emerald-400">
+                    <Cloud className="h-4.5 w-4.5" />
+                  </div>
+                  <div className="min-w-0">
+                    <p className="font-outfit text-xs text-gray-500 dark:text-gray-400">
+                      Deployment
+                    </p>
+                    <p className="truncate font-outfit text-xs font-semibold text-gray-800 dark:text-gray-200">
+                      Docker &amp; Cloud (AWS)
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+      </m.div>
     </m.div>
   );
 }

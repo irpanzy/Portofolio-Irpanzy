@@ -20,6 +20,20 @@ export default function Experience({ isDarkMode }: ExperienceProps) {
     });
   };
 
+  const getPeriod = (exp: {
+    startDate: string;
+    endDate?: string;
+    current: boolean;
+  }) => {
+    const start = formatDate(exp.startDate);
+    const end = exp.current
+      ? "Present"
+      : exp.endDate
+        ? formatDate(exp.endDate)
+        : "Present";
+    return `${start} - ${end}`;
+  };
+
   return (
     <m.div
       initial={{ opacity: 0 }}
@@ -59,7 +73,7 @@ export default function Experience({ isDarkMode }: ExperienceProps) {
           {Array.from({ length: 3 }).map((_, i) => (
             <div
               key={i}
-              className="animate-pulse rounded-2xl bg-gray-200 p-8 dark:bg-gray-800"
+              className="animate-pulse rounded-lg bg-gray-200 p-8 dark:bg-gray-800"
             >
               <div className="mb-4 h-6 w-3/4 rounded bg-gray-300 dark:bg-gray-700"></div>
               <div className="mb-2 h-4 w-1/2 rounded bg-gray-300 dark:bg-gray-700"></div>
@@ -77,75 +91,91 @@ export default function Experience({ isDarkMode }: ExperienceProps) {
           {experiences?.map((exp, index) => (
             <m.div
               key={exp._id}
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.2 }}
-              className="group relative overflow-hidden rounded-2xl border border-gray-200 bg-white p-6 shadow-sm transition-all duration-300 hover:border-gray-300 hover:shadow-lg md:p-8 dark:border-gray-700 dark:bg-gray-800/50 dark:hover:border-gray-600"
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6, delay: 1 + index * 0.2 }}
+              className="relative border-l-2 border-gray-300 pb-12 pl-8 last:pb-0 dark:border-gray-600"
             >
-              {/* Company Logo */}
-              {exp.logo && (
-                <div className="mb-6 flex items-start justify-between">
-                  <div className="relative h-16 w-16 overflow-hidden rounded-lg bg-white p-2 shadow-md">
-                    <Image
-                      src={exp.logo}
-                      alt={exp.company}
-                      fill
-                      className="object-contain"
-                    />
+              <div className="absolute -left-2 top-0 h-4 w-4 rounded-full border-4 border-white bg-[#77BEF0] dark:border-darkTheme"></div>
+
+              <m.div
+                whileHover={{ scale: 1.02 }}
+                className="rounded-lg border border-gray-200 bg-white p-6 font-outfit shadow-md transition-all duration-300 hover:shadow-lg dark:border-gray-600 dark:bg-darkHover/30"
+              >
+                <div className="mb-4 flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
+                  <div className="flex items-start gap-4">
+                    {exp.logo && (
+                      <m.div
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.5, delay: 1.1 }}
+                        className="flex-shrink-0"
+                      >
+                        <div className="flex h-12 w-12 items-center justify-center rounded-lg border border-gray-200 bg-white p-2 shadow-sm md:h-14 md:w-14 dark:border-gray-600 dark:bg-gray-800">
+                          <Image
+                            src={exp.logo}
+                            alt={`${exp.company} logo`}
+                            width={48}
+                            height={48}
+                            className="object-contain"
+                            loading="lazy"
+                            style={{ width: "100%", height: "100%" }}
+                          />
+                        </div>
+                      </m.div>
+                    )}
+
+                    <div className="flex-grow">
+                      <h3 className="font-ovo text-xl font-semibold text-gray-800 dark:text-white">
+                        {exp.position}
+                      </h3>
+                      <div className="mt-1 flex items-center gap-2 font-medium text-[#77BEF0]">
+                        <Building2 className="h-4 w-4" />
+                        <span>{exp.company}</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="mt-2 flex flex-col gap-1 md:ml-4 md:mt-0 md:items-end">
+                    <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300">
+                      <Calendar className="h-4 w-4" />
+                      <span>{getPeriod(exp)}</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300">
+                      <MapPin className="h-4 w-4" />
+                      <span>{exp.location}</span>
+                    </div>
                   </div>
                 </div>
-              )}
 
-              {/* Company & Position */}
-              <div className="mb-4">
-                <h3 className="mb-2 font-ovo text-2xl font-bold text-gray-900 md:text-3xl dark:text-white">
-                  {exp.position}
-                </h3>
-                <div className="flex flex-wrap items-center gap-4 text-sm text-gray-600 md:text-base dark:text-gray-300">
-                  <div className="flex items-center gap-2">
-                    <Building2 className="h-5 w-5" />
-                    <span className="font-medium">{exp.company}</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <MapPin className="h-5 w-5" />
-                    <span>{exp.location}</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Calendar className="h-5 w-5" />
-                    <span>
-                      {formatDate(exp.startDate)} -{" "}
-                      {exp.current ? "Present" : formatDate(exp.endDate!)}
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Description */}
-              {exp.description && (
-                <p className="mb-4 text-gray-700 dark:text-gray-300">
-                  {exp.description}
-                </p>
-              )}
-
-              {/* Responsibilities */}
-              {exp.responsibilities && exp.responsibilities.length > 0 && (
-                <div className="space-y-2">
-                  <p className="font-semibold text-gray-900 dark:text-white">
-                    Key Responsibilities:
+                {exp.description && (
+                  <p className="mb-4 text-sm text-gray-700 dark:text-gray-300">
+                    {exp.description}
                   </p>
-                  <ul className="space-y-2 text-sm text-gray-700 md:text-base dark:text-gray-300">
-                    {exp.responsibilities.map((resp, idx) => (
-                      <li key={idx} className="flex gap-3">
-                        <span className="mt-1 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-blue-600"></span>
-                        <span>{resp}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
+                )}
 
-              {/* Decorative element */}
-              <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-gradient-to-br from-blue-100 to-purple-100 opacity-0 blur-3xl transition-opacity duration-300 group-hover:opacity-20 dark:from-blue-900/20 dark:to-purple-900/20"></div>
+                {exp.responsibilities && exp.responsibilities.length > 0 && (
+                  <div>
+                    <p className="mb-3 font-medium text-gray-700 dark:text-gray-200">
+                      Key Responsibilities:
+                    </p>
+                    <m.ul className="space-y-2 text-sm leading-relaxed text-gray-600 dark:text-gray-300">
+                      {exp.responsibilities.map((responsibility, idx) => (
+                        <m.li
+                          key={idx}
+                          initial={{ opacity: 0, x: -20 }}
+                          whileInView={{ opacity: 1, x: 0 }}
+                          transition={{ duration: 0.4, delay: 1.2 + idx * 0.1 }}
+                          className="flex items-start gap-3"
+                        >
+                          <div className="mt-2 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-[#77BEF0]"></div>
+                          <span className="text-justify">{responsibility}</span>
+                        </m.li>
+                      ))}
+                    </m.ul>
+                  </div>
+                )}
+              </m.div>
             </m.div>
           ))}
         </m.div>

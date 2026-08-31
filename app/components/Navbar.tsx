@@ -27,9 +27,10 @@ export default function Navbar({ isDarkMode, setIsDarkMode }: NavbarProps) {
   const navigationItems = [
     { id: "home", label: "Home" },
     { id: "about", label: "About Me" },
+    { id: "education", label: "Education" },
     { id: "experience", label: "Experience" },
     { id: "work", label: "Projects" },
-    { id: "services", label: "Services" },
+    { id: "skills", label: "Skills" },
     { id: "contact", label: "Contact" },
   ];
 

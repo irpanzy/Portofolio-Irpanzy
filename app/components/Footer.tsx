@@ -31,7 +31,7 @@ export default function Footer({ isDarkMode }: FooterProps) {
               width={24}
               height={24}
               loading="lazy"
-              style={{ width: "24px", height: "24px" }}
+              style={{ width: "25px", height: "20px" }}
             />
             irfanmuria04@gmail.com
           </a>
