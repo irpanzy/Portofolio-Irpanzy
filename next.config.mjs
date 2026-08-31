@@ -1,6 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Optimasi gambar
   images: {
     formats: ["image/avif", "image/webp"],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
@@ -13,23 +12,24 @@ const nextConfig = {
       {
         protocol: "https",
         hostname: "ik.imagekit.io",
-        pathname: "/1yelpitcv/**",
+        pathname: "/**",
       },
     ],
   },
 
-  // Optimasi production build
   compiler: {
     removeConsole: process.env.NODE_ENV === "production",
   },
 
-  // Kompresi
   compress: true,
 
-  // Optimasi untuk performa
   reactStrictMode: true,
 
-  // Optimasi bundling dan code splitting
+  onDemandEntries: {
+    maxInactiveAge: 25 * 1000,
+    pagesBufferLength: 2,
+  },
+
   experimental: {
     optimizePackageImports: [
       "framer-motion",
@@ -38,10 +38,8 @@ const nextConfig = {
     ],
   },
 
-  // Optimasi untuk production
   poweredByHeader: false,
 
-  // Headers untuk DNS prefetch
   async headers() {
     return [
       {
