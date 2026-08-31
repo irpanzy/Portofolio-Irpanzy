@@ -1,0 +1,762 @@
+"use client";
+
+import { useState } from "react";
+import {
+  useEducations,
+  useCreateEducation,
+  useUpdateEducation,
+  useDeleteEducation,
+  useReorderEducations,
+} from "@/hooks/useApi";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { Badge } from "@/components/ui/badge";
+import { Switch } from "@/components/ui/switch";
+import {
+  Plus,
+  Pencil,
+  Trash2,
+  Search,
+  ChevronDown,
+  ArrowUp,
+  ArrowDown,
+} from "lucide-react";
+import Image from "next/image";
+import ImageUpload from "@/components/ImageUpload";
+import { PageLoading } from "@/components/LoadingSpinner";
+import type { Education, EducationAttachment } from "@/types";
+
+const typeOptions = [
+  { value: "formal", label: "Formal" },
+  { value: "bootcamp", label: "Bootcamp" },
+  { value: "certification", label: "Certification" },
+  { value: "course", label: "Course" },
+];
+
+const typeBadgeColors: Record<string, string> = {
+  formal: "bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300",
+  bootcamp:
+    "bg-orange-100 text-orange-700 dark:bg-orange-900/40 dark:text-orange-300",
+  certification:
+    "bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-300",
+  course:
+    "bg-purple-100 text-purple-700 dark:bg-purple-900/40 dark:text-purple-300",
+};
+
+export default function EducationPage() {
+  const { data: educations, isLoading, error } = useEducations();
+  const createMutation = useCreateEducation();
+  const updateMutation = useUpdateEducation();
+  const deleteMutation = useDeleteEducation();
+  const reorderMutation = useReorderEducations();
+
+  const [searchQuery, setSearchQuery] = useState("");
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [editingEducation, setEditingEducation] = useState<Education | null>(
+    null
+  );
+  const [deletingEducation, setDeletingEducation] = useState<Education | null>(
+    null
+  );
+
+  const handleMove = async (index: number, direction: "up" | "down") => {
+    if (!filteredEducations) return;
+    const targetIndex = direction === "up" ? index - 1 : index + 1;
+    if (targetIndex < 0 || targetIndex >= filteredEducations.length) return;
+
+    const newItems = [...filteredEducations];
+    const temp = newItems[index];
+    newItems[index] = newItems[targetIndex];
+    newItems[targetIndex] = temp;
+
+    const orders = newItems.map((item, i) => ({
+      id: item._id,
+      order: i + 1,
+    }));
+
+    try {
+      await reorderMutation.mutateAsync(orders);
+    } catch (err) {
+      console.error("Education reorder failed:", err);
+    }
+  };
+
+  const [formData, setFormData] = useState({
+    institution: "",
+    degree: "",
+    location: "",
+    startDate: "",
+    endDate: "",
+    current: false,
+    description: "",
+    type: "formal" as Education["type"],
+    logo: "",
+    logoFileId: "",
+    attachments: [] as EducationAttachment[],
+    order: 0,
+  });
+
+  const [newAttachment, setNewAttachment] = useState({
+    title: "",
+    url: "",
+    fileId: "",
+  });
+
+  const getNextOrder = () => {
+    if (!educations || educations.length === 0) return 1;
+    return Math.max(...educations.map((e) => e.order || 0)) + 1;
+  };
+
+  const handleCreate = () => {
+    setEditingEducation(null);
+    setFormData({
+      institution: "",
+      degree: "",
+      location: "",
+      startDate: "",
+      endDate: "",
+      current: false,
+      description: "",
+      type: "formal",
+      logo: "",
+      logoFileId: "",
+      attachments: [],
+      order: getNextOrder(),
+    });
+    setNewAttachment({ title: "", url: "", fileId: "" });
+    setDialogOpen(true);
+  };
+
+  const handleEdit = (education: Education) => {
+    setEditingEducation(education);
+    setFormData({
+      institution: education.institution,
+      degree: education.degree,
+      location: education.location,
+      startDate: education.startDate.split("T")[0],
+      endDate: education.endDate ? education.endDate.split("T")[0] : "",
+      current: education.current,
+      description: education.description || "",
+      type: education.type,
+      logo: education.logo || "",
+      logoFileId: education.logoFileId || "",
+      attachments: education.attachments || [],
+      order: education.order,
+    });
+    setNewAttachment({ title: "", url: "", fileId: "" });
+    setDialogOpen(true);
+  };
+
+  const handleAddAttachment = () => {
+    if (!newAttachment.url.trim()) return;
+    setFormData((prev) => ({
+      ...prev,
+      attachments: [
+        ...prev.attachments,
+        {
+          title: newAttachment.title.trim() || "Certificate / Document",
+          url: newAttachment.url.trim(),
+          fileId: newAttachment.fileId || undefined,
+        },
+      ],
+    }));
+    setNewAttachment({ title: "", url: "", fileId: "" });
+  };
+
+  const handleRemoveAttachment = (index: number) => {
+    setFormData((prev) => ({
+      ...prev,
+      attachments: prev.attachments.filter((_, i) => i !== index),
+    }));
+  };
+
+  const handleDelete = (education: Education) => {
+    setDeletingEducation(education);
+    setDeleteDialogOpen(true);
+  };
+
+  const handleSave = async () => {
+    if (!formData.institution.trim() || !formData.degree.trim()) {
+      return;
+    }
+    if (!formData.startDate) {
+      return;
+    }
+
+    // If user uploaded an attachment but forgot to click "Attach Document", include it automatically
+    const finalAttachments = [...formData.attachments];
+    if (newAttachment.url.trim()) {
+      finalAttachments.push({
+        title: newAttachment.title.trim() || "Certificate / Document",
+        url: newAttachment.url.trim(),
+        fileId: newAttachment.fileId || undefined,
+      });
+    }
+
+    const payload = {
+      ...formData,
+      attachments: finalAttachments,
+    };
+
+    try {
+      if (editingEducation) {
+        await updateMutation.mutateAsync({
+          id: editingEducation._id,
+          data: payload,
+        });
+      } else {
+        await createMutation.mutateAsync(payload);
+      }
+      setNewAttachment({ title: "", url: "", fileId: "" });
+      setDialogOpen(false);
+    } catch (error) {
+      console.error("Failed to save education:", error);
+    }
+  };
+
+  const confirmDelete = async () => {
+    if (!deletingEducation) return;
+
+    try {
+      await deleteMutation.mutateAsync(deletingEducation._id);
+      setDeleteDialogOpen(false);
+    } catch (error) {
+      console.error("Failed to delete education:", error);
+    }
+  };
+
+  const filteredEducations = educations?.filter(
+    (edu) =>
+      edu.institution.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      edu.degree.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  if (isLoading) {
+    return <PageLoading text="Loading education data..." />;
+  }
+
+  if (error) {
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <Card className="w-full max-w-md">
+          <CardContent className="pt-6">
+            <p className="text-center text-red-600">
+              Error loading education data: {error.message}
+            </p>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
+  const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "short",
+    });
+  };
+
+  return (
+    <div className="p-6">
+      {/* Sticky Header & Search Toolbar */}
+      <div className="sticky top-0 z-20 -mx-6 -mt-6 mb-6 border-b border-gray-200/80 bg-gray-50/95 px-6 pb-4 pt-6 backdrop-blur-md dark:border-gray-800 dark:bg-gray-900/95">
+        <div className="mb-4 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <h1 className="text-2xl font-bold">Education</h1>
+            <p className="text-sm text-gray-600 dark:text-gray-400">
+              Manage your education history
+            </p>
+          </div>
+          <Button className="gap-2" onClick={handleCreate}>
+            <Plus className="h-4 w-4" />
+            Add Education
+          </Button>
+        </div>
+
+        <div className="relative">
+          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-500" />
+          <Input
+            placeholder="Search education..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="bg-white pl-10 dark:bg-gray-800"
+          />
+        </div>
+      </div>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>
+            All Education ({filteredEducations?.length || 0})
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="overflow-x-auto">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead className="w-[80px]">Order</TableHead>
+                  <TableHead className="w-[80px]">Logo</TableHead>
+                  <TableHead>Degree</TableHead>
+                  <TableHead>Institution</TableHead>
+                  <TableHead>Type</TableHead>
+                  <TableHead>Duration</TableHead>
+                  <TableHead>Location</TableHead>
+                  <TableHead className="w-[120px]">Actions</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {filteredEducations && filteredEducations.length > 0 ? (
+                  filteredEducations.map((edu, idx) => (
+                    <TableRow key={edu._id}>
+                      <TableCell>
+                        <div className="flex items-center gap-1">
+                          <span className="w-5 font-mono text-xs text-gray-500">
+                            {idx + 1}
+                          </span>
+                          <div className="flex flex-col gap-0.5">
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className="h-5 w-5"
+                              disabled={idx === 0 || reorderMutation.isPending}
+                              onClick={() => handleMove(idx, "up")}
+                              title="Move Up"
+                            >
+                              <ArrowUp className="h-3 w-3" />
+                            </Button>
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className="h-5 w-5"
+                              disabled={
+                                idx === filteredEducations.length - 1 ||
+                                reorderMutation.isPending
+                              }
+                              onClick={() => handleMove(idx, "down")}
+                              title="Move Down"
+                            >
+                              <ArrowDown className="h-3 w-3" />
+                            </Button>
+                          </div>
+                        </div>
+                      </TableCell>
+                      <TableCell>
+                        {edu.logo ? (
+                          <div className="relative h-12 w-12 overflow-hidden rounded-md">
+                            <Image
+                              src={edu.logo}
+                              alt={edu.institution}
+                              fill
+                              className="object-contain p-1"
+                            />
+                          </div>
+                        ) : (
+                          <div className="flex h-12 w-12 items-center justify-center rounded-md bg-gray-200 text-xs font-bold text-gray-600">
+                            {edu.institution.substring(0, 2).toUpperCase()}
+                          </div>
+                        )}
+                      </TableCell>
+                      <TableCell className="font-medium">
+                        <div className="flex items-center gap-1.5">
+                          <span>{edu.degree}</span>
+                          {edu.attachments && edu.attachments.length > 0 && (
+                            <Badge
+                              variant="secondary"
+                              className="h-5 px-1.5 py-0 text-[10px] font-normal"
+                            >
+                              📎 {edu.attachments.length} files
+                            </Badge>
+                          )}
+                        </div>
+                      </TableCell>
+                      <TableCell>{edu.institution}</TableCell>
+                      <TableCell>
+                        <Badge
+                          className={`${typeBadgeColors[edu.type] || ""} border-0`}
+                        >
+                          {typeOptions.find((t) => t.value === edu.type)
+                            ?.label || edu.type}
+                        </Badge>
+                      </TableCell>
+                      <TableCell>
+                        <div className="text-sm">
+                          {formatDate(edu.startDate)} -{" "}
+                          {edu.endDate ? formatDate(edu.endDate) : "Present"}
+                        </div>
+                      </TableCell>
+                      <TableCell>
+                        <Badge variant="outline">{edu.location}</Badge>
+                      </TableCell>
+                      <TableCell>
+                        <div className="flex gap-2">
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => handleEdit(edu)}
+                          >
+                            <Pencil className="h-4 w-4" />
+                          </Button>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            className="text-red-600 hover:text-red-700"
+                            onClick={() => handleDelete(edu)}
+                          >
+                            <Trash2 className="h-4 w-4" />
+                          </Button>
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  ))
+                ) : (
+                  <TableRow>
+                    <TableCell colSpan={7} className="text-center">
+                      <div className="py-8 text-gray-500">
+                        <p>No education entries found</p>
+                        <Button
+                          className="mt-4"
+                          size="sm"
+                          onClick={handleCreate}
+                        >
+                          <Plus className="mr-2 h-4 w-4" />
+                          Add Your First Education
+                        </Button>
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Create/Edit Dialog */}
+      <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+        <DialogContent className="max-h-[90vh] overflow-y-auto bg-white sm:max-w-[600px] dark:bg-gray-900">
+          <DialogHeader>
+            <DialogTitle>
+              {editingEducation ? "Edit Education" : "Create New Education"}
+            </DialogTitle>
+            <DialogDescription>
+              {editingEducation
+                ? "Update education information"
+                : "Add a new education entry"}
+            </DialogDescription>
+          </DialogHeader>
+
+          <div className="space-y-4 py-4">
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div className="space-y-2">
+                <Label htmlFor="institution">Institution *</Label>
+                <Input
+                  id="institution"
+                  value={formData.institution}
+                  onChange={(e) =>
+                    setFormData({ ...formData, institution: e.target.value })
+                  }
+                  placeholder="University / Bootcamp name"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="degree">Degree / Program *</Label>
+                <Input
+                  id="degree"
+                  value={formData.degree}
+                  onChange={(e) =>
+                    setFormData({ ...formData, degree: e.target.value })
+                  }
+                  placeholder="S1 Software Engineering"
+                />
+              </div>
+            </div>
+
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div className="space-y-2">
+                <Label htmlFor="location">Location</Label>
+                <Input
+                  id="location"
+                  value={formData.location}
+                  onChange={(e) =>
+                    setFormData({ ...formData, location: e.target.value })
+                  }
+                  placeholder="City, Country"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="type">Type *</Label>
+                <div className="relative">
+                  <select
+                    id="type"
+                    value={formData.type}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        type: e.target.value as Education["type"],
+                      })
+                    }
+                    className="focus-visible:ring-ring/40 h-9 w-full appearance-none rounded-lg border border-input bg-transparent px-3 py-1.5 pr-8 font-outfit text-sm text-foreground outline-none transition-colors focus-visible:border-ring focus-visible:ring-2 dark:border-gray-700 dark:bg-gray-800"
+                  >
+                    {typeOptions.map((option) => (
+                      <option
+                        key={option.value}
+                        value={option.value}
+                        className="dark:bg-gray-800 dark:text-gray-100"
+                      >
+                        {option.label}
+                      </option>
+                    ))}
+                  </select>
+                  <ChevronDown className="pointer-events-none absolute right-2.5 top-2.5 h-4 w-4 text-muted-foreground opacity-70" />
+                </div>
+              </div>
+            </div>
+
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div className="space-y-2">
+                <Label htmlFor="startDate">Start Date *</Label>
+                <Input
+                  id="startDate"
+                  type="date"
+                  value={formData.startDate}
+                  onChange={(e) =>
+                    setFormData({ ...formData, startDate: e.target.value })
+                  }
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="endDate">End Date</Label>
+                <Input
+                  id="endDate"
+                  type="date"
+                  value={formData.endDate}
+                  onChange={(e) =>
+                    setFormData({ ...formData, endDate: e.target.value })
+                  }
+                  disabled={formData.current}
+                />
+              </div>
+            </div>
+
+            <div className="flex items-center justify-between rounded-lg border p-4">
+              <div className="space-y-0.5">
+                <Label htmlFor="current">Currently Studying</Label>
+                <p className="text-sm text-gray-500">I am currently here</p>
+              </div>
+              <Switch
+                id="current"
+                checked={formData.current}
+                onCheckedChange={(checked) => {
+                  setFormData({
+                    ...formData,
+                    current: checked,
+                    endDate: checked ? "" : formData.endDate,
+                  });
+                }}
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="description">Description</Label>
+              <Textarea
+                id="description"
+                value={formData.description}
+                onChange={(e) =>
+                  setFormData({ ...formData, description: e.target.value })
+                }
+                placeholder="Brief description of the program"
+                rows={3}
+              />
+            </div>
+
+            <ImageUpload
+              label="Institution Logo"
+              value={formData.logo}
+              fileId={formData.logoFileId}
+              onUploadSuccess={(url, fileId) => {
+                setFormData((prev) => ({
+                  ...prev,
+                  logo: url,
+                  logoFileId: fileId,
+                }));
+              }}
+              category="EDUCATIONS"
+              showPreview={true}
+            />
+
+            {/* Certificates & Documents Attachments */}
+            <div className="space-y-3 rounded-lg border p-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <Label className="text-base font-semibold">
+                    Certificates & Documents
+                  </Label>
+                  <p className="text-xs text-gray-500">
+                    Upload certificate, transcript, or academic evidence images.
+                  </p>
+                </div>
+                <Badge variant="secondary">
+                  {formData.attachments.length} attached
+                </Badge>
+              </div>
+
+              {/* List of existing attachments */}
+              {formData.attachments.length > 0 && (
+                <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+                  {formData.attachments.map((att, idx) => (
+                    <div
+                      key={idx}
+                      className="bg-muted/40 flex items-center justify-between gap-2 rounded-md border p-2"
+                    >
+                      <div className="flex items-center gap-2 overflow-hidden">
+                        <div className="relative h-10 w-10 flex-shrink-0 overflow-hidden rounded border">
+                          <Image
+                            src={att.url}
+                            alt={att.title}
+                            fill
+                            className="object-cover"
+                            sizes="40px"
+                          />
+                        </div>
+                        <span className="truncate text-xs font-medium">
+                          {att.title}
+                        </span>
+                      </div>
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="icon"
+                        className="h-7 w-7 text-red-500 hover:text-red-700"
+                        onClick={() => handleRemoveAttachment(idx)}
+                      >
+                        <Trash2 className="h-3.5 w-3.5" />
+                      </Button>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {/* Add New Attachment */}
+              <div className="space-y-2 rounded-md border border-dashed p-3">
+                <Label className="text-xs font-medium">
+                  Add Certificate / Transcript
+                </Label>
+                <Input
+                  placeholder="Document Title (e.g. Certificate of Completion, Transcript of Records)"
+                  value={newAttachment.title}
+                  onChange={(e) =>
+                    setNewAttachment((prev) => ({
+                      ...prev,
+                      title: e.target.value,
+                    }))
+                  }
+                  className="text-xs"
+                />
+                <ImageUpload
+                  label="Document Image"
+                  value={newAttachment.url}
+                  fileId={newAttachment.fileId}
+                  onUploadSuccess={(url, fileId) => {
+                    setNewAttachment((prev) => ({
+                      ...prev,
+                      url,
+                      fileId,
+                    }));
+                  }}
+                  category="EDUCATIONS"
+                  showPreview={true}
+                />
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={handleAddAttachment}
+                  disabled={!newAttachment.url}
+                  className="mt-2 w-full gap-1 text-xs"
+                >
+                  <Plus className="h-3.5 w-3.5" />
+                  Attach Document
+                </Button>
+              </div>
+            </div>
+          </div>
+
+          <DialogFooter>
+            <Button
+              variant="outline"
+              onClick={() => setDialogOpen(false)}
+              disabled={createMutation.isPending || updateMutation.isPending}
+            >
+              Cancel
+            </Button>
+            <Button
+              onClick={handleSave}
+              disabled={createMutation.isPending || updateMutation.isPending}
+            >
+              {createMutation.isPending || updateMutation.isPending
+                ? "Saving..."
+                : editingEducation
+                  ? "Update"
+                  : "Create"}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Delete Confirmation Dialog */}
+      <Dialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
+        <DialogContent className="bg-white dark:bg-gray-900">
+          <DialogHeader>
+            <DialogTitle>Delete Education</DialogTitle>
+            <DialogDescription>
+              Are you sure you want to delete{" "}
+              <strong>{deletingEducation?.degree}</strong> at{" "}
+              <strong>{deletingEducation?.institution}</strong>? This action
+              will move it to the recycle bin.
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button
+              variant="outline"
+              onClick={() => setDeleteDialogOpen(false)}
+              disabled={deleteMutation.isPending}
+            >
+              Cancel
+            </Button>
+            <Button
+              variant="destructive"
+              onClick={confirmDelete}
+              disabled={deleteMutation.isPending}
+            >
+              {deleteMutation.isPending ? "Deleting..." : "Delete"}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+    </div>
+  );
+}
