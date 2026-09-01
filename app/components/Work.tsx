@@ -83,9 +83,9 @@ export default function Work({ isDarkMode }: WorkProps) {
 
                 {/* Project Showcase Container */}
                 <div className="flex flex-col border-b border-gray-100 bg-gray-100/80 p-2 dark:border-white/10 dark:bg-black/50">
-                  {/* Minimal Top Space for Live Badge */}
-                  {hasDemoLink && (
-                    <div className="mb-1 flex justify-end px-1">
+                  {/* Top Space for Live Badge (Fixed height for uniform alignment) */}
+                  <div className="mb-1 flex h-4 items-center justify-end px-1">
+                    {hasDemoLink ? (
                       <span className="inline-flex h-4 items-center gap-1 rounded-full border border-emerald-500/30 bg-emerald-50 px-2 font-outfit text-[9px] font-medium leading-none text-emerald-700 shadow-sm backdrop-blur-md dark:bg-emerald-950/80 dark:text-emerald-300">
                         <span className="relative flex h-1 w-1">
                           <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-500 opacity-75" />
@@ -93,8 +93,10 @@ export default function Work({ isDarkMode }: WorkProps) {
                         </span>
                         Live
                       </span>
-                    </div>
-                  )}
+                    ) : (
+                      <div className="h-4" aria-hidden="true" />
+                    )}
+                  </div>
 
                   {/* Project Image Container */}
                   <div className="relative aspect-[16/10] w-full overflow-hidden rounded-xl border border-gray-200/70 bg-white shadow-sm dark:border-transparent dark:bg-gray-900/30">
