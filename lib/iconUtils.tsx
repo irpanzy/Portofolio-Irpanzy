@@ -73,3 +73,22 @@ export function isUrl(str: string): boolean {
 export function isEmoji(str: string): boolean {
   return /\p{Emoji}/u.test(str);
 }
+
+export function getTechIcon(
+  tech?: {
+    icon?: string;
+    iconLight?: string;
+    iconDark?: string;
+  } | null,
+  isDarkMode?: boolean
+): string | undefined {
+  if (!tech) return undefined;
+  if (isDarkMode && tech.iconDark) return tech.iconDark;
+  if (!isDarkMode && tech.iconLight) return tech.iconLight;
+  return (
+    tech.icon ||
+    (isDarkMode ? tech.iconDark : tech.iconLight) ||
+    tech.iconLight ||
+    tech.iconDark
+  );
+}

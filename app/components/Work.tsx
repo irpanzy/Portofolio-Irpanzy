@@ -5,6 +5,7 @@ import React from "react";
 import { m } from "framer-motion";
 import { CircleArrowOutUpRight, ExternalLink, Github, Eye } from "lucide-react";
 import { useProjects } from "@/hooks/useApi";
+import { getTechIcon } from "@/lib/iconUtils";
 
 interface WorkProps {
   isDarkMode: boolean;
@@ -161,7 +162,9 @@ export default function Work({ isDarkMode }: WorkProps) {
                           {project.techStack.map((tech, techIndex) => {
                             const isObject = typeof tech === "object";
                             const title = isObject ? tech.title : tech;
-                            const icon = isObject ? tech.icon : null;
+                            const icon = isObject
+                              ? getTechIcon(tech, isDarkMode)
+                              : null;
 
                             return (
                               <div

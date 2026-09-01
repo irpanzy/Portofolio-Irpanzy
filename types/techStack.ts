@@ -12,6 +12,10 @@ export interface TechStack {
   title: string;
   icon?: string;
   iconFileId?: string;
+  iconLight?: string;
+  iconLightFileId?: string;
+  iconDark?: string;
+  iconDarkFileId?: string;
   categories: TechCategory[];
   category?: TechCategory;
   proficiencyLevel?: number;

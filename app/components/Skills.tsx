@@ -18,6 +18,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import type { TechCategory, TechStack } from "@/types";
+import { getTechIcon } from "@/lib/iconUtils";
 
 interface SkillsProps {
   isDarkMode: boolean;
@@ -208,55 +209,59 @@ export default function Skills({ isDarkMode }: SkillsProps) {
 
                     {/* Skill Badges Grid */}
                     <div className="grid grid-cols-3 gap-2.5 sm:grid-cols-4 md:grid-cols-3 lg:grid-cols-4">
-                      {displayedItems.map((tool) => (
-                        <m.div
-                          key={`${key}-${tool._id}`}
-                          whileHover={{ scale: 1.04, y: -2 }}
-                          className="shadow-xs flex flex-col items-center justify-center gap-1.5 rounded-xl border border-gray-200/70 bg-white/90 p-2.5 text-center transition-all duration-200 hover:border-[#77BEF0] hover:bg-[#77BEF0]/5 hover:shadow-sm dark:border-white/10 dark:bg-white/5 dark:hover:border-[#77BEF0]/60 dark:hover:bg-[#77BEF0]/10"
-                        >
-                          <div className="relative flex h-9 w-9 items-center justify-center">
-                            {tool.icon ? (
-                              <Image
-                                src={tool.icon}
-                                alt={tool.title}
-                                className="h-full w-full object-contain p-0.5"
-                                width={36}
-                                height={36}
-                                loading="lazy"
-                              />
-                            ) : (
-                              <div className="flex h-full w-full items-center justify-center rounded-md bg-gray-100 text-[10px] font-bold text-gray-600 dark:bg-gray-800 dark:text-gray-300">
-                                {tool.title.substring(0, 2).toUpperCase()}
-                              </div>
-                            )}
-                          </div>
+                      {displayedItems.map((tool) => {
+                        const iconSrc = getTechIcon(tool, isDarkMode);
 
-                          <span className="w-full truncate font-outfit text-xs font-semibold text-gray-800 dark:text-gray-200">
-                            {tool.title}
-                          </span>
-
-                          {tool.proficiencyLevel &&
-                          tool.proficiencyLevel > 0 ? (
-                            <div
-                              className="flex items-center gap-0.5"
-                              title={`Proficiency: ${tool.proficiencyLevel}/5`}
-                            >
-                              {Array.from({ length: 5 }).map((_, i) => (
-                                <Star
-                                  key={i}
-                                  className={`h-2.5 w-2.5 ${
-                                    i < (tool.proficiencyLevel || 0)
-                                      ? "fill-amber-400 text-amber-400"
-                                      : "text-gray-300 dark:text-gray-600"
-                                  }`}
+                        return (
+                          <m.div
+                            key={`${key}-${tool._id}`}
+                            whileHover={{ scale: 1.04, y: -2 }}
+                            className="shadow-xs flex flex-col items-center justify-center gap-1.5 rounded-xl border border-gray-200/70 bg-white/90 p-2.5 text-center transition-all duration-200 hover:border-[#77BEF0] hover:bg-[#77BEF0]/5 hover:shadow-sm dark:border-white/10 dark:bg-white/5 dark:hover:border-[#77BEF0]/60 dark:hover:bg-[#77BEF0]/10"
+                          >
+                            <div className="relative flex h-9 w-9 items-center justify-center">
+                              {iconSrc ? (
+                                <Image
+                                  src={iconSrc}
+                                  alt={tool.title}
+                                  className="h-full w-full object-contain p-0.5"
+                                  width={36}
+                                  height={36}
+                                  loading="lazy"
                                 />
-                              ))}
+                              ) : (
+                                <div className="flex h-full w-full items-center justify-center rounded-md bg-gray-100 text-[10px] font-bold text-gray-600 dark:bg-gray-800 dark:text-gray-300">
+                                  {tool.title.substring(0, 2).toUpperCase()}
+                                </div>
+                              )}
                             </div>
-                          ) : (
-                            <div className="h-2.5" />
-                          )}
-                        </m.div>
-                      ))}
+
+                            <span className="w-full truncate font-outfit text-xs font-semibold text-gray-800 dark:text-gray-200">
+                              {tool.title}
+                            </span>
+
+                            {tool.proficiencyLevel &&
+                            tool.proficiencyLevel > 0 ? (
+                              <div
+                                className="flex items-center gap-0.5"
+                                title={`Proficiency: ${tool.proficiencyLevel}/5`}
+                              >
+                                {Array.from({ length: 5 }).map((_, i) => (
+                                  <Star
+                                    key={i}
+                                    className={`h-2.5 w-2.5 ${
+                                      i < (tool.proficiencyLevel || 0)
+                                        ? "fill-amber-400 text-amber-400"
+                                        : "text-gray-300 dark:text-gray-600"
+                                    }`}
+                                  />
+                                ))}
+                              </div>
+                            ) : (
+                              <div className="h-2.5" />
+                            )}
+                          </m.div>
+                        );
+                      })}
                     </div>
 
                     {/* Show More / Show Less Button */}

@@ -7,7 +7,15 @@ export interface Project {
   bgImage: string;
   demoLink?: string;
   githubLink?: string;
-  techStack: Array<string | { title: string; icon?: string }>;
+  techStack: Array<
+    | string
+    | {
+        title: string;
+        icon?: string;
+        iconLight?: string;
+        iconDark?: string;
+      }
+  >;
   order: number;
   isVisible: boolean;
   createdAt: string;

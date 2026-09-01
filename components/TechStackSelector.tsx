@@ -27,14 +27,12 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
-import type { TechStack } from "@/types";
+import type { TechStack, Project } from "@/types";
 import { Button } from "./ui/button";
 
 interface TechStackSelectorProps {
-  selected: Array<string | { title: string; icon?: string }>;
-  onChange: (
-    techStack: Array<string | { title: string; icon?: string }>
-  ) => void;
+  selected: Project["techStack"];
+  onChange: (techStack: Project["techStack"]) => void;
   className?: string;
 }
 
@@ -67,6 +65,8 @@ export default function TechStackSelector({
         {
           title: techStack.title,
           icon: techStack.icon || "",
+          iconLight: techStack.iconLight || "",
+          iconDark: techStack.iconDark || "",
         },
       ]);
     }
@@ -158,21 +158,56 @@ export default function TechStackSelector({
                   </button>
                 )}
 
-                {icon ? (
-                  <Image
-                    src={icon}
-                    alt={title}
-                    width={16}
-                    height={16}
-                    className="h-4 w-4 shrink-0 object-contain"
-                  />
-                ) : (
-                  <div className="flex h-4 w-4 shrink-0 items-center justify-center rounded bg-gray-200 text-[9px] font-bold text-gray-600 dark:bg-gray-700 dark:text-gray-300">
-                    {typeof title === "string"
-                      ? title.substring(0, 2).toUpperCase()
-                      : ""}
-                  </div>
-                )}
+                {(() => {
+                  if (
+                    isObject &&
+                    typeof item === "object" &&
+                    (item.iconDark || item.iconLight)
+                  ) {
+                    const lightSrc =
+                      item.iconLight || item.icon || item.iconDark!;
+                    const darkSrc =
+                      item.iconDark || item.icon || item.iconLight!;
+                    return (
+                      <>
+                        <Image
+                          src={lightSrc}
+                          alt={title}
+                          width={16}
+                          height={16}
+                          className="h-4 w-4 shrink-0 object-contain dark:hidden"
+                        />
+                        <Image
+                          src={darkSrc}
+                          alt={`${title} dark`}
+                          width={16}
+                          height={16}
+                          className="hidden h-4 w-4 shrink-0 object-contain dark:block"
+                        />
+                      </>
+                    );
+                  }
+
+                  if (icon) {
+                    return (
+                      <Image
+                        src={icon}
+                        alt={title}
+                        width={16}
+                        height={16}
+                        className="h-4 w-4 shrink-0 object-contain"
+                      />
+                    );
+                  }
+
+                  return (
+                    <div className="flex h-4 w-4 shrink-0 items-center justify-center rounded bg-gray-200 text-[9px] font-bold text-gray-600 dark:bg-gray-700 dark:text-gray-300">
+                      {typeof title === "string"
+                        ? title.substring(0, 2).toUpperCase()
+                        : ""}
+                    </div>
+                  );
+                })()}
 
                 <span className="text-xs font-medium">{title}</span>
 
@@ -250,19 +285,50 @@ export default function TechStackSelector({
                       )}
                     >
                       <div className="flex min-w-0 items-center gap-2.5">
-                        {tech.icon ? (
-                          <Image
-                            src={tech.icon}
-                            alt={tech.title}
-                            width={20}
-                            height={20}
-                            className="h-5 w-5 shrink-0 object-contain"
-                          />
-                        ) : (
-                          <div className="flex h-5 w-5 shrink-0 items-center justify-center rounded bg-gray-200 text-[10px] font-bold text-gray-600 dark:bg-gray-700 dark:text-gray-300">
-                            {tech.title.substring(0, 2).toUpperCase()}
-                          </div>
-                        )}
+                        {(() => {
+                          if (tech.iconDark || tech.iconLight) {
+                            const lightSrc =
+                              tech.iconLight || tech.icon || tech.iconDark!;
+                            const darkSrc =
+                              tech.iconDark || tech.icon || tech.iconLight!;
+                            return (
+                              <>
+                                <Image
+                                  src={lightSrc}
+                                  alt={tech.title}
+                                  width={20}
+                                  height={20}
+                                  className="h-5 w-5 shrink-0 object-contain dark:hidden"
+                                />
+                                <Image
+                                  src={darkSrc}
+                                  alt={`${tech.title} dark`}
+                                  width={20}
+                                  height={20}
+                                  className="hidden h-5 w-5 shrink-0 object-contain dark:block"
+                                />
+                              </>
+                            );
+                          }
+
+                          if (tech.icon) {
+                            return (
+                              <Image
+                                src={tech.icon}
+                                alt={tech.title}
+                                width={20}
+                                height={20}
+                                className="h-5 w-5 shrink-0 object-contain"
+                              />
+                            );
+                          }
+
+                          return (
+                            <div className="flex h-5 w-5 shrink-0 items-center justify-center rounded bg-gray-200 text-[10px] font-bold text-gray-600 dark:bg-gray-700 dark:text-gray-300">
+                              {tech.title.substring(0, 2).toUpperCase()}
+                            </div>
+                          );
+                        })()}
                         <span className="truncate">{tech.title}</span>
                       </div>
 
