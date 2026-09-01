@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import React, { useState } from "react";
 import {
   useProjects,
   useCreateProject,
@@ -41,12 +41,18 @@ import {
   Search,
   ArrowUp,
   ArrowDown,
+  ChevronLeft,
+  ChevronRight,
+  ChevronsLeft,
+  ChevronsRight,
 } from "lucide-react";
 import Image from "next/image";
 import ImageUpload from "@/components/ImageUpload";
 import { PageLoading } from "@/components/LoadingSpinner";
 import TechStackSelector from "@/components/TechStackSelector";
 import type { Project } from "@/types";
+
+const ITEMS_PER_PAGE = 5;
 
 export default function ProjectsPage() {
   const { data: projects, isLoading, error } = useProjects();
@@ -56,6 +62,7 @@ export default function ProjectsPage() {
   const reorderMutation = useReorderProjects();
 
   const [searchQuery, setSearchQuery] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [editingProject, setEditingProject] = useState<Project | null>(null);
@@ -87,7 +94,7 @@ export default function ProjectsPage() {
     bgImage: string;
     demoLink: string;
     githubLink: string;
-    techStack: Array<string | { title: string; icon?: string }>;
+    techStack: Project["techStack"];
     isVisible: boolean;
   }>({
     title: "",
@@ -169,6 +176,13 @@ export default function ProjectsPage() {
     project.title.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
+  const totalItems = filteredProjects?.length || 0;
+  const totalPages = Math.max(1, Math.ceil(totalItems / ITEMS_PER_PAGE));
+  const validCurrentPage = Math.min(currentPage, totalPages);
+  const startIndex = (validCurrentPage - 1) * ITEMS_PER_PAGE;
+  const endIndex = Math.min(startIndex + ITEMS_PER_PAGE, totalItems);
+  const paginatedProjects = filteredProjects?.slice(startIndex, endIndex) || [];
+
   if (isLoading) {
     return <PageLoading text="Loading projects..." />;
   }
@@ -209,7 +223,10 @@ export default function ProjectsPage() {
           <Input
             placeholder="Search projects..."
             value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
+            onChange={(e) => {
+              setSearchQuery(e.target.value);
+              setCurrentPage(1);
+            }}
             className="bg-white pl-10 dark:bg-gray-800"
           />
         </div>
@@ -217,10 +234,17 @@ export default function ProjectsPage() {
 
       <Card>
         <CardHeader>
-          <CardTitle>All Projects ({filteredProjects?.length || 0})</CardTitle>
+          <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+            <CardTitle>All Projects ({totalItems})</CardTitle>
+            {totalItems > 0 && (
+              <span className="text-xs text-muted-foreground">
+                Page {validCurrentPage} of {totalPages}
+              </span>
+            )}
+          </div>
         </CardHeader>
         <CardContent>
-          <div className="overflow-x-auto">
+          <div className="min-h-[385px] overflow-x-auto">
             <Table>
               <TableHeader>
                 <TableRow>
@@ -233,141 +257,168 @@ export default function ProjectsPage() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {filteredProjects && filteredProjects.length > 0 ? (
-                  filteredProjects.map((project, idx) => (
-                    <TableRow key={project._id}>
-                      <TableCell>
-                        <div className="flex items-center gap-1">
-                          <span className="w-5 font-mono text-xs text-gray-500">
-                            {idx + 1}
-                          </span>
-                          <div className="flex flex-col gap-0.5">
-                            <Button
-                              variant="ghost"
-                              size="icon"
-                              className="h-5 w-5"
-                              disabled={idx === 0 || reorderMutation.isPending}
-                              onClick={() => handleMove(idx, "up")}
-                              title="Move Up"
-                            >
-                              <ArrowUp className="h-3 w-3" />
-                            </Button>
-                            <Button
-                              variant="ghost"
-                              size="icon"
-                              className="h-5 w-5"
-                              disabled={
-                                idx === filteredProjects.length - 1 ||
-                                reorderMutation.isPending
-                              }
-                              onClick={() => handleMove(idx, "down")}
-                              title="Move Down"
-                            >
-                              <ArrowDown className="h-3 w-3" />
-                            </Button>
-                          </div>
-                        </div>
-                      </TableCell>
-                      <TableCell>
-                        <div className="relative h-12 w-12 overflow-hidden rounded-md">
-                          <Image
-                            src={project.bgImage}
-                            alt={project.title}
-                            fill
-                            className="object-cover"
-                          />
-                        </div>
-                      </TableCell>
-                      <TableCell className="font-medium">
-                        {project.title}
-                      </TableCell>
-                      <TableCell>
-                        <div className="flex flex-wrap gap-1">
-                          {project.techStack.slice(0, 3).map((tech, idx) => {
-                            const isObject = typeof tech === "object";
-                            const title = isObject ? tech.title : tech;
-                            const icon = isObject ? tech.icon : null;
+                {paginatedProjects && paginatedProjects.length > 0 ? (
+                  paginatedProjects.map((project, idx) => {
+                    const globalIndex = startIndex + idx;
 
-                            return (
-                              <Badge
-                                key={idx}
-                                variant="secondary"
-                                className="flex items-center gap-1.5"
-                              >
-                                {icon && (
-                                  <Image
-                                    src={icon}
-                                    alt={title}
-                                    width={14}
-                                    height={14}
-                                    className="h-3.5 w-3.5 object-contain"
-                                  />
-                                )}
-                                {title}
-                              </Badge>
-                            );
-                          })}
-                          {project.techStack.length > 3 && (
-                            <Badge variant="secondary">
-                              +{project.techStack.length - 3}
-                            </Badge>
-                          )}
-                        </div>
-                      </TableCell>
-                      <TableCell>
-                        {project.isVisible ? (
-                          <Badge className="gap-1">
-                            <Eye className="h-3 w-3" />
-                            Visible
-                          </Badge>
-                        ) : (
-                          <Badge variant="secondary" className="gap-1">
-                            <EyeOff className="h-3 w-3" />
-                            Hidden
-                          </Badge>
-                        )}
-                      </TableCell>
-                      <TableCell>
-                        <div className="flex gap-2">
-                          {project.demoLink && (
-                            <a
-                              href={project.demoLink}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                            >
+                    return (
+                      <TableRow key={project._id}>
+                        <TableCell>
+                          <div className="flex items-center gap-1">
+                            <span className="w-5 font-mono text-xs text-gray-500">
+                              {globalIndex + 1}
+                            </span>
+                            <div className="flex flex-col gap-0.5">
                               <Button
                                 variant="ghost"
-                                size="sm"
-                                title="View Demo"
+                                size="icon"
+                                className="h-5 w-5"
+                                disabled={
+                                  globalIndex === 0 || reorderMutation.isPending
+                                }
+                                onClick={() => handleMove(globalIndex, "up")}
+                                title="Move Up"
                               >
-                                <ExternalLink className="h-4 w-4" />
+                                <ArrowUp className="h-3 w-3" />
                               </Button>
-                            </a>
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                className="h-5 w-5"
+                                disabled={
+                                  globalIndex === totalItems - 1 ||
+                                  reorderMutation.isPending
+                                }
+                                onClick={() => handleMove(globalIndex, "down")}
+                                title="Move Down"
+                              >
+                                <ArrowDown className="h-3 w-3" />
+                              </Button>
+                            </div>
+                          </div>
+                        </TableCell>
+                        <TableCell>
+                          <div className="relative h-12 w-12 overflow-hidden rounded-md">
+                            <Image
+                              src={project.bgImage}
+                              alt={project.title}
+                              fill
+                              className="object-cover"
+                            />
+                          </div>
+                        </TableCell>
+                        <TableCell className="font-medium">
+                          {project.title}
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex flex-wrap gap-1">
+                            {project.techStack.slice(0, 3).map((tech, tIdx) => {
+                              const isObject = typeof tech === "object";
+                              const title = isObject ? tech.title : tech;
+                              const icon = isObject ? tech.icon : null;
+                              const iconDark = isObject ? tech.iconDark : null;
+                              const iconLight = isObject
+                                ? tech.iconLight
+                                : null;
+
+                              return (
+                                <Badge
+                                  key={tIdx}
+                                  variant="secondary"
+                                  className="flex items-center gap-1.5"
+                                >
+                                  {iconDark || iconLight ? (
+                                    <>
+                                      <Image
+                                        src={iconLight || icon || iconDark!}
+                                        alt={title}
+                                        width={14}
+                                        height={14}
+                                        className="h-3.5 w-3.5 object-contain dark:hidden"
+                                      />
+                                      <Image
+                                        src={iconDark || icon || iconLight!}
+                                        alt={`${title} dark`}
+                                        width={14}
+                                        height={14}
+                                        className="hidden h-3.5 w-3.5 object-contain dark:block"
+                                      />
+                                    </>
+                                  ) : icon ? (
+                                    <Image
+                                      src={icon}
+                                      alt={title}
+                                      width={14}
+                                      height={14}
+                                      className="h-3.5 w-3.5 object-contain"
+                                    />
+                                  ) : null}
+                                  {title}
+                                </Badge>
+                              );
+                            })}
+                            {project.techStack.length > 3 && (
+                              <Badge variant="secondary">
+                                +{project.techStack.length - 3}
+                              </Badge>
+                            )}
+                          </div>
+                        </TableCell>
+                        <TableCell>
+                          {project.isVisible ? (
+                            <Badge className="gap-1">
+                              <Eye className="h-3 w-3" />
+                              Visible
+                            </Badge>
+                          ) : (
+                            <Badge variant="secondary" className="gap-1">
+                              <EyeOff className="h-3 w-3" />
+                              Hidden
+                            </Badge>
                           )}
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => handleEdit(project)}
-                            title="Edit"
-                          >
-                            <Pencil className="h-4 w-4" />
-                          </Button>
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            className="text-red-600 hover:text-red-700"
-                            onClick={() => handleDelete(project)}
-                            title="Delete"
-                          >
-                            <Trash2 className="h-4 w-4" />
-                          </Button>
-                        </div>
-                      </TableCell>
-                    </TableRow>
-                  ))
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex gap-2">
+                            {project.demoLink && (
+                              <a
+                                href={project.demoLink}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                              >
+                                <Button
+                                  variant="ghost"
+                                  size="sm"
+                                  title="View Demo"
+                                >
+                                  <ExternalLink className="h-4 w-4" />
+                                </Button>
+                              </a>
+                            )}
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => handleEdit(project)}
+                              title="Edit"
+                            >
+                              <Pencil className="h-4 w-4" />
+                            </Button>
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              className="text-red-600 hover:text-red-700"
+                              onClick={() => handleDelete(project)}
+                              title="Delete"
+                            >
+                              <Trash2 className="h-4 w-4" />
+                            </Button>
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })
                 ) : (
                   <TableRow>
-                    <TableCell colSpan={5} className="text-center">
+                    <TableCell colSpan={6} className="text-center">
                       <div className="py-8 text-gray-500">
                         <p>No projects found</p>
                         <Button
@@ -385,6 +436,108 @@ export default function ProjectsPage() {
               </TableBody>
             </Table>
           </div>
+
+          {/* Pagination Controls */}
+          {totalItems > 0 && (
+            <div className="flex flex-col items-center justify-between gap-4 border-t border-gray-100 pt-4 sm:flex-row dark:border-gray-800">
+              <div className="text-xs text-muted-foreground">
+                Showing{" "}
+                <strong className="text-gray-900 dark:text-gray-100">
+                  {startIndex + 1}
+                </strong>{" "}
+                to{" "}
+                <strong className="text-gray-900 dark:text-gray-100">
+                  {endIndex}
+                </strong>{" "}
+                of{" "}
+                <strong className="text-gray-900 dark:text-gray-100">
+                  {totalItems}
+                </strong>{" "}
+                projects
+              </div>
+
+              <div className="flex items-center gap-1">
+                <Button
+                  variant="outline"
+                  size="icon"
+                  className="h-8 w-8"
+                  onClick={() => setCurrentPage(1)}
+                  disabled={validCurrentPage === 1}
+                  title="First Page"
+                >
+                  <ChevronsLeft className="h-4 w-4" />
+                </Button>
+                <Button
+                  variant="outline"
+                  size="icon"
+                  className="h-8 w-8"
+                  onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+                  disabled={validCurrentPage === 1}
+                  title="Previous Page"
+                >
+                  <ChevronLeft className="h-4 w-4" />
+                </Button>
+
+                <div className="flex items-center gap-1 px-1">
+                  {Array.from({ length: totalPages }, (_, i) => i + 1)
+                    .filter((page) => {
+                      return (
+                        page === 1 ||
+                        page === totalPages ||
+                        Math.abs(page - validCurrentPage) <= 1
+                      );
+                    })
+                    .map((page, idx, arr) => {
+                      const prevPage = arr[idx - 1];
+                      const showEllipsis = prevPage && page - prevPage > 1;
+
+                      return (
+                        <React.Fragment key={page}>
+                          {showEllipsis && (
+                            <span className="px-1 text-xs text-gray-400">
+                              ...
+                            </span>
+                          )}
+                          <Button
+                            variant={
+                              validCurrentPage === page ? "default" : "outline"
+                            }
+                            size="sm"
+                            className="h-8 min-w-8 px-2 text-xs"
+                            onClick={() => setCurrentPage(page)}
+                          >
+                            {page}
+                          </Button>
+                        </React.Fragment>
+                      );
+                    })}
+                </div>
+
+                <Button
+                  variant="outline"
+                  size="icon"
+                  className="h-8 w-8"
+                  onClick={() =>
+                    setCurrentPage((p) => Math.min(totalPages, p + 1))
+                  }
+                  disabled={validCurrentPage === totalPages}
+                  title="Next Page"
+                >
+                  <ChevronRight className="h-4 w-4" />
+                </Button>
+                <Button
+                  variant="outline"
+                  size="icon"
+                  className="h-8 w-8"
+                  onClick={() => setCurrentPage(totalPages)}
+                  disabled={validCurrentPage === totalPages}
+                  title="Last Page"
+                >
+                  <ChevronsRight className="h-4 w-4" />
+                </Button>
+              </div>
+            </div>
+          )}
         </CardContent>
       </Card>
 
