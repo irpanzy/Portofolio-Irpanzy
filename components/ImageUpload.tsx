@@ -77,7 +77,6 @@ export default function ImageUpload({
     } catch (error: any) {
       const message = error.response?.data?.message || "Failed to upload image";
       toast.error(message);
-      console.error("Upload error:", error);
     } finally {
       setIsUploading(false);
       e.target.value = "";

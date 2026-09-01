@@ -96,9 +96,7 @@ export default function EducationPage() {
 
     try {
       await reorderMutation.mutateAsync(orders);
-    } catch (err) {
-      console.error("Education reorder failed:", err);
-    }
+    } catch {}
   };
 
   const [formData, setFormData] = useState({
@@ -203,7 +201,6 @@ export default function EducationPage() {
       return;
     }
 
-    // If user uploaded an attachment but forgot to click "Attach Document", include it automatically
     const finalAttachments = [...formData.attachments];
     if (newAttachment.url.trim()) {
       finalAttachments.push({
@@ -229,9 +226,7 @@ export default function EducationPage() {
       }
       setNewAttachment({ title: "", url: "", fileId: "" });
       setDialogOpen(false);
-    } catch (error) {
-      console.error("Failed to save education:", error);
-    }
+    } catch {}
   };
 
   const confirmDelete = async () => {
@@ -240,9 +235,7 @@ export default function EducationPage() {
     try {
       await deleteMutation.mutateAsync(deletingEducation._id);
       setDeleteDialogOpen(false);
-    } catch (error) {
-      console.error("Failed to delete education:", error);
-    }
+    } catch {}
   };
 
   const filteredEducations = educations?.filter(

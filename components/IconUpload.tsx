@@ -71,7 +71,6 @@ export default function IconUpload({
     } catch (error: any) {
       const message = error.response?.data?.message || "Failed to upload icon";
       toast.error(message);
-      console.error("Upload error:", error);
     } finally {
       setIsUploading(false);
       e.target.value = "";

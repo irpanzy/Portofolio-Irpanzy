@@ -108,9 +108,7 @@ export default function ServicesPage() {
         await createMutation.mutateAsync(formData);
       }
       setDialogOpen(false);
-    } catch (error) {
-      console.error("Failed to save service:", error);
-    }
+    } catch {}
   };
 
   const confirmDelete = async () => {
@@ -119,9 +117,7 @@ export default function ServicesPage() {
     try {
       await deleteMutation.mutateAsync(deletingService._id);
       setDeleteDialogOpen(false);
-    } catch (error) {
-      console.error("Failed to delete service:", error);
-    }
+    } catch {}
   };
 
   const filteredServices = services?.filter((service) =>

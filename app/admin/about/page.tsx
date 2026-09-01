@@ -50,9 +50,7 @@ export default function AboutAdminPage() {
       } else {
         await createMutation.mutateAsync(formData);
       }
-    } catch (error) {
-      console.error("Failed to save about data:", error);
-    }
+    } catch {}
   };
 
   if (isLoading) {

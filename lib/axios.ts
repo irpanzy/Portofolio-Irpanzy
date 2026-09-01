@@ -22,16 +22,9 @@ axiosInstance.interceptors.request.use(
 
           if (token) {
             config.headers.Authorization = `Bearer ${token}`;
-            console.log("✅ Token attached to request:", config.url);
-          } else {
-            console.warn("⚠️ No token found in auth-storage for:", config.url);
           }
-        } else {
-          console.warn("⚠️ No auth-storage found for:", config.url);
         }
-      } catch (error) {
-        console.error("❌ Error reading auth token:", error);
-      }
+      } catch {}
     }
 
     return config;
@@ -46,9 +39,6 @@ axiosInstance.interceptors.response.use(
     return response;
   },
   (error: AxiosError<ApiError>) => {
-    const errorMessage =
-      error.response?.data?.message || error.message || "An error occurred";
-
     if (error.response?.status === 401) {
       if (typeof window !== "undefined") {
         localStorage.removeItem("auth-storage");
@@ -58,12 +48,6 @@ axiosInstance.interceptors.response.use(
         }
       }
     }
-
-    console.error("API Error:", {
-      status: error.response?.status,
-      message: errorMessage,
-      url: error.config?.url,
-    });
 
     return Promise.reject(error);
   }

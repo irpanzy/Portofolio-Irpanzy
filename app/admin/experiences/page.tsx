@@ -79,9 +79,7 @@ export default function ExperiencesPage() {
 
     try {
       await reorderMutation.mutateAsync(orders);
-    } catch (err) {
-      console.error("Experience reorder failed:", err);
-    }
+    } catch {}
   };
 
   const [formData, setFormData] = useState({
@@ -159,9 +157,7 @@ export default function ExperiencesPage() {
         await createMutation.mutateAsync(formData);
       }
       setDialogOpen(false);
-    } catch (error) {
-      console.error("Failed to save experience:", error);
-    }
+    } catch {}
   };
 
   const confirmDelete = async () => {
@@ -170,9 +166,7 @@ export default function ExperiencesPage() {
     try {
       await deleteMutation.mutateAsync(deletingExperience._id);
       setDeleteDialogOpen(false);
-    } catch (error) {
-      console.error("Failed to delete experience:", error);
-    }
+    } catch {}
   };
 
   const filteredExperiences = experiences?.filter(

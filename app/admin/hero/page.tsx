@@ -72,9 +72,7 @@ export default function HeroAdminPage() {
       } else {
         await createMutation.mutateAsync(formData);
       }
-    } catch (error) {
-      console.error("Failed to save hero data:", error);
-    }
+    } catch {}
   };
 
   if (isLoading) {

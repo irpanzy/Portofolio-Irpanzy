@@ -78,9 +78,7 @@ export default function ProjectsPage() {
 
     try {
       await reorderMutation.mutateAsync(orders);
-    } catch (err) {
-      console.error("Reorder failed:", err);
-    }
+    } catch {}
   };
 
   const [formData, setFormData] = useState<{
@@ -155,9 +153,7 @@ export default function ProjectsPage() {
         await createMutation.mutateAsync(formData);
       }
       setDialogOpen(false);
-    } catch (error) {
-      console.error("Failed to save project:", error);
-    }
+    } catch {}
   };
 
   const confirmDelete = async () => {
@@ -166,9 +162,7 @@ export default function ProjectsPage() {
     try {
       await deleteMutation.mutateAsync(deletingProject._id);
       setDeleteDialogOpen(false);
-    } catch (error) {
-      console.error("Failed to delete project:", error);
-    }
+    } catch {}
   };
 
   const filteredProjects = projects?.filter((project) =>
