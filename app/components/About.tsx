@@ -62,28 +62,27 @@ export default function About({ isDarkMode }: AboutProps) {
             </div>
           </div>
         ) : (
-          <div className="group relative rounded-3xl bg-gradient-to-b from-[#77BEF0]/20 via-purple-500/10 to-transparent p-[1px] shadow-lg transition-all duration-300 hover:shadow-2xl hover:shadow-purple-500/10">
-            <div className="relative overflow-hidden rounded-[23px] border border-gray-200/80 bg-white/80 p-6 backdrop-blur-xl sm:p-8 md:p-10 dark:border-white/10 dark:bg-[#1a0033]/70">
-              {/* Ambient Glows */}
-              <div className="pointer-events-none absolute -right-20 -top-20 h-56 w-56 rounded-full bg-[#77BEF0]/10 blur-3xl" />
-              <div className="pointer-events-none absolute -bottom-20 -left-20 h-56 w-56 rounded-full bg-purple-500/10 blur-3xl" />
+          <div className="group relative rounded-3xl p-0 shadow-md transition-all duration-300 sm:bg-gradient-to-b sm:from-[#77BEF0]/20 sm:via-purple-500/10 sm:to-transparent sm:p-[1px] sm:shadow-lg sm:hover:shadow-2xl sm:hover:shadow-purple-500/10">
+            <div className="relative overflow-hidden rounded-3xl border border-gray-200 bg-white p-6 sm:rounded-[23px] sm:border-gray-200/80 sm:bg-white/80 sm:p-8 sm:backdrop-blur-xl md:p-10 dark:border-gray-800 dark:bg-[#1a0033] sm:dark:border-white/10 sm:dark:bg-[#1a0033]/70">
+              {/* Ambient Glows (Hidden on mobile to keep colors static and crisp) */}
+              <div className="pointer-events-none absolute -right-20 -top-20 hidden h-56 w-56 rounded-full bg-[#77BEF0]/10 blur-3xl sm:block" />
+              <div className="pointer-events-none absolute -bottom-20 -left-20 hidden h-56 w-56 rounded-full bg-purple-500/10 blur-3xl sm:block" />
 
               {/* Card Top Bar */}
               <div className="mb-6 flex flex-wrap items-center justify-between gap-3 border-b border-gray-200/60 pb-4 dark:border-white/10">
                 <div className="flex items-center gap-2">
                   <div className="flex gap-1.5">
-                    <span className="h-3 w-3 rounded-full bg-rose-400/80" />
-                    <span className="h-3 w-3 rounded-full bg-amber-400/80" />
-                    <span className="h-3 w-3 rounded-full bg-emerald-400/80" />
+                    <span className="h-3 w-3 rounded-full bg-rose-400" />
+                    <span className="h-3 w-3 rounded-full bg-amber-400" />
+                    <span className="h-3 w-3 rounded-full bg-emerald-400" />
                   </div>
                   <span className="ml-2 font-outfit text-xs font-medium text-gray-500 dark:text-gray-400">
                     profile ~ bio.md
                   </span>
                 </div>
 
-                <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/20 bg-emerald-50/80 px-3 py-1 font-outfit text-xs font-medium text-emerald-600 dark:bg-emerald-950/40 dark:text-emerald-400">
+                <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/20 bg-emerald-50 px-3 py-1 font-outfit text-xs font-medium text-emerald-600 dark:bg-emerald-950/40 dark:text-emerald-400">
                   <span className="relative flex h-2 w-2">
-                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
                     <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
                   </span>
                   Open to Opportunities
@@ -115,7 +114,7 @@ export default function About({ isDarkMode }: AboutProps) {
 
               {/* Key Highlight Badges / Quick Stats */}
               <div className="mt-8 grid grid-cols-1 gap-3 border-t border-gray-200/60 pt-6 sm:grid-cols-2 lg:grid-cols-3 dark:border-white/10">
-                <div className="flex items-center gap-3 rounded-xl border border-gray-200/60 bg-gray-50/70 p-3 transition-colors hover:border-[#77BEF0] dark:border-white/5 dark:bg-white/5">
+                <div className="flex items-center gap-3 rounded-xl border border-gray-200 bg-gray-50 p-3 sm:border-gray-200/60 sm:bg-gray-50/70 sm:transition-colors sm:hover:border-[#77BEF0] dark:border-gray-800 dark:bg-gray-800/50 sm:dark:border-white/5 sm:dark:bg-white/5">
                   <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-blue-500/10 text-blue-500 dark:bg-blue-500/20 dark:text-blue-400">
                     <Code2 className="h-4.5 w-4.5" />
                   </div>
@@ -129,7 +128,7 @@ export default function About({ isDarkMode }: AboutProps) {
                   </div>
                 </div>
 
-                <div className="flex items-center gap-3 rounded-xl border border-gray-200/60 bg-gray-50/70 p-3 transition-colors hover:border-purple-400 dark:border-white/5 dark:bg-white/5">
+                <div className="flex items-center gap-3 rounded-xl border border-gray-200 bg-gray-50 p-3 sm:border-gray-200/60 sm:bg-gray-50/70 sm:transition-colors sm:hover:border-purple-400 dark:border-gray-800 dark:bg-gray-800/50 sm:dark:border-white/5 sm:dark:bg-white/5">
                   <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-purple-500/10 text-purple-500 dark:bg-purple-500/20 dark:text-purple-400">
                     <Server className="h-4.5 w-4.5" />
                   </div>
@@ -143,7 +142,7 @@ export default function About({ isDarkMode }: AboutProps) {
                   </div>
                 </div>
 
-                <div className="flex items-center gap-3 rounded-xl border border-gray-200/60 bg-gray-50/70 p-3 transition-colors hover:border-emerald-400 sm:col-span-2 lg:col-span-1 dark:border-white/5 dark:bg-white/5">
+                <div className="flex items-center gap-3 rounded-xl border border-gray-200 bg-gray-50 p-3 sm:col-span-2 sm:border-gray-200/60 sm:bg-gray-50/70 sm:transition-colors sm:hover:border-emerald-400 lg:col-span-1 dark:border-gray-800 dark:bg-gray-800/50 sm:dark:border-white/5 sm:dark:bg-white/5">
                   <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-emerald-500/10 text-emerald-500 dark:bg-emerald-500/20 dark:text-emerald-400">
                     <Cloud className="h-4.5 w-4.5" />
                   </div>
