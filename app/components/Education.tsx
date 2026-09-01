@@ -1,8 +1,17 @@
 "use client";
 
 import React, { useState } from "react";
-import { m } from "framer-motion";
-import { MapPin, Calendar, GraduationCap, Award, Eye } from "lucide-react";
+import { AnimatePresence, m } from "framer-motion";
+import {
+  MapPin,
+  Calendar,
+  GraduationCap,
+  Award,
+  Eye,
+  ChevronLeft,
+  ChevronRight,
+  ExternalLink,
+} from "lucide-react";
 import { useEducations } from "@/hooks/useApi";
 import Image from "next/image";
 import {
@@ -45,8 +54,11 @@ const typeConfig: Record<
 
 export default function Education({ isDarkMode }: EducationProps) {
   const { data: educations, isLoading } = useEducations();
-  const [selectedAttachment, setSelectedAttachment] =
-    useState<EducationAttachment | null>(null);
+  const [selectedAttachment, setSelectedAttachment] = useState<{
+    attachment: EducationAttachment;
+    list: EducationAttachment[];
+    index: number;
+  } | null>(null);
 
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString("en-US", {
@@ -98,6 +110,22 @@ export default function Education({ isDarkMode }: EducationProps) {
         return null;
       })
       .filter(Boolean) as EducationAttachment[];
+  };
+
+  const handleNavigateAttachment = (direction: "prev" | "next") => {
+    if (!selectedAttachment) return;
+    const { list, index } = selectedAttachment;
+    if (list.length <= 1) return;
+
+    let newIndex = direction === "next" ? index + 1 : index - 1;
+    if (newIndex < 0) newIndex = list.length - 1;
+    if (newIndex >= list.length) newIndex = 0;
+
+    setSelectedAttachment({
+      attachment: list[newIndex],
+      list,
+      index: newIndex,
+    });
   };
 
   return (
@@ -206,9 +234,16 @@ export default function Education({ isDarkMode }: EducationProps) {
                             {badge.label}
                           </span>
                         </div>
-                        <div className="mt-1 flex items-center gap-2 font-medium text-[#77BEF0]">
-                          <GraduationCap className="h-4 w-4" />
-                          <span>{edu.institution}</span>
+                        <div
+                          className="mt-1 flex items-center gap-2 font-medium text-[#77BEF0]"
+                          title={edu.institution}
+                        >
+                          <GraduationCap className="h-4 w-4 shrink-0" />
+                          <span>
+                            {edu.institution.length > 20
+                              ? `${edu.institution.slice(0, 20)}...`
+                              : edu.institution}
+                          </span>
                         </div>
                       </div>
                     </div>
@@ -242,11 +277,19 @@ export default function Education({ isDarkMode }: EducationProps) {
                       </div>
                       <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4">
                         {attachments.map((att, attIdx) => (
-                          <button
+                          <m.button
                             key={attIdx}
                             type="button"
-                            onClick={() => setSelectedAttachment(att)}
-                            className="group relative flex flex-col overflow-hidden rounded-lg border border-gray-200 bg-gray-50 text-left transition-all hover:border-[#77BEF0] hover:shadow-md dark:border-gray-700 dark:bg-gray-800/60"
+                            whileHover={{ scale: 1.03 }}
+                            whileTap={{ scale: 0.97 }}
+                            onClick={() =>
+                              setSelectedAttachment({
+                                attachment: att,
+                                list: attachments,
+                                index: attIdx,
+                              })
+                            }
+                            className="group relative flex flex-col overflow-hidden rounded-xl border border-gray-200 bg-gray-50 text-left shadow-sm transition-all hover:border-[#77BEF0] hover:shadow-md dark:border-gray-700 dark:bg-gray-800/60"
                           >
                             <div className="relative aspect-[4/3] w-full overflow-hidden bg-gray-100 dark:bg-gray-800">
                               <Image
@@ -260,12 +303,12 @@ export default function Education({ isDarkMode }: EducationProps) {
                                 <Eye className="h-5 w-5 text-white drop-shadow" />
                               </div>
                             </div>
-                            <div className="p-2">
+                            <div className="p-2.5">
                               <p className="line-clamp-1 text-xs font-medium text-gray-800 dark:text-gray-200">
                                 {att.title}
                               </p>
                             </div>
-                          </button>
+                          </m.button>
                         ))}
                       </div>
                     </div>
@@ -282,32 +325,91 @@ export default function Education({ isDarkMode }: EducationProps) {
         open={!!selectedAttachment}
         onOpenChange={(open) => !open && setSelectedAttachment(null)}
       >
-        <DialogContent className="max-w-3xl overflow-hidden bg-white p-4 sm:p-6 dark:bg-gray-900">
-          <DialogHeader>
-            <DialogTitle className="flex items-center gap-2 text-lg font-semibold">
-              <Award className="h-5 w-5 text-[#77BEF0]" />
-              {selectedAttachment?.title || "Document Preview"}
-            </DialogTitle>
+        <DialogContent className="w-[94vw] max-w-3xl overflow-hidden rounded-2xl border border-gray-200/80 bg-white/95 p-3 shadow-2xl backdrop-blur-xl sm:rounded-3xl sm:p-5 dark:border-gray-800/80 dark:bg-gray-900/95">
+          <DialogHeader className="mb-2">
+            <div className="flex items-center justify-between gap-2 pr-6 sm:pr-8">
+              <DialogTitle className="flex items-center gap-2 text-sm font-semibold sm:text-base md:text-lg">
+                <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-[#77BEF0]/15 text-[#2170a8] dark:bg-[#77BEF0]/20 dark:text-[#90cdf4]">
+                  <Award className="h-4 w-4" />
+                </div>
+                <span className="line-clamp-1">
+                  {selectedAttachment?.attachment.title || "Document Preview"}
+                </span>
+              </DialogTitle>
+            </div>
           </DialogHeader>
+
           {selectedAttachment && (
-            <div className="space-y-4">
-              <div className="relative aspect-[16/10] max-h-[65vh] w-full overflow-hidden rounded-lg border border-gray-200 bg-black/5 dark:border-gray-800 dark:bg-black/40">
-                <Image
-                  src={selectedAttachment.url}
-                  alt={selectedAttachment.title}
-                  fill
-                  className="object-contain"
-                  sizes="(max-width: 1024px) 100vw, 800px"
-                  priority
-                />
+            <div className="relative flex flex-col items-center">
+              {/* Main Image Container with Animated Presence */}
+              <div className="relative aspect-[4/3] max-h-[58vh] w-full overflow-hidden rounded-xl border border-gray-200/80 bg-black/5 sm:aspect-[16/10] sm:max-h-[62vh] sm:rounded-2xl dark:border-gray-800 dark:bg-black/60">
+                <AnimatePresence mode="wait">
+                  <m.div
+                    key={selectedAttachment.attachment.url}
+                    initial={{ opacity: 0, scale: 0.96 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.96 }}
+                    transition={{ duration: 0.2, ease: "easeOut" }}
+                    className="relative h-full w-full"
+                  >
+                    <Image
+                      src={selectedAttachment.attachment.url}
+                      alt={selectedAttachment.attachment.title}
+                      fill
+                      className="object-contain"
+                      sizes="(max-width: 768px) 94vw, 800px"
+                      priority
+                    />
+                  </m.div>
+                </AnimatePresence>
+
+                {/* Previous / Next Floating Buttons on Image (if list.length > 1) */}
+                {selectedAttachment.list.length > 1 && (
+                  <>
+                    <button
+                      type="button"
+                      onClick={() => handleNavigateAttachment("prev")}
+                      title="Previous Document"
+                      className="absolute left-2 top-1/2 -translate-y-1/2 rounded-full border border-white/20 bg-black/60 p-2 text-white backdrop-blur-md transition-all hover:scale-110 hover:bg-black/80 active:scale-95 sm:left-3 sm:p-2.5"
+                    >
+                      <ChevronLeft className="h-4 w-4 sm:h-5 sm:w-5" />
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => handleNavigateAttachment("next")}
+                      title="Next Document"
+                      className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full border border-white/20 bg-black/60 p-2 text-white backdrop-blur-md transition-all hover:scale-110 hover:bg-black/80 active:scale-95 sm:right-3 sm:p-2.5"
+                    >
+                      <ChevronRight className="h-4 w-4 sm:h-5 sm:w-5" />
+                    </button>
+                  </>
+                )}
               </div>
-              {selectedAttachment.title && (
-                <div className="pt-1 text-center">
-                  <span className="text-xs text-gray-500">
-                    {selectedAttachment.title}
+
+              {/* Footer Bar: Counter & Open Full Image */}
+              <div className="mt-3 flex w-full items-center justify-between px-1 text-xs text-gray-500 dark:text-gray-400">
+                <div className="flex items-center gap-2">
+                  {selectedAttachment.list.length > 1 && (
+                    <span className="rounded-full bg-gray-100 px-2.5 py-0.5 font-medium text-gray-700 dark:bg-gray-800 dark:text-gray-300">
+                      {selectedAttachment.index + 1} /{" "}
+                      {selectedAttachment.list.length}
+                    </span>
+                  )}
+                  <span className="line-clamp-1 max-w-[170px] text-gray-600 sm:max-w-xs dark:text-gray-300">
+                    {selectedAttachment.attachment.title}
                   </span>
                 </div>
-              )}
+
+                <a
+                  href={selectedAttachment.attachment.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1 rounded-lg border border-gray-200 bg-gray-50 px-2.5 py-1 text-xs font-medium text-gray-700 transition-colors hover:bg-gray-100 hover:text-primary dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
+                >
+                  <span>Open Full</span>
+                  <ExternalLink className="h-3 w-3" />
+                </a>
+              </div>
             </div>
           )}
         </DialogContent>
