@@ -37,12 +37,14 @@ import {
   Wrench,
   ArrowUp,
   ArrowDown,
+  GripVertical,
   type LucideIcon,
 } from "lucide-react";
 import Image from "next/image";
 import ImageUpload from "@/components/ImageUpload";
 import { PageLoading } from "@/components/LoadingSpinner";
 import { toast } from "@/hooks/use-toast";
+import { cn } from "@/lib/utils";
 import type { TechCategory, TechStack } from "@/types";
 
 const TECH_CATEGORIES: {
@@ -88,6 +90,14 @@ export default function TechStackPage() {
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [editingTech, setEditingTech] = useState<TechStack | null>(null);
   const [deletingTech, setDeletingTech] = useState<TechStack | null>(null);
+  const [draggedTech, setDraggedTech] = useState<{
+    category: string;
+    index: number;
+  } | null>(null);
+  const [dragOverTech, setDragOverTech] = useState<{
+    category: string;
+    index: number;
+  } | null>(null);
 
   const handleMoveTech = async (
     category: string,
@@ -110,9 +120,68 @@ export default function TechStackPage() {
 
     try {
       await reorderMutation.mutateAsync(orders);
-    } catch (err) {
-      console.error("Tech stack reorder failed:", err);
+    } catch {}
+  };
+
+  const handleDragStart = (
+    e: React.DragEvent,
+    category: string,
+    index: number
+  ) => {
+    setDraggedTech({ category, index });
+    e.dataTransfer.effectAllowed = "move";
+    e.dataTransfer.setData("text/plain", JSON.stringify({ category, index }));
+  };
+
+  const handleDragOver = (
+    e: React.DragEvent,
+    category: string,
+    index: number
+  ) => {
+    e.preventDefault();
+    if (draggedTech && draggedTech.category === category) {
+      e.dataTransfer.dropEffect = "move";
+      setDragOverTech({ category, index });
     }
+  };
+
+  const handleDrop = async (
+    e: React.DragEvent,
+    category: string,
+    targetIndex: number,
+    items: TechStack[]
+  ) => {
+    e.preventDefault();
+    setDragOverTech(null);
+    if (
+      !draggedTech ||
+      draggedTech.category !== category ||
+      draggedTech.index === targetIndex
+    ) {
+      setDraggedTech(null);
+      return;
+    }
+
+    const fromIndex = draggedTech.index;
+    setDraggedTech(null);
+
+    const newItems = [...items];
+    const [movedItem] = newItems.splice(fromIndex, 1);
+    newItems.splice(targetIndex, 0, movedItem);
+
+    const orders = newItems.map((item, i) => ({
+      id: item._id,
+      order: i + 1,
+    }));
+
+    try {
+      await reorderMutation.mutateAsync(orders);
+    } catch {}
+  };
+
+  const handleDragEnd = () => {
+    setDraggedTech(null);
+    setDragOverTech(null);
   };
 
   const [formData, setFormData] = useState<{
@@ -205,9 +274,7 @@ export default function TechStackPage() {
         await createMutation.mutateAsync(payload);
       }
       setDialogOpen(false);
-    } catch (error) {
-      console.error("Failed to save technology:", error);
-    }
+    } catch {}
   };
 
   const confirmDelete = async () => {
@@ -216,9 +283,7 @@ export default function TechStackPage() {
     try {
       await deleteMutation.mutateAsync(deletingTech._id);
       setDeleteDialogOpen(false);
-    } catch (error) {
-      console.error("Failed to delete technology:", error);
-    }
+    } catch {}
   };
 
   const filteredTechStack = techStack?.filter((tech) => {
@@ -238,7 +303,6 @@ export default function TechStackPage() {
     return matchesSearch && matchesCategory;
   });
 
-  // Group by category (multi-category aware)
   const groupedTech = filteredTechStack?.reduce(
     (acc, tech) => {
       const cats =
@@ -351,105 +415,142 @@ export default function TechStackPage() {
                       <CategoryIcon className="h-5 w-5 text-primary" />
                       {formatCategoryTitle(category)}
                     </CardTitle>
-                    <Badge variant="secondary">{items.length} items</Badge>
+                    <div className="flex items-center gap-2">
+                      <span className="hidden text-xs text-muted-foreground sm:inline">
+                        💡 Drag &amp; drop kartu untuk mengatur urutan
+                      </span>
+                      <Badge variant="secondary">{items.length} items</Badge>
+                    </div>
                   </div>
                 </CardHeader>
                 <CardContent>
                   <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                    {items.map((tech, idx) => (
-                      <div
-                        key={tech._id}
-                        className="flex items-center justify-between rounded-lg border p-3 transition-colors hover:bg-gray-50 dark:hover:bg-gray-800"
-                      >
-                        <div className="flex items-center gap-3">
-                          <div className="flex flex-col gap-0.5">
-                            <Button
-                              variant="ghost"
-                              size="icon"
-                              className="h-5 w-5"
-                              disabled={idx === 0 || reorderMutation.isPending}
-                              onClick={() =>
-                                handleMoveTech(category, idx, "up", items)
-                              }
-                              title="Move Up"
-                            >
-                              <ArrowUp className="h-3 w-3" />
-                            </Button>
-                            <Button
-                              variant="ghost"
-                              size="icon"
-                              className="h-5 w-5"
-                              disabled={
-                                idx === items.length - 1 ||
-                                reorderMutation.isPending
-                              }
-                              onClick={() =>
-                                handleMoveTech(category, idx, "down", items)
-                              }
-                              title="Move Down"
-                            >
-                              <ArrowDown className="h-3 w-3" />
-                            </Button>
-                          </div>
-                          {tech.icon ? (
-                            <div className="relative h-10 w-10 flex-shrink-0 overflow-hidden rounded bg-gray-100 p-1 dark:bg-gray-800">
-                              <Image
-                                src={tech.icon}
-                                alt={tech.title}
-                                fill
-                                className="object-contain"
-                              />
-                            </div>
-                          ) : (
-                            <div className="flex h-10 w-10 items-center justify-center rounded bg-gray-200 text-xs font-bold text-gray-600 dark:bg-gray-700 dark:text-gray-300">
-                              {tech.title.substring(0, 2).toUpperCase()}
-                            </div>
+                    {items.map((tech, idx) => {
+                      const isBeingDragged =
+                        draggedTech?.category === category &&
+                        draggedTech?.index === idx;
+                      const isDragOver =
+                        dragOverTech?.category === category &&
+                        dragOverTech?.index === idx &&
+                        !isBeingDragged;
+
+                      return (
+                        <div
+                          key={tech._id}
+                          draggable
+                          onDragStart={(e) => handleDragStart(e, category, idx)}
+                          onDragOver={(e) => handleDragOver(e, category, idx)}
+                          onDrop={(e) => handleDrop(e, category, idx, items)}
+                          onDragEnd={handleDragEnd}
+                          className={cn(
+                            "group flex cursor-grab items-center justify-between rounded-lg border p-3 transition-all active:cursor-grabbing",
+                            isBeingDragged
+                              ? "ring-primary/30 scale-95 border-dashed border-primary opacity-40 ring-2"
+                              : isDragOver
+                                ? "bg-primary/5 ring-primary/20 scale-[1.02] border-primary ring-2"
+                                : "hover:border-primary/50 hover:bg-gray-50 hover:shadow-sm dark:hover:bg-gray-800"
                           )}
-                          <div>
-                            <p className="text-sm font-medium">{tech.title}</p>
-                            {tech.proficiencyLevel &&
-                            tech.proficiencyLevel > 0 ? (
-                              <div
-                                className="mt-0.5 flex items-center gap-0.5"
-                                title={`Level ${tech.proficiencyLevel}/5`}
+                        >
+                          <div className="flex items-center gap-2">
+                            <GripVertical className="h-4 w-4 shrink-0 cursor-grab text-gray-400 opacity-40 transition-opacity active:cursor-grabbing group-hover:opacity-100" />
+                            <div className="flex flex-col gap-0.5">
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                className="h-5 w-5"
+                                disabled={
+                                  idx === 0 || reorderMutation.isPending
+                                }
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  handleMoveTech(category, idx, "up", items);
+                                }}
+                                title="Move Up"
                               >
-                                {Array.from({ length: 5 }).map((_, i) => (
-                                  <Star
-                                    key={i}
-                                    className={`h-3 w-3 ${
-                                      i < (tech.proficiencyLevel || 0)
-                                        ? "fill-amber-400 text-amber-400"
-                                        : "text-gray-300 dark:text-gray-600"
-                                    }`}
-                                  />
-                                ))}
+                                <ArrowUp className="h-3 w-3" />
+                              </Button>
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                className="h-5 w-5"
+                                disabled={
+                                  idx === items.length - 1 ||
+                                  reorderMutation.isPending
+                                }
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  handleMoveTech(category, idx, "down", items);
+                                }}
+                                title="Move Down"
+                              >
+                                <ArrowDown className="h-3 w-3" />
+                              </Button>
+                            </div>
+                            {tech.icon ? (
+                              <div className="relative h-10 w-10 flex-shrink-0 overflow-hidden rounded bg-gray-100 p-1 dark:bg-gray-800">
+                                <Image
+                                  src={tech.icon}
+                                  alt={tech.title}
+                                  fill
+                                  className="object-contain"
+                                />
                               </div>
                             ) : (
-                              <p className="text-xs text-gray-500">
-                                Order: {tech.order}
-                              </p>
+                              <div className="flex h-10 w-10 items-center justify-center rounded bg-gray-200 text-xs font-bold text-gray-600 dark:bg-gray-700 dark:text-gray-300">
+                                {tech.title.substring(0, 2).toUpperCase()}
+                              </div>
                             )}
+                            <div>
+                              <p className="text-sm font-medium">
+                                {tech.title}
+                              </p>
+                              {tech.proficiencyLevel &&
+                              tech.proficiencyLevel > 0 ? (
+                                <div
+                                  className="mt-0.5 flex items-center gap-0.5"
+                                  title={`Level ${tech.proficiencyLevel}/5`}
+                                >
+                                  {Array.from({ length: 5 }).map((_, i) => (
+                                    <Star
+                                      key={i}
+                                      className={`h-3 w-3 ${
+                                        i < (tech.proficiencyLevel || 0)
+                                          ? "fill-amber-400 text-amber-400"
+                                          : "text-gray-300 dark:text-gray-600"
+                                      }`}
+                                    />
+                                  ))}
+                                </div>
+                              ) : (
+                                <p className="text-xs text-gray-500">
+                                  Order: {tech.order}
+                                </p>
+                              )}
+                            </div>
+                          </div>
+                          <div
+                            className="flex gap-1"
+                            onClick={(e) => e.stopPropagation()}
+                          >
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => handleEdit(tech)}
+                            >
+                              <Pencil className="h-4 w-4" />
+                            </Button>
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              className="text-red-600 hover:text-red-700"
+                              onClick={() => handleDelete(tech)}
+                            >
+                              <Trash2 className="h-4 w-4" />
+                            </Button>
                           </div>
                         </div>
-                        <div className="flex gap-1">
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => handleEdit(tech)}
-                          >
-                            <Pencil className="h-4 w-4" />
-                          </Button>
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            className="text-red-600 hover:text-red-700"
-                            onClick={() => handleDelete(tech)}
-                          >
-                            <Trash2 className="h-4 w-4" />
-                          </Button>
-                        </div>
-                      </div>
-                    ))}
+                      );
+                    })}
                   </div>
                 </CardContent>
               </Card>
