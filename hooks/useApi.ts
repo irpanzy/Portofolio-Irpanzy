@@ -597,6 +597,7 @@ export const useUpdateTechStack = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: queryKeys.techStack() });
+      queryClient.invalidateQueries({ queryKey: queryKeys.projects });
       toast.success("Tech stack updated successfully!");
     },
     onError: (error: any) => {
@@ -617,6 +618,7 @@ export const useDeleteTechStack = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: queryKeys.techStack() });
+      queryClient.invalidateQueries({ queryKey: queryKeys.projects });
       toast.success("Tech stack deleted successfully!");
     },
     onError: (error: any) => {
