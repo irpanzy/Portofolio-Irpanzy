@@ -70,8 +70,6 @@ export default function TechStackSelector({
         },
       ]);
     }
-
-    setOpen(false);
   };
 
   const handleRemove = (index: number) => {
@@ -218,18 +216,22 @@ export default function TechStackSelector({
             aria-expanded={open}
             className="w-full justify-between font-outfit"
           >
-            Select from library...
+            <span className="truncate">
+              {selected.length > 0
+                ? `${selected.length} tech stack dipilih`
+                : "Select from library..."}
+            </span>
             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
           </Button>
         </PopoverTrigger>
         <PopoverContent
-          className="w-[400px] p-0 font-outfit"
+          className="w-[400px] p-0 font-outfit shadow-2xl"
           align="start"
           sideOffset={4}
         >
           <Command className="font-outfit">
             <CommandInput placeholder="Search tech stack..." />
-            <CommandList>
+            <CommandList className="max-h-[260px] overflow-y-auto">
               <CommandEmpty>No tech stack found.</CommandEmpty>
               <CommandGroup>
                 {techStacks?.map((tech) => {
@@ -241,38 +243,66 @@ export default function TechStackSelector({
                       onSelect={() => {
                         handleSelect(tech);
                       }}
-                      className="flex cursor-pointer items-center gap-2"
-                    >
-                      <Check
-                        className={cn(
-                          "mr-2 h-4 w-4",
-                          isSelected ? "opacity-100" : "opacity-0"
-                        )}
-                      />
-                      {tech.icon ? (
-                        <Image
-                          src={tech.icon}
-                          alt={tech.title}
-                          width={20}
-                          height={20}
-                          className="h-5 w-5 object-contain"
-                        />
-                      ) : (
-                        <div className="flex h-5 w-5 items-center justify-center rounded bg-gray-200 text-[10px] font-bold text-gray-600 dark:bg-gray-700 dark:text-gray-300">
-                          {tech.title.substring(0, 2).toUpperCase()}
-                        </div>
+                      className={cn(
+                        "flex cursor-pointer items-center justify-between gap-2 px-3 py-2 transition-colors",
+                        isSelected &&
+                          "bg-[#77BEF0]/15 font-medium dark:bg-[#77BEF0]/20"
                       )}
-                      <span>{tech.title}</span>
+                    >
+                      <div className="flex min-w-0 items-center gap-2.5">
+                        {tech.icon ? (
+                          <Image
+                            src={tech.icon}
+                            alt={tech.title}
+                            width={20}
+                            height={20}
+                            className="h-5 w-5 shrink-0 object-contain"
+                          />
+                        ) : (
+                          <div className="flex h-5 w-5 shrink-0 items-center justify-center rounded bg-gray-200 text-[10px] font-bold text-gray-600 dark:bg-gray-700 dark:text-gray-300">
+                            {tech.title.substring(0, 2).toUpperCase()}
+                          </div>
+                        )}
+                        <span className="truncate">{tech.title}</span>
+                      </div>
+
+                      <div
+                        className={cn(
+                          "flex h-4 w-4 shrink-0 items-center justify-center rounded border transition-colors",
+                          isSelected
+                            ? "border-[#77BEF0] bg-[#77BEF0] text-gray-950 dark:text-white"
+                            : "border-gray-300 dark:border-gray-600"
+                        )}
+                      >
+                        {isSelected && <Check className="h-3 w-3 stroke-[3]" />}
+                      </div>
                     </CommandItem>
                   );
                 })}
               </CommandGroup>
             </CommandList>
+
+            {/* Bottom bar with counter and Done button */}
+            <div className="flex items-center justify-between border-t border-gray-100 bg-gray-50/80 px-3 py-2 dark:border-gray-800 dark:bg-gray-900/80">
+              <span className="text-xs text-gray-500 dark:text-gray-400">
+                {selected.length} tech stack dipilih
+              </span>
+              <Button
+                type="button"
+                size="sm"
+                className="h-7 bg-[#77BEF0] px-3 text-xs font-semibold text-gray-950 hover:bg-[#64b0e6]"
+                onClick={() => setOpen(false)}
+              >
+                Selesai
+              </Button>
+            </div>
           </Command>
         </PopoverContent>
       </Popover>
 
-      <p className="text-xs text-gray-500">Select tech stack from library</p>
+      <p className="text-xs text-gray-500">
+        Klik item untuk memilih sekaligus banyak, lalu klik &quot;Selesai&quot;
+      </p>
     </div>
   );
 }
