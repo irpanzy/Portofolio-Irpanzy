@@ -1,3 +1,9 @@
+export interface ExperienceAttachment {
+  title: string;
+  url: string;
+  fileId?: string;
+}
+
 export interface Experience {
   _id: string;
   company: string;
@@ -9,6 +15,7 @@ export interface Experience {
   description: string;
   responsibilities: string[];
   logo?: string;
+  attachments?: ExperienceAttachment[];
   order: number;
   createdAt: string;
   updatedAt: string;
