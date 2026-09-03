@@ -423,9 +423,6 @@ export default function Experience({ isDarkMode }: ExperienceProps) {
                           PDF
                         </span>
                       )}
-                      <span className="line-clamp-1 hidden max-w-[170px] truncate text-gray-600 sm:inline-block sm:max-w-xs dark:text-gray-300">
-                        {selectedAttachment.attachment.title}
-                      </span>
                     </div>
 
                     <a
