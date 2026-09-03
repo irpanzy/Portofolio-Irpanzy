@@ -354,7 +354,7 @@ export default function Experience({ isDarkMode }: ExperienceProps) {
               return (
                 <div className="relative flex flex-col items-center">
                   {/* Main Media Container with Animated Presence */}
-                  <div className="relative aspect-[4/3] max-h-[62vh] min-h-[45vh] w-full overflow-hidden rounded-xl border border-gray-200/80 bg-black/5 sm:aspect-[16/10] sm:max-h-[66vh] sm:min-h-[55vh] sm:rounded-2xl dark:border-gray-800 dark:bg-black/60">
+                  <div className="relative aspect-[4/3] max-h-[58vh] min-h-[38vh] w-full overflow-hidden rounded-xl border border-gray-200/80 bg-black/5 sm:aspect-[16/10] sm:max-h-[66vh] sm:min-h-[55vh] sm:rounded-2xl dark:border-gray-800 dark:bg-black/60">
                     <AnimatePresence mode="wait">
                       <m.div
                         key={selectedAttachment.attachment.url}
@@ -392,38 +392,38 @@ export default function Experience({ isDarkMode }: ExperienceProps) {
                           type="button"
                           onClick={() => handleNavigateAttachment("prev")}
                           title="Previous Document"
-                          className="absolute left-2 top-1/2 z-10 -translate-y-1/2 rounded-full border border-white/20 bg-black/60 p-2 text-white backdrop-blur-md transition-all hover:scale-110 hover:bg-black/80 active:scale-95 sm:left-3 sm:p-2.5"
+                          className="absolute left-1.5 top-1/2 z-10 -translate-y-1/2 rounded-full border border-white/20 bg-black/60 p-1.5 text-white backdrop-blur-md transition-all hover:scale-110 hover:bg-black/80 active:scale-95 sm:left-3 sm:p-2.5"
                         >
-                          <ChevronLeft className="h-4 w-4 sm:h-5 sm:w-5" />
+                          <ChevronLeft className="h-3.5 w-3.5 sm:h-5 sm:w-5" />
                         </button>
                         <button
                           type="button"
                           onClick={() => handleNavigateAttachment("next")}
                           title="Next Document"
-                          className="absolute right-2 top-1/2 z-10 -translate-y-1/2 rounded-full border border-white/20 bg-black/60 p-2 text-white backdrop-blur-md transition-all hover:scale-110 hover:bg-black/80 active:scale-95 sm:right-3 sm:p-2.5"
+                          className="absolute right-1.5 top-1/2 z-10 -translate-y-1/2 rounded-full border border-white/20 bg-black/60 p-1.5 text-white backdrop-blur-md transition-all hover:scale-110 hover:bg-black/80 active:scale-95 sm:right-3 sm:p-2.5"
                         >
-                          <ChevronRight className="h-4 w-4 sm:h-5 sm:w-5" />
+                          <ChevronRight className="h-3.5 w-3.5 sm:h-5 sm:w-5" />
                         </button>
                       </>
                     )}
                   </div>
 
                   {/* Footer Bar: Counter & Open Full Image/PDF */}
-                  <div className="mt-3 flex w-full items-center justify-between px-1 text-xs text-gray-500 dark:text-gray-400">
-                    <div className="flex items-center gap-2">
+                  <div className="mt-3 flex w-full items-center justify-between gap-2 px-1 text-xs text-gray-500 dark:text-gray-400">
+                    <div className="flex min-w-0 items-center gap-1.5 sm:gap-2">
                       {selectedAttachment.list.length > 1 && (
-                        <span className="rounded-full bg-gray-100 px-2.5 py-0.5 font-medium text-gray-700 dark:bg-gray-800 dark:text-gray-300">
+                        <span className="shrink-0 whitespace-nowrap rounded-full bg-gray-100 px-2 py-0.5 text-[11px] font-semibold text-gray-700 sm:px-2.5 sm:text-xs dark:bg-gray-800 dark:text-gray-300">
                           {selectedAttachment.index + 1} /{" "}
                           {selectedAttachment.list.length}
                         </span>
                       )}
                       {isPdf && (
-                        <span className="inline-flex items-center gap-1 rounded-full border border-rose-500/20 bg-rose-500/10 px-2 py-0.5 text-[10px] font-semibold text-rose-600 dark:text-rose-400">
+                        <span className="inline-flex shrink-0 items-center gap-1 rounded-full border border-rose-500/20 bg-rose-500/10 px-2 py-0.5 text-[10px] font-semibold text-rose-600 dark:text-rose-400">
                           <FileText className="h-2.5 w-2.5" />
                           PDF
                         </span>
                       )}
-                      <span className="line-clamp-1 max-w-[170px] text-gray-600 sm:max-w-xs dark:text-gray-300">
+                      <span className="line-clamp-1 hidden max-w-[170px] truncate text-gray-600 sm:inline-block sm:max-w-xs dark:text-gray-300">
                         {selectedAttachment.attachment.title}
                       </span>
                     </div>
@@ -432,9 +432,9 @@ export default function Experience({ isDarkMode }: ExperienceProps) {
                       href={selectedAttachment.attachment.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1 rounded-lg border border-gray-200 bg-gray-50 px-2.5 py-1 text-xs font-medium text-gray-700 transition-colors hover:bg-gray-100 hover:text-primary dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
+                      className="inline-flex shrink-0 items-center gap-1 whitespace-nowrap rounded-lg border border-gray-200 bg-gray-50 px-2.5 py-1 text-[11px] font-medium text-gray-700 transition-colors hover:bg-gray-100 hover:text-primary sm:text-xs dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
                     >
-                      <span>{isPdf ? "Open / Download PDF" : "Open Full"}</span>
+                      <span>{isPdf ? "Open PDF" : "Open Full"}</span>
                       <ExternalLink className="h-3 w-3" />
                     </a>
                   </div>
