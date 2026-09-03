@@ -11,9 +11,11 @@ import {
   ChevronLeft,
   ChevronRight,
   ExternalLink,
+  FileText,
 } from "lucide-react";
 import { useEducations } from "@/hooks/useApi";
 import Image from "next/image";
+import PdfThumbnail from "@/components/PdfThumbnail";
 import {
   Dialog,
   DialogContent,
@@ -276,40 +278,51 @@ export default function Education({ isDarkMode }: EducationProps) {
                         </span>
                       </div>
                       <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4">
-                        {attachments.map((att, attIdx) => (
-                          <m.button
-                            key={attIdx}
-                            type="button"
-                            whileHover={{ scale: 1.03 }}
-                            whileTap={{ scale: 0.97 }}
-                            onClick={() =>
-                              setSelectedAttachment({
-                                attachment: att,
-                                list: attachments,
-                                index: attIdx,
-                              })
-                            }
-                            className="group relative flex flex-col overflow-hidden rounded-xl border border-gray-200 bg-gray-50 text-left shadow-sm transition-all hover:border-[#77BEF0] hover:shadow-md dark:border-gray-700 dark:bg-gray-800/60"
-                          >
-                            <div className="relative aspect-[4/3] w-full overflow-hidden bg-gray-100 dark:bg-gray-800">
-                              <Image
-                                src={att.url}
-                                alt={att.title}
-                                fill
-                                className="object-cover transition-transform duration-300 group-hover:scale-105"
-                                sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, 25vw"
-                              />
-                              <div className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 transition-opacity group-hover:opacity-100">
-                                <Eye className="h-5 w-5 text-white drop-shadow" />
+                        {attachments.map((att, attIdx) => {
+                          const isPdf = att.url?.toLowerCase().includes(".pdf");
+
+                          return (
+                            <m.button
+                              key={attIdx}
+                              type="button"
+                              whileHover={{ scale: 1.03 }}
+                              whileTap={{ scale: 0.97 }}
+                              onClick={() =>
+                                setSelectedAttachment({
+                                  attachment: att,
+                                  list: attachments,
+                                  index: attIdx,
+                                })
+                              }
+                              className="group relative flex flex-col overflow-hidden rounded-xl border border-gray-200 bg-gray-50 text-left shadow-sm transition-all hover:border-[#77BEF0] hover:shadow-md dark:border-gray-700 dark:bg-gray-800/60"
+                            >
+                              <div className="relative aspect-[4/3] w-full overflow-hidden bg-gray-100 dark:bg-gray-800">
+                                {isPdf ? (
+                                  <PdfThumbnail
+                                    url={att.url}
+                                    title={att.title}
+                                  />
+                                ) : (
+                                  <Image
+                                    src={att.url}
+                                    alt={att.title}
+                                    fill
+                                    className="object-cover transition-transform duration-300 group-hover:scale-105"
+                                    sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, 25vw"
+                                  />
+                                )}
+                                <div className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 transition-opacity group-hover:opacity-100">
+                                  <Eye className="h-5 w-5 text-white drop-shadow" />
+                                </div>
                               </div>
-                            </div>
-                            <div className="p-2.5">
-                              <p className="line-clamp-1 text-xs font-medium text-gray-800 dark:text-gray-200">
-                                {att.title}
-                              </p>
-                            </div>
-                          </m.button>
-                        ))}
+                              <div className="p-2.5">
+                                <p className="line-clamp-1 text-xs font-medium text-gray-800 dark:text-gray-200">
+                                  {att.title}
+                                </p>
+                              </div>
+                            </m.button>
+                          );
+                        })}
                       </div>
                     </div>
                   )}
@@ -339,79 +352,102 @@ export default function Education({ isDarkMode }: EducationProps) {
             </div>
           </DialogHeader>
 
-          {selectedAttachment && (
-            <div className="relative flex flex-col items-center">
-              {/* Main Image Container with Animated Presence */}
-              <div className="relative aspect-[4/3] max-h-[58vh] w-full overflow-hidden rounded-xl border border-gray-200/80 bg-black/5 sm:aspect-[16/10] sm:max-h-[62vh] sm:rounded-2xl dark:border-gray-800 dark:bg-black/60">
-                <AnimatePresence mode="wait">
-                  <m.div
-                    key={selectedAttachment.attachment.url}
-                    initial={{ opacity: 0, scale: 0.96 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.96 }}
-                    transition={{ duration: 0.2, ease: "easeOut" }}
-                    className="relative h-full w-full"
-                  >
-                    <Image
-                      src={selectedAttachment.attachment.url}
-                      alt={selectedAttachment.attachment.title}
-                      fill
-                      className="object-contain"
-                      sizes="(max-width: 768px) 94vw, 800px"
-                      priority
-                    />
-                  </m.div>
-                </AnimatePresence>
+          {selectedAttachment &&
+            (() => {
+              const isPdf = selectedAttachment.attachment.url
+                ?.toLowerCase()
+                .includes(".pdf");
 
-                {/* Previous / Next Floating Buttons on Image (if list.length > 1) */}
-                {selectedAttachment.list.length > 1 && (
-                  <>
-                    <button
-                      type="button"
-                      onClick={() => handleNavigateAttachment("prev")}
-                      title="Previous Document"
-                      className="absolute left-2 top-1/2 -translate-y-1/2 rounded-full border border-white/20 bg-black/60 p-2 text-white backdrop-blur-md transition-all hover:scale-110 hover:bg-black/80 active:scale-95 sm:left-3 sm:p-2.5"
-                    >
-                      <ChevronLeft className="h-4 w-4 sm:h-5 sm:w-5" />
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => handleNavigateAttachment("next")}
-                      title="Next Document"
-                      className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full border border-white/20 bg-black/60 p-2 text-white backdrop-blur-md transition-all hover:scale-110 hover:bg-black/80 active:scale-95 sm:right-3 sm:p-2.5"
-                    >
-                      <ChevronRight className="h-4 w-4 sm:h-5 sm:w-5" />
-                    </button>
-                  </>
-                )}
-              </div>
+              return (
+                <div className="relative flex flex-col items-center">
+                  {/* Main Media Container with Animated Presence */}
+                  <div className="relative aspect-[4/3] max-h-[62vh] min-h-[45vh] w-full overflow-hidden rounded-xl border border-gray-200/80 bg-black/5 sm:aspect-[16/10] sm:max-h-[66vh] sm:min-h-[55vh] sm:rounded-2xl dark:border-gray-800 dark:bg-black/60">
+                    <AnimatePresence mode="wait">
+                      <m.div
+                        key={selectedAttachment.attachment.url}
+                        initial={{ opacity: 0, scale: 0.96 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.96 }}
+                        transition={{ duration: 0.2, ease: "easeOut" }}
+                        className="relative h-full w-full"
+                      >
+                        {isPdf ? (
+                          <div className="relative flex h-full w-full flex-col">
+                            <iframe
+                              src={`${selectedAttachment.attachment.url}#view=FitH`}
+                              className="h-full w-full rounded-xl border-0 bg-white"
+                              title={selectedAttachment.attachment.title}
+                            />
+                          </div>
+                        ) : (
+                          <Image
+                            src={selectedAttachment.attachment.url}
+                            alt={selectedAttachment.attachment.title}
+                            fill
+                            className="object-contain"
+                            sizes="(max-width: 768px) 94vw, 800px"
+                            priority
+                          />
+                        )}
+                      </m.div>
+                    </AnimatePresence>
 
-              {/* Footer Bar: Counter & Open Full Image */}
-              <div className="mt-3 flex w-full items-center justify-between px-1 text-xs text-gray-500 dark:text-gray-400">
-                <div className="flex items-center gap-2">
-                  {selectedAttachment.list.length > 1 && (
-                    <span className="rounded-full bg-gray-100 px-2.5 py-0.5 font-medium text-gray-700 dark:bg-gray-800 dark:text-gray-300">
-                      {selectedAttachment.index + 1} /{" "}
-                      {selectedAttachment.list.length}
-                    </span>
-                  )}
-                  <span className="line-clamp-1 max-w-[170px] text-gray-600 sm:max-w-xs dark:text-gray-300">
-                    {selectedAttachment.attachment.title}
-                  </span>
+                    {/* Previous / Next Floating Buttons on Image (if list.length > 1) */}
+                    {selectedAttachment.list.length > 1 && (
+                      <>
+                        <button
+                          type="button"
+                          onClick={() => handleNavigateAttachment("prev")}
+                          title="Previous Document"
+                          className="absolute left-2 top-1/2 z-10 -translate-y-1/2 rounded-full border border-white/20 bg-black/60 p-2 text-white backdrop-blur-md transition-all hover:scale-110 hover:bg-black/80 active:scale-95 sm:left-3 sm:p-2.5"
+                        >
+                          <ChevronLeft className="h-4 w-4 sm:h-5 sm:w-5" />
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => handleNavigateAttachment("next")}
+                          title="Next Document"
+                          className="absolute right-2 top-1/2 z-10 -translate-y-1/2 rounded-full border border-white/20 bg-black/60 p-2 text-white backdrop-blur-md transition-all hover:scale-110 hover:bg-black/80 active:scale-95 sm:right-3 sm:p-2.5"
+                        >
+                          <ChevronRight className="h-4 w-4 sm:h-5 sm:w-5" />
+                        </button>
+                      </>
+                    )}
+                  </div>
+
+                  {/* Footer Bar: Counter & Open Full Image/PDF */}
+                  <div className="mt-3 flex w-full items-center justify-between px-1 text-xs text-gray-500 dark:text-gray-400">
+                    <div className="flex items-center gap-2">
+                      {selectedAttachment.list.length > 1 && (
+                        <span className="rounded-full bg-gray-100 px-2.5 py-0.5 font-medium text-gray-700 dark:bg-gray-800 dark:text-gray-300">
+                          {selectedAttachment.index + 1} /{" "}
+                          {selectedAttachment.list.length}
+                        </span>
+                      )}
+                      {isPdf && (
+                        <span className="inline-flex items-center gap-1 rounded-full border border-rose-500/20 bg-rose-500/10 px-2 py-0.5 text-[10px] font-semibold text-rose-600 dark:text-rose-400">
+                          <FileText className="h-2.5 w-2.5" />
+                          PDF
+                        </span>
+                      )}
+                      <span className="line-clamp-1 max-w-[170px] text-gray-600 sm:max-w-xs dark:text-gray-300">
+                        {selectedAttachment.attachment.title}
+                      </span>
+                    </div>
+
+                    <a
+                      href={selectedAttachment.attachment.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1 rounded-lg border border-gray-200 bg-gray-50 px-2.5 py-1 text-xs font-medium text-gray-700 transition-colors hover:bg-gray-100 hover:text-primary dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
+                    >
+                      <span>{isPdf ? "Open / Download PDF" : "Open Full"}</span>
+                      <ExternalLink className="h-3 w-3" />
+                    </a>
+                  </div>
                 </div>
-
-                <a
-                  href={selectedAttachment.attachment.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1 rounded-lg border border-gray-200 bg-gray-50 px-2.5 py-1 text-xs font-medium text-gray-700 transition-colors hover:bg-gray-100 hover:text-primary dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
-                >
-                  <span>Open Full</span>
-                  <ExternalLink className="h-3 w-3" />
-                </a>
-              </div>
-            </div>
-          )}
+              );
+            })()}
         </DialogContent>
       </Dialog>
     </m.div>

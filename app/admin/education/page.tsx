@@ -39,8 +39,13 @@ import {
   ChevronDown,
   ArrowUp,
   ArrowDown,
+  ExternalLink,
+  Check,
+  X,
+  GripVertical,
 } from "lucide-react";
 import Image from "next/image";
+import PdfThumbnail from "@/components/PdfThumbnail";
 import ImageUpload from "@/components/ImageUpload";
 import { PageLoading } from "@/components/LoadingSpinner";
 import type { Education, EducationAttachment } from "@/types";
@@ -119,6 +124,10 @@ export default function EducationPage() {
     url: "",
     fileId: "",
   });
+  const [editingAttachmentIdx, setEditingAttachmentIdx] = useState<
+    number | null
+  >(null);
+  const [editingAttachmentTitle, setEditingAttachmentTitle] = useState("");
 
   const getNextOrder = () => {
     if (!educations || educations.length === 0) return 1;
@@ -142,6 +151,8 @@ export default function EducationPage() {
       order: getNextOrder(),
     });
     setNewAttachment({ title: "", url: "", fileId: "" });
+    setEditingAttachmentIdx(null);
+    setEditingAttachmentTitle("");
     setDialogOpen(true);
   };
 
@@ -162,6 +173,8 @@ export default function EducationPage() {
       order: education.order,
     });
     setNewAttachment({ title: "", url: "", fileId: "" });
+    setEditingAttachmentIdx(null);
+    setEditingAttachmentTitle("");
     setDialogOpen(true);
   };
 
@@ -182,10 +195,89 @@ export default function EducationPage() {
   };
 
   const handleRemoveAttachment = (index: number) => {
+    if (editingAttachmentIdx === index) {
+      setEditingAttachmentIdx(null);
+      setEditingAttachmentTitle("");
+    }
     setFormData((prev) => ({
       ...prev,
       attachments: prev.attachments.filter((_, i) => i !== index),
     }));
+  };
+
+  const handleStartEditAttachment = (index: number, currentTitle: string) => {
+    setEditingAttachmentIdx(index);
+    setEditingAttachmentTitle(currentTitle);
+  };
+
+  const handleSaveAttachmentTitle = (index: number) => {
+    if (!editingAttachmentTitle.trim()) return;
+    setFormData((prev) => {
+      const updated = [...prev.attachments];
+      if (updated[index]) {
+        updated[index] = {
+          ...updated[index],
+          title: editingAttachmentTitle.trim(),
+        };
+      }
+      return { ...prev, attachments: updated };
+    });
+    setEditingAttachmentIdx(null);
+    setEditingAttachmentTitle("");
+  };
+
+  const handleCancelEditAttachment = () => {
+    setEditingAttachmentIdx(null);
+    setEditingAttachmentTitle("");
+  };
+
+  const [draggedAttachmentIdx, setDraggedAttachmentIdx] = useState<
+    number | null
+  >(null);
+  const [dragOverAttachmentIdx, setDragOverAttachmentIdx] = useState<
+    number | null
+  >(null);
+
+  const handleDragStart = (e: React.DragEvent, index: number) => {
+    setDraggedAttachmentIdx(index);
+    e.dataTransfer.effectAllowed = "move";
+    e.dataTransfer.setData("text/plain", `${index}`);
+  };
+
+  const handleDragOver = (e: React.DragEvent, index: number) => {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = "move";
+    if (dragOverAttachmentIdx !== index) {
+      setDragOverAttachmentIdx(index);
+    }
+  };
+
+  const handleDrop = (e: React.DragEvent, targetIndex: number) => {
+    e.preventDefault();
+    if (draggedAttachmentIdx === null || draggedAttachmentIdx === targetIndex) {
+      setDraggedAttachmentIdx(null);
+      setDragOverAttachmentIdx(null);
+      return;
+    }
+
+    setFormData((prev) => {
+      const updated = [...prev.attachments];
+      const [movedItem] = updated.splice(draggedAttachmentIdx, 1);
+      updated.splice(targetIndex, 0, movedItem);
+      return { ...prev, attachments: updated };
+    });
+
+    if (editingAttachmentIdx === draggedAttachmentIdx) {
+      setEditingAttachmentIdx(targetIndex);
+    }
+
+    setDraggedAttachmentIdx(null);
+    setDragOverAttachmentIdx(null);
+  };
+
+  const handleDragEnd = () => {
+    setDraggedAttachmentIdx(null);
+    setDragOverAttachmentIdx(null);
   };
 
   const handleDelete = (education: Education) => {
@@ -610,6 +702,7 @@ export default function EducationPage() {
                   </Label>
                   <p className="text-xs text-gray-500">
                     Upload certificate, transcript, or academic evidence images.
+                    Drag and drop to reorder.
                   </p>
                 </div>
                 <Badge variant="secondary">
@@ -620,36 +713,154 @@ export default function EducationPage() {
               {/* List of existing attachments */}
               {formData.attachments.length > 0 && (
                 <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
-                  {formData.attachments.map((att, idx) => (
-                    <div
-                      key={idx}
-                      className="bg-muted/40 flex items-center justify-between gap-2 rounded-md border p-2"
-                    >
-                      <div className="flex items-center gap-2 overflow-hidden">
-                        <div className="relative h-10 w-10 flex-shrink-0 overflow-hidden rounded border">
-                          <Image
-                            src={att.url}
-                            alt={att.title}
-                            fill
-                            className="object-cover"
-                            sizes="40px"
-                          />
-                        </div>
-                        <span className="truncate text-xs font-medium">
-                          {att.title}
-                        </span>
-                      </div>
-                      <Button
-                        type="button"
-                        variant="ghost"
-                        size="icon"
-                        className="h-7 w-7 text-red-500 hover:text-red-700"
-                        onClick={() => handleRemoveAttachment(idx)}
+                  {formData.attachments.map((att, idx) => {
+                    const isPdf = att.url?.toLowerCase().includes(".pdf");
+
+                    return (
+                      <div
+                        key={idx}
+                        draggable
+                        onDragStart={(e) => handleDragStart(e, idx)}
+                        onDragOver={(e) => handleDragOver(e, idx)}
+                        onDrop={(e) => handleDrop(e, idx)}
+                        onDragEnd={handleDragEnd}
+                        className={`flex items-center justify-between gap-2 rounded-md border p-2 transition-all duration-200 ${
+                          draggedAttachmentIdx === idx
+                            ? "bg-primary/10 scale-[0.98] border-dashed border-primary opacity-40"
+                            : "bg-muted/40 hover:border-gray-300 dark:hover:border-gray-700"
+                        } ${
+                          dragOverAttachmentIdx === idx &&
+                          draggedAttachmentIdx !== idx
+                            ? "bg-primary/15 ring-primary/30 border-primary shadow-sm ring-2"
+                            : ""
+                        }`}
                       >
-                        <Trash2 className="h-3.5 w-3.5" />
-                      </Button>
-                    </div>
-                  ))}
+                        <div className="flex min-w-0 flex-1 items-center gap-2 overflow-hidden">
+                          {/* Drag Handle & Order Index */}
+                          <div
+                            className="flex cursor-grab items-center gap-1 text-gray-400 hover:text-gray-700 active:cursor-grabbing dark:hover:text-gray-200"
+                            title="Drag to reorder"
+                          >
+                            <GripVertical className="h-4 w-4 shrink-0" />
+                            <span className="w-3 text-center font-mono text-[10px] text-gray-400">
+                              {idx + 1}
+                            </span>
+                          </div>
+
+                          {/* Thumbnail */}
+                          <div className="relative flex h-10 w-10 flex-shrink-0 items-center justify-center overflow-hidden rounded border bg-gray-50 dark:bg-gray-800">
+                            {isPdf ? (
+                              <PdfThumbnail
+                                url={att.url}
+                                title={att.title}
+                                showBadge={false}
+                              />
+                            ) : (
+                              <Image
+                                src={att.url}
+                                alt={att.title}
+                                fill
+                                className="object-cover"
+                                sizes="40px"
+                              />
+                            )}
+                          </div>
+                          {editingAttachmentIdx === idx ? (
+                            <div className="flex min-w-0 flex-1 items-center gap-1.5 px-1">
+                              <Input
+                                value={editingAttachmentTitle}
+                                onChange={(e) =>
+                                  setEditingAttachmentTitle(e.target.value)
+                                }
+                                placeholder="Document Title"
+                                className="h-7 text-xs"
+                                autoFocus
+                                onKeyDown={(e) => {
+                                  if (e.key === "Enter") {
+                                    e.preventDefault();
+                                    handleSaveAttachmentTitle(idx);
+                                  } else if (e.key === "Escape") {
+                                    handleCancelEditAttachment();
+                                  }
+                                }}
+                              />
+                              <Button
+                                type="button"
+                                variant="ghost"
+                                size="icon"
+                                className="h-7 w-7 text-emerald-600 hover:bg-emerald-50 hover:text-emerald-700 dark:text-emerald-400 dark:hover:bg-emerald-950/50"
+                                onClick={() => handleSaveAttachmentTitle(idx)}
+                                title="Save Title"
+                              >
+                                <Check className="h-3.5 w-3.5" />
+                              </Button>
+                              <Button
+                                type="button"
+                                variant="ghost"
+                                size="icon"
+                                className="h-7 w-7 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200"
+                                onClick={handleCancelEditAttachment}
+                                title="Cancel"
+                              >
+                                <X className="h-3.5 w-3.5" />
+                              </Button>
+                            </div>
+                          ) : (
+                            <div className="flex min-w-0 flex-1 flex-col overflow-hidden">
+                              <div className="flex items-center gap-1">
+                                <span
+                                  className="truncate text-xs font-medium text-gray-900 dark:text-gray-100"
+                                  title={att.title}
+                                >
+                                  {att.title}
+                                </span>
+                                <Button
+                                  type="button"
+                                  variant="ghost"
+                                  size="icon"
+                                  className="h-5 w-5 text-gray-400 hover:text-primary dark:text-gray-500"
+                                  onClick={() =>
+                                    handleStartEditAttachment(idx, att.title)
+                                  }
+                                  title="Edit Title"
+                                >
+                                  <Pencil className="h-3 w-3" />
+                                </Button>
+                              </div>
+                              {isPdf && (
+                                <span className="text-[10px] font-medium text-rose-500">
+                                  PDF Document
+                                </span>
+                              )}
+                            </div>
+                          )}
+                        </div>
+                        {editingAttachmentIdx !== idx && (
+                          <div className="flex items-center gap-1">
+                            <a
+                              href={att.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="rounded p-1 text-gray-500 hover:bg-gray-200 dark:hover:bg-gray-700"
+                              title="Open Document"
+                            >
+                              <ExternalLink className="h-3.5 w-3.5" />
+                            </a>
+                            <Button
+                              type="button"
+                              variant="ghost"
+                              size="icon"
+                              className="h-7 w-7 text-red-500 hover:text-red-700"
+                              onClick={() => handleRemoveAttachment(idx)}
+                              title="Delete"
+                            >
+                              <Trash2 className="h-3.5 w-3.5" />
+                            </Button>
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
                 </div>
               )}
 
@@ -670,7 +881,7 @@ export default function EducationPage() {
                   className="text-xs"
                 />
                 <ImageUpload
-                  label="Document Image"
+                  label="Document File (Image or PDF)"
                   value={newAttachment.url}
                   fileId={newAttachment.fileId}
                   onUploadSuccess={(url, fileId) => {
@@ -681,6 +892,8 @@ export default function EducationPage() {
                     }));
                   }}
                   category="EDUCATIONS"
+                  accept="image/*,.pdf,application/pdf"
+                  maxSize={10}
                   showPreview={true}
                 />
                 <Button
