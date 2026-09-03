@@ -16,7 +16,7 @@ export function getPdfThumbnailUrl(url?: string): string {
   const cleanUrl = url.split("?")[0].split("#")[0];
 
   if (cleanUrl.includes("ik.imagekit.io") || cleanUrl.includes("imagekit.io")) {
-    return `${cleanUrl}/ik-thumbnail.jpg?tr=w-500,h-400,fo-auto`;
+    return `${cleanUrl}/ik-thumbnail.jpg?tr=w-600,h-450,fo-center`;
   }
 
   return cleanUrl;
@@ -35,22 +35,22 @@ export default function PdfThumbnail({
 
   return (
     <div
-      className={`relative h-full w-full overflow-hidden bg-gray-100 dark:bg-gray-800 ${className}`}
+      className={`relative flex h-full w-full items-center justify-center overflow-hidden bg-gray-100 dark:bg-gray-800 ${className}`}
     >
       {isImageKit && !hasImageError ? (
         <Image
           src={thumbnailUrl}
           alt={title}
           fill
-          className="object-cover object-top transition-transform duration-300 group-hover:scale-105"
+          className="object-cover object-center transition-transform duration-300 group-hover:scale-105"
           sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, 25vw"
           onError={() => setHasImageError(true)}
         />
       ) : (
         <object
-          data={`${cleanUrl}#page=1&view=FitH&toolbar=0&navpanes=0`}
+          data={`${cleanUrl}#page=1&view=Fit&toolbar=0&navpanes=0`}
           type="application/pdf"
-          className="pointer-events-none h-full w-full overflow-hidden border-0 object-cover"
+          className="pointer-events-none h-full w-full overflow-hidden border-0 object-contain object-center"
           title={title}
         >
           <div className="flex h-full w-full flex-col items-center justify-center gap-1.5 bg-rose-50/70 p-3 text-center dark:bg-rose-950/30">
