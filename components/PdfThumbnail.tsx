@@ -11,12 +11,37 @@ interface PdfThumbnailProps {
   showBadge?: boolean;
 }
 
-export function getPdfThumbnailUrl(url?: string): string {
+export function getPdfThumbnailUrl(url?: string, title?: string): string {
   if (!url) return "";
   const cleanUrl = url.split("?")[0].split("#")[0];
 
+  let rotation = "";
+  if (url.includes("?")) {
+    const searchParams = new URLSearchParams(url.split("?")[1].split("#")[0]);
+    const rt = searchParams.get("rt") || searchParams.get("rotate");
+    if (rt) {
+      rotation = rt;
+    } else {
+      const tr = searchParams.get("tr");
+      const match = tr?.match(/rt-(\d+)/);
+      if (match) rotation = match[1];
+    }
+  }
+
+  if (!rotation) {
+    const lowerUrl = url.toLowerCase();
+    const lowerTitle = (title || "").toLowerCase();
+    if (lowerUrl.includes("certiport") || lowerTitle.includes("certiport")) {
+      rotation = "270";
+    }
+  }
+
   if (cleanUrl.includes("ik.imagekit.io") || cleanUrl.includes("imagekit.io")) {
-    return `${cleanUrl}/ik-thumbnail.jpg?tr=w-600,h-450,fo-center`;
+    const trParts = ["w-600", "h-450", "fo-center"];
+    if (rotation && rotation !== "0") {
+      trParts.push(`rt-${rotation}`);
+    }
+    return `${cleanUrl}/ik-thumbnail.jpg?tr=${trParts.join(",")}`;
   }
 
   return cleanUrl;
@@ -31,7 +56,7 @@ export default function PdfThumbnail({
   const [hasImageError, setHasImageError] = useState(false);
   const cleanUrl = url ? url.split("?")[0].split("#")[0] : "";
   const isImageKit = cleanUrl.includes("imagekit.io");
-  const thumbnailUrl = getPdfThumbnailUrl(url);
+  const thumbnailUrl = getPdfThumbnailUrl(url, title);
 
   return (
     <div
