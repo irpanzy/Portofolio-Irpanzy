@@ -12,6 +12,8 @@ import {
   ExternalLink,
   ChevronLeft,
   ChevronRight,
+  Briefcase,
+  ListChecks,
 } from "lucide-react";
 import { useExperiences } from "@/hooks/useApi";
 import Image from "next/image";
@@ -207,29 +209,36 @@ export default function Experience({ isDarkMode }: ExperienceProps) {
                       </div>
                     </div>
 
-                    <div className="mt-2 flex flex-col gap-1 md:ml-4 md:mt-0 md:items-end">
-                      <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300">
-                        <Calendar className="h-4 w-4" />
+                    <div className="mt-2 flex flex-wrap gap-2 md:ml-4 md:mt-0 md:flex-col md:items-end md:gap-1.5">
+                      <span className="shadow-xs inline-flex items-center gap-1.5 rounded-lg border border-gray-200/60 bg-gray-50/80 px-2.5 py-1 text-xs font-medium text-gray-600 dark:border-gray-700/60 dark:bg-gray-800/60 dark:text-gray-300">
+                        <Calendar className="h-3.5 w-3.5 text-[#77BEF0]" />
                         <span>{getPeriod(exp)}</span>
-                      </div>
-                      <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300">
-                        <MapPin className="h-4 w-4" />
+                      </span>
+                      <span className="shadow-xs inline-flex items-center gap-1.5 rounded-lg border border-gray-200/60 bg-gray-50/80 px-2.5 py-1 text-xs font-medium text-gray-600 dark:border-gray-700/60 dark:bg-gray-800/60 dark:text-gray-300">
+                        <MapPin className="h-3.5 w-3.5 text-[#77BEF0]" />
                         <span>{exp.location}</span>
-                      </div>
+                      </span>
                     </div>
                   </div>
 
                   {exp.description && (
-                    <p className="mb-4 text-sm text-gray-700 dark:text-gray-300">
-                      {exp.description}
-                    </p>
+                    <div className="mb-5 rounded-r-xl border border-l-4 border-gray-100 border-l-[#77BEF0] bg-slate-50/70 p-4 shadow-sm dark:border-gray-700/60 dark:border-l-[#77BEF0] dark:bg-darkHover/40">
+                      <div className="mb-2 flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">
+                        <Briefcase className="h-3.5 w-3.5 text-[#77BEF0]" />
+                        <span>Role Overview</span>
+                      </div>
+                      <p className="text-justify text-sm leading-relaxed text-gray-700 dark:text-gray-200">
+                        {exp.description}
+                      </p>
+                    </div>
                   )}
 
                   {exp.responsibilities && exp.responsibilities.length > 0 && (
                     <div>
-                      <p className="mb-3 font-medium text-gray-700 dark:text-gray-200">
-                        Key Responsibilities:
-                      </p>
+                      <div className="mb-3 flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">
+                        <ListChecks className="h-3.5 w-3.5 text-[#77BEF0]" />
+                        <span>Key Responsibilities</span>
+                      </div>
                       <m.ul className="space-y-2 text-sm leading-relaxed text-gray-600 dark:text-gray-300">
                         {exp.responsibilities.map((responsibility, idx) => (
                           <m.li
