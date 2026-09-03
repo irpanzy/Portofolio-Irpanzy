@@ -12,6 +12,7 @@ import {
   ChevronRight,
   ExternalLink,
   FileText,
+  BookOpen,
 } from "lucide-react";
 import { useEducations } from "@/hooks/useApi";
 import Image from "next/image";
@@ -34,23 +35,26 @@ const typeConfig: Record<
 > = {
   formal: {
     label: "Formal",
-    color: "bg-blue-100 text-blue-700",
-    darkColor: "dark:bg-blue-900/40 dark:text-blue-300",
+    color: "bg-blue-50 text-blue-700 border-blue-200/80",
+    darkColor: "dark:bg-blue-950/50 dark:text-blue-300 dark:border-blue-800/60",
   },
   bootcamp: {
     label: "Bootcamp",
-    color: "bg-orange-100 text-orange-700",
-    darkColor: "dark:bg-orange-900/40 dark:text-orange-300",
+    color: "bg-orange-50 text-orange-700 border-orange-200/80",
+    darkColor:
+      "dark:bg-orange-950/50 dark:text-orange-300 dark:border-orange-800/60",
   },
   certification: {
     label: "Certification",
-    color: "bg-green-100 text-green-700",
-    darkColor: "dark:bg-green-900/40 dark:text-green-300",
+    color: "bg-emerald-50 text-emerald-700 border-emerald-200/80",
+    darkColor:
+      "dark:bg-emerald-950/50 dark:text-emerald-300 dark:border-emerald-800/60",
   },
   course: {
     label: "Course",
-    color: "bg-purple-100 text-purple-700",
-    darkColor: "dark:bg-purple-900/40 dark:text-purple-300",
+    color: "bg-purple-50 text-purple-700 border-purple-200/80",
+    darkColor:
+      "dark:bg-purple-950/50 dark:text-purple-300 dark:border-purple-800/60",
   },
 };
 
@@ -81,6 +85,20 @@ export default function Education({ isDarkMode }: EducationProps) {
         ? formatDate(edu.endDate)
         : "Present";
     return `${start} - ${end}`;
+  };
+
+  const getOverviewLabel = (type: string) => {
+    switch (type) {
+      case "bootcamp":
+        return "Program Overview";
+      case "certification":
+        return "Certification Overview";
+      case "course":
+        return "Course Overview";
+      case "formal":
+      default:
+        return "Academic Overview";
+    }
   };
 
   const normalizeAttachments = (
@@ -199,10 +217,10 @@ export default function Education({ isDarkMode }: EducationProps) {
                 <div className="absolute -left-2 top-0 h-4 w-4 rounded-full border-4 border-white bg-[#77BEF0] dark:border-darkTheme"></div>
 
                 <m.div
-                  whileHover={{ scale: 1.02 }}
-                  className="rounded-lg border border-gray-200 bg-white p-6 font-outfit shadow-md transition-all duration-300 hover:shadow-lg dark:border-gray-600 dark:bg-darkHover/30"
+                  whileHover={{ scale: 1.01 }}
+                  className="group rounded-2xl border border-gray-200/80 bg-white p-6 font-outfit shadow-md transition-all duration-300 hover:border-[#77BEF0]/50 hover:shadow-xl dark:border-gray-700/60 dark:bg-darkHover/30"
                 >
-                  <div className="mb-4 flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
+                  <div className="mb-5 flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
                     <div className="flex items-start gap-4">
                       {edu.logo && (
                         <m.div
@@ -211,7 +229,7 @@ export default function Education({ isDarkMode }: EducationProps) {
                           transition={{ duration: 0.5, delay: 1.1 }}
                           className="flex-shrink-0"
                         >
-                          <div className="flex h-12 w-12 items-center justify-center rounded-lg border border-gray-200 bg-white p-2 shadow-sm md:h-14 md:w-14 dark:border-gray-600 dark:bg-gray-800">
+                          <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-gray-200/80 bg-white p-2 shadow-sm transition-transform duration-300 group-hover:scale-105 md:h-14 md:w-14 dark:border-gray-700 dark:bg-gray-800">
                             <Image
                               src={edu.logo}
                               alt={`${edu.institution} logo`}
@@ -226,12 +244,12 @@ export default function Education({ isDarkMode }: EducationProps) {
                       )}
 
                       <div className="flex-grow">
-                        <div className="mb-1 flex flex-wrap items-center gap-2">
+                        <div className="mb-1.5 flex flex-wrap items-center gap-2">
                           <h3 className="font-outfit text-xl font-semibold text-gray-800 dark:text-white">
                             {edu.degree}
                           </h3>
                           <span
-                            className={`rounded-full px-2.5 py-0.5 text-xs font-medium ${badge.color} ${badge.darkColor}`}
+                            className={`inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold uppercase tracking-wider ${badge.color} ${badge.darkColor}`}
                           >
                             {badge.label}
                           </span>
@@ -241,31 +259,35 @@ export default function Education({ isDarkMode }: EducationProps) {
                           title={edu.institution}
                         >
                           <GraduationCap className="h-4 w-4 shrink-0" />
-                          <span>
-                            {edu.institution.length > 20
-                              ? `${edu.institution.slice(0, 20)}...`
-                              : edu.institution}
+                          <span className="text-sm font-medium md:text-base">
+                            {edu.institution}
                           </span>
                         </div>
                       </div>
                     </div>
 
-                    <div className="mt-2 flex flex-col gap-1 md:ml-4 md:mt-0 md:items-end">
-                      <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300">
-                        <Calendar className="h-4 w-4" />
+                    <div className="mt-2 flex flex-wrap gap-2 md:ml-4 md:mt-0 md:flex-col md:items-end md:gap-1.5">
+                      <span className="shadow-xs inline-flex items-center gap-1.5 rounded-lg border border-gray-200/60 bg-gray-50/80 px-2.5 py-1 text-xs font-medium text-gray-600 dark:border-gray-700/60 dark:bg-gray-800/60 dark:text-gray-300">
+                        <Calendar className="h-3.5 w-3.5 text-[#77BEF0]" />
                         <span>{getPeriod(edu)}</span>
-                      </div>
-                      <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300">
-                        <MapPin className="h-4 w-4" />
+                      </span>
+                      <span className="shadow-xs inline-flex items-center gap-1.5 rounded-lg border border-gray-200/60 bg-gray-50/80 px-2.5 py-1 text-xs font-medium text-gray-600 dark:border-gray-700/60 dark:bg-gray-800/60 dark:text-gray-300">
+                        <MapPin className="h-3.5 w-3.5 text-[#77BEF0]" />
                         <span>{edu.location}</span>
-                      </div>
+                      </span>
                     </div>
                   </div>
 
                   {edu.description && (
-                    <p className="text-justify text-sm leading-relaxed text-gray-700 dark:text-gray-300">
-                      {edu.description}
-                    </p>
+                    <div className="mb-5 rounded-r-xl border border-l-4 border-gray-100 border-l-[#77BEF0] bg-slate-50/70 p-4 shadow-sm dark:border-gray-700/60 dark:border-l-[#77BEF0] dark:bg-darkHover/40">
+                      <div className="mb-2 flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">
+                        <BookOpen className="h-3.5 w-3.5 text-[#77BEF0]" />
+                        <span>{getOverviewLabel(edu.type)}</span>
+                      </div>
+                      <p className="text-justify text-sm leading-relaxed text-gray-700 dark:text-gray-200">
+                        {edu.description}
+                      </p>
+                    </div>
                   )}
 
                   {/* Certificates & Documentation Gallery */}
