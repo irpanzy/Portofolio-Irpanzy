@@ -43,6 +43,7 @@ import {
   Check,
   X,
   GripVertical,
+  RotateCw,
 } from "lucide-react";
 import Image from "next/image";
 import PdfThumbnail from "@/components/PdfThumbnail";
@@ -229,6 +230,34 @@ export default function EducationPage() {
   const handleCancelEditAttachment = () => {
     setEditingAttachmentIdx(null);
     setEditingAttachmentTitle("");
+  };
+
+  const handleRotateAttachment = (index: number) => {
+    setFormData((prev) => {
+      const updated = [...prev.attachments];
+      const current = updated[index];
+      if (!current) return prev;
+
+      let currentRt = 0;
+      const cleanUrl = current.url.split("?")[0].split("#")[0];
+      if (current.url.includes("?")) {
+        const search = new URLSearchParams(
+          current.url.split("?")[1].split("#")[0]
+        );
+        const rt = search.get("rt") || search.get("rotate");
+        if (rt) currentRt = parseInt(rt, 10) || 0;
+      }
+
+      const nextRt = (currentRt + 90) % 360;
+      const newUrl = nextRt === 0 ? cleanUrl : `${cleanUrl}?rt=${nextRt}`;
+
+      updated[index] = {
+        ...current,
+        url: newUrl,
+      };
+
+      return { ...prev, attachments: updated };
+    });
   };
 
   const [draggedAttachmentIdx, setDraggedAttachmentIdx] = useState<
@@ -826,6 +855,18 @@ export default function EducationPage() {
                                 >
                                   <Pencil className="h-3 w-3" />
                                 </Button>
+                                {isPdf && (
+                                  <Button
+                                    type="button"
+                                    variant="ghost"
+                                    size="icon"
+                                    className="h-5 w-5 text-gray-400 hover:text-[#77BEF0] dark:text-gray-500"
+                                    onClick={() => handleRotateAttachment(idx)}
+                                    title="Rotate 90°"
+                                  >
+                                    <RotateCw className="h-3 w-3" />
+                                  </Button>
+                                )}
                               </div>
                               {isPdf && (
                                 <span className="text-[10px] font-medium text-rose-500">
