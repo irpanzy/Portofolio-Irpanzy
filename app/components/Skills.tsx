@@ -149,7 +149,7 @@ export default function Skills({ isDarkMode }: SkillsProps) {
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         transition={{ duration: 0.5, delay: 0.7 }}
-        className="mx-auto mb-12 mt-5 max-w-2xl text-center font-ovo text-gray-600 dark:text-gray-400"
+        className="mx-auto mb-12 mt-5 max-w-3xl text-center font-ovo text-sm text-gray-600 md:text-base dark:text-gray-300"
       >
         A categorized look at the languages, frameworks, databases, and tools I
         use to craft modern digital solutions.

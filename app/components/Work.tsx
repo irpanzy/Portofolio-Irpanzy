@@ -52,7 +52,7 @@ export default function Work({ isDarkMode }: WorkProps) {
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         transition={{ duration: 0.5, delay: 0.7 }}
-        className="mx-auto mb-12 mt-5 max-w-2xl text-center font-ovo"
+        className="mx-auto mb-12 mt-5 max-w-3xl text-center font-ovo text-sm text-gray-600 md:text-base dark:text-gray-300"
       >
         A showcase of real-world projects built with modern web technologies -
         from Fullstack applications to scalable backend systems and RESTful

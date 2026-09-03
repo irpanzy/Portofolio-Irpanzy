@@ -87,7 +87,7 @@ export default function Contact({ isDarkMode }: ContactProps) {
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         transition={{ duration: 0.5, delay: 0.7 }}
-        className="mx-auto mb-12 mt-5 max-w-2xl text-center font-ovo text-gray-600 dark:text-gray-300"
+        className="mx-auto mb-12 mt-5 max-w-3xl text-center font-ovo text-sm text-gray-600 md:text-base dark:text-gray-300"
       >
         Have a project in mind or just want to say hi? Let&apos;s connect and
         bring your ideas to life. I&apos;m always open to new collaborations and
