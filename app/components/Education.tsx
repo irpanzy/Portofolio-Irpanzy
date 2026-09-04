@@ -360,9 +360,9 @@ export default function Education({ isDarkMode }: EducationProps) {
         open={!!selectedAttachment}
         onOpenChange={(open) => !open && setSelectedAttachment(null)}
       >
-        <DialogContent className="w-[94vw] max-w-3xl overflow-hidden rounded-2xl border border-gray-200/80 bg-white/95 p-3 shadow-2xl backdrop-blur-xl sm:rounded-3xl sm:p-5 dark:border-gray-800/80 dark:bg-gray-900/95">
+        <DialogContent className="w-[calc(100vw-20px)] max-w-3xl overflow-hidden rounded-2xl border border-gray-200/80 bg-white/95 p-3.5 shadow-2xl backdrop-blur-xl sm:w-[92vw] sm:rounded-3xl sm:p-5 dark:border-gray-800/80 dark:bg-gray-900/95">
           <DialogHeader className="mb-2">
-            <div className="flex items-center justify-between gap-2 pr-6 sm:pr-8">
+            <div className="flex items-center justify-between gap-2 pr-8 sm:pr-10">
               <DialogTitle className="flex items-center gap-2 text-sm font-semibold sm:text-base md:text-lg">
                 <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-[#77BEF0]/15 text-[#2170a8] dark:bg-[#77BEF0]/20 dark:text-[#90cdf4]">
                   <Award className="h-4 w-4" />
@@ -383,7 +383,7 @@ export default function Education({ isDarkMode }: EducationProps) {
               return (
                 <div className="relative flex flex-col items-center">
                   {/* Main Media Container with Animated Presence */}
-                  <div className="relative aspect-[4/3] max-h-[58vh] min-h-[38vh] w-full overflow-hidden rounded-xl border border-gray-200/80 bg-black/5 sm:aspect-[16/10] sm:max-h-[66vh] sm:min-h-[55vh] sm:rounded-2xl dark:border-gray-800 dark:bg-black/60">
+                  <div className="relative h-[48vh] max-h-[58vh] min-h-[300px] w-full overflow-hidden rounded-xl border border-gray-200/80 bg-black/5 sm:aspect-[16/10] sm:h-auto sm:max-h-[66vh] sm:min-h-[50vh] sm:rounded-2xl dark:border-gray-800 dark:bg-black/70">
                     <AnimatePresence mode="wait">
                       <m.div
                         key={selectedAttachment.attachment.url}
@@ -391,6 +391,20 @@ export default function Education({ isDarkMode }: EducationProps) {
                         animate={{ opacity: 1, scale: 1 }}
                         exit={{ opacity: 0, scale: 0.96 }}
                         transition={{ duration: 0.2, ease: "easeOut" }}
+                        drag={
+                          !isPdf && selectedAttachment.list.length > 1
+                            ? "x"
+                            : false
+                        }
+                        dragConstraints={{ left: 0, right: 0 }}
+                        dragElastic={0.2}
+                        onDragEnd={(_, info) => {
+                          if (info.offset.x < -40) {
+                            handleNavigateAttachment("next");
+                          } else if (info.offset.x > 40) {
+                            handleNavigateAttachment("prev");
+                          }
+                        }}
                         className="relative h-full w-full"
                       >
                         {isPdf ? (
@@ -414,37 +428,59 @@ export default function Education({ isDarkMode }: EducationProps) {
                       </m.div>
                     </AnimatePresence>
 
-                    {/* Previous / Next Floating Buttons on Image (if list.length > 1) */}
+                    {/* Previous / Next Floating Buttons on Image (Desktop only to prevent blocking subject on mobile) */}
                     {selectedAttachment.list.length > 1 && (
                       <>
                         <button
                           type="button"
                           onClick={() => handleNavigateAttachment("prev")}
                           title="Previous Document"
-                          className="absolute left-1.5 top-1/2 z-10 -translate-y-1/2 rounded-full border border-white/20 bg-black/60 p-1.5 text-white backdrop-blur-md transition-all hover:scale-110 hover:bg-black/80 active:scale-95 sm:left-3 sm:p-2.5"
+                          aria-label="Previous Document"
+                          className="absolute left-3 top-1/2 z-10 hidden -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-black/60 p-2.5 text-white backdrop-blur-md transition-all hover:scale-110 hover:bg-black/80 active:scale-95 sm:flex"
                         >
-                          <ChevronLeft className="h-3.5 w-3.5 sm:h-5 sm:w-5" />
+                          <ChevronLeft className="h-5 w-5" />
                         </button>
                         <button
                           type="button"
                           onClick={() => handleNavigateAttachment("next")}
                           title="Next Document"
-                          className="absolute right-1.5 top-1/2 z-10 -translate-y-1/2 rounded-full border border-white/20 bg-black/60 p-1.5 text-white backdrop-blur-md transition-all hover:scale-110 hover:bg-black/80 active:scale-95 sm:right-3 sm:p-2.5"
+                          aria-label="Next Document"
+                          className="absolute right-3 top-1/2 z-10 hidden -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-black/60 p-2.5 text-white backdrop-blur-md transition-all hover:scale-110 hover:bg-black/80 active:scale-95 sm:flex"
                         >
-                          <ChevronRight className="h-3.5 w-3.5 sm:h-5 sm:w-5" />
+                          <ChevronRight className="h-5 w-5" />
                         </button>
                       </>
                     )}
                   </div>
 
-                  {/* Footer Bar: Counter & Open Full Image/PDF */}
-                  <div className="mt-3 flex w-full items-center justify-between gap-2 px-1 text-xs text-gray-500 dark:text-gray-400">
+                  {/* Footer Bar: Controls, Counter & Open Full Image/PDF */}
+                  <div className="mt-3 flex w-full items-center justify-between gap-2 px-0.5 text-xs text-gray-500 dark:text-gray-400">
                     <div className="flex min-w-0 items-center gap-1.5 sm:gap-2">
                       {selectedAttachment.list.length > 1 && (
-                        <span className="shrink-0 whitespace-nowrap rounded-full bg-gray-100 px-2 py-0.5 text-[11px] font-semibold text-gray-700 sm:px-2.5 sm:text-xs dark:bg-gray-800 dark:text-gray-300">
-                          {selectedAttachment.index + 1} /{" "}
-                          {selectedAttachment.list.length}
-                        </span>
+                        <div className="flex items-center gap-0.5 rounded-full border border-gray-200/80 bg-gray-100 p-0.5 sm:gap-1 dark:border-gray-700/60 dark:bg-gray-800">
+                          <button
+                            type="button"
+                            onClick={() => handleNavigateAttachment("prev")}
+                            title="Previous Document"
+                            aria-label="Previous Document"
+                            className="flex h-6 w-6 items-center justify-center rounded-full text-gray-600 transition-colors hover:bg-white hover:text-gray-900 active:scale-90 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                          >
+                            <ChevronLeft className="h-3.5 w-3.5" />
+                          </button>
+                          <span className="px-1.5 text-[11px] font-semibold text-gray-700 sm:text-xs dark:text-gray-300">
+                            {selectedAttachment.index + 1} /{" "}
+                            {selectedAttachment.list.length}
+                          </span>
+                          <button
+                            type="button"
+                            onClick={() => handleNavigateAttachment("next")}
+                            title="Next Document"
+                            aria-label="Next Document"
+                            className="flex h-6 w-6 items-center justify-center rounded-full text-gray-600 transition-colors hover:bg-white hover:text-gray-900 active:scale-90 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                          >
+                            <ChevronRight className="h-3.5 w-3.5" />
+                          </button>
+                        </div>
                       )}
                       {isPdf && (
                         <span className="inline-flex shrink-0 items-center gap-1 rounded-full border border-rose-500/20 bg-rose-500/10 px-2 py-0.5 text-[10px] font-semibold text-rose-600 dark:text-rose-400">
