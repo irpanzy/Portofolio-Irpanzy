@@ -169,18 +169,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       suppressHydrationWarning
     >
       <head>
-        <link
-          rel="preconnect"
-          href="https://portofolio-irpanzy.vercel.app"
-          crossOrigin="anonymous"
-        />
         <link rel="dns-prefetch" href="https://portofolio-irpanzy.vercel.app" />
-        <link
-          rel="preconnect"
-          href="https://ik.imagekit.io"
-          crossOrigin="anonymous"
-        />
-        <link rel="dns-prefetch" href="https://ik.imagekit.io" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

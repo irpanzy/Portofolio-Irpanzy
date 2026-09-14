@@ -1,104 +1,24 @@
-"use client";
-import { useEffect, useState } from "react";
-import dynamic from "next/dynamic";
-import Header from "./components/Header";
-import Navbar from "./components/Navbar";
-import MotionProvider from "./components/MotionProvider";
-import { usePortfolioAll } from "@/hooks/useApi";
+import HomeClient from "./HomeClient";
+import type { PortfolioAllData } from "@/types";
 
-const About = dynamic(() => import("./components/About"), {
-  loading: () => <div className="min-h-screen" />,
-  ssr: true,
-});
-const Education = dynamic(() => import("./components/Education"), {
-  loading: () => <div className="min-h-screen" />,
-  ssr: false,
-});
-const Experience = dynamic(() => import("./components/Experience"), {
-  loading: () => <div className="min-h-screen" />,
-  ssr: false,
-});
-const Work = dynamic(() => import("./components/Work"), {
-  loading: () => <div className="min-h-screen" />,
-  ssr: false,
-});
-const Skills = dynamic(() => import("./components/Skills"), {
-  loading: () => <div className="min-h-screen" />,
-  ssr: false,
-});
-const Contact = dynamic(() => import("./components/Contact"), {
-  loading: () => <div className="min-h-screen" />,
-  ssr: false,
-});
-const Footer = dynamic(() => import("./components/Footer"), {
-  ssr: false,
-});
+async function getPortfolioData(): Promise<PortfolioAllData | null> {
+  const apiUrl =
+    process.env.NEXT_PUBLIC_API_URL ||
+    "https://portofolio-irpanzy.vercel.app/api";
 
-export default function Home() {
-  const { data: portfolio, isLoading } = usePortfolioAll();
-  const [isDarkMode, setIsDarkMode] = useState(false);
-  const [mounted, setMounted] = useState(false);
+  try {
+    const res = await fetch(`${apiUrl}/portfolio/all`, {
+      next: { revalidate: 600 },
+    });
+    if (!res.ok) return null;
+    const json = await res.json();
+    return json.data || null;
+  } catch {
+    return null;
+  }
+}
 
-  useEffect(() => {
-    setMounted(true);
-    const savedTheme = localStorage.getItem("theme");
-    const prefersDark = window.matchMedia(
-      "(prefers-color-scheme: dark)"
-    ).matches;
-
-    if (savedTheme === "dark" || (!savedTheme && prefersDark)) {
-      setIsDarkMode(true);
-      document.documentElement.classList.add("dark");
-    } else {
-      setIsDarkMode(false);
-      document.documentElement.classList.remove("dark");
-    }
-  }, []);
-
-  useEffect(() => {
-    if (!mounted) return;
-    if (isDarkMode) {
-      document.documentElement.classList.add("dark");
-      localStorage.setItem("theme", "dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-      localStorage.setItem("theme", "light");
-    }
-  }, [isDarkMode, mounted]);
-
-  return (
-    <MotionProvider>
-      <Navbar isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} />
-      <main>
-        <Header data={portfolio?.hero} isLoading={isLoading} />
-        <About
-          data={portfolio?.about}
-          isLoading={isLoading}
-          isDarkMode={isDarkMode}
-        />
-        <Education
-          data={portfolio?.educations}
-          isLoading={isLoading}
-          isDarkMode={isDarkMode}
-        />
-        <Experience
-          data={portfolio?.experiences}
-          isLoading={isLoading}
-          isDarkMode={isDarkMode}
-        />
-        <Work
-          data={portfolio?.projects}
-          isLoading={isLoading}
-          isDarkMode={isDarkMode}
-        />
-        <Skills
-          data={portfolio?.techstacks}
-          isLoading={isLoading}
-          isDarkMode={isDarkMode}
-        />
-        <Contact isDarkMode={isDarkMode} />
-      </main>
-      <Footer isDarkMode={isDarkMode} />
-    </MotionProvider>
-  );
+export default async function Home() {
+  const initialData = await getPortfolioData();
+  return <HomeClient initialData={initialData} />;
 }

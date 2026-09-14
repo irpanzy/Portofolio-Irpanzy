@@ -8,6 +8,7 @@ import type {
   UpdateAboutInput,
   CreateHeroInput,
   UpdateHeroInput,
+  PortfolioAllData,
 } from "@/types";
 import { toast } from "./use-toast";
 
@@ -27,7 +28,7 @@ export const queryKeys = {
   about: ["about"] as const,
 };
 
-export const usePortfolioAll = () => {
+export const usePortfolioAll = (initialData?: PortfolioAllData | null) => {
   const queryClient = useQueryClient();
 
   return useQuery({
@@ -53,6 +54,7 @@ export const usePortfolioAll = () => {
 
       return data;
     },
+    initialData: initialData || undefined,
     staleTime: 10 * 60 * 1000,
     gcTime: 30 * 60 * 1000,
   });

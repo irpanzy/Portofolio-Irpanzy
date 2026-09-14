@@ -18,6 +18,7 @@ const DEFAULT_HERO: Partial<Hero> = {
   title: "Fullstack Developer based in Indonesia.",
   description:
     "I build modern fullstack apps with React, Node.js, Express, Next.js, Laravel, and Cloud technologies.",
+  resumeLink: "#contact",
 };
 
 export default function Header({
@@ -26,15 +27,12 @@ export default function Header({
 }: HeaderProps = {}) {
   const { data: queryData, isLoading: queryIsLoading } = useHero();
   const hero = propData !== undefined ? propData : queryData;
-  const isLoading =
-    propIsLoading !== undefined ? propIsLoading : !propData && queryIsLoading;
 
   const avatar = hero?.avatarImage || assets.profile_img;
-  const greeting = hero?.greeting || (isLoading ? DEFAULT_HERO.greeting : "");
-  const title = hero?.title || (isLoading ? DEFAULT_HERO.title : "");
-  const description =
-    hero?.description || (isLoading ? DEFAULT_HERO.description : "");
-  const resumeLink = hero?.resumeLink;
+  const greeting = hero?.greeting || DEFAULT_HERO.greeting;
+  const title = hero?.title || DEFAULT_HERO.title;
+  const description = hero?.description || DEFAULT_HERO.description;
+  const resumeLink = hero?.resumeLink || DEFAULT_HERO.resumeLink;
 
   return (
     <div

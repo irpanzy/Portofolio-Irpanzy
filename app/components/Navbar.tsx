@@ -20,7 +20,7 @@ export default function Navbar({ isDarkMode, setIsDarkMode }: NavbarProps) {
     const handleScroll = () => {
       setIsScroll(window.scrollY > 50);
     };
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
