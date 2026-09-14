@@ -41,7 +41,8 @@ export default function Navbar({ isDarkMode, setIsDarkMode }: NavbarProps) {
         <Image
           src={assets.header_bg_color}
           className="w-full"
-          alt="header background"
+          alt=""
+          role="presentation"
           priority
           quality={75}
         />
@@ -49,9 +50,6 @@ export default function Navbar({ isDarkMode, setIsDarkMode }: NavbarProps) {
 
       {/* Navbar */}
       <m.nav
-        initial={{ y: -60, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.5 }}
         className={`fixed z-50 flex w-full items-center justify-between px-5 py-4 lg:px-[8%] ${
           isScroll
             ? "bg-white bg-opacity-50 shadow-sm backdrop-blur-lg dark:bg-darkTheme dark:shadow-white/20"
@@ -61,12 +59,13 @@ export default function Navbar({ isDarkMode, setIsDarkMode }: NavbarProps) {
         {/* Logo */}
         <m.a
           href="#top"
+          aria-label="Irpanzy Home"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >
           <Image
             src={isDarkMode ? assets.logo_dark : assets.logo}
-            alt="logo"
+            alt="Irpanzy"
             className="cursor-pointer xl:mr-[60px]"
             width={112}
             height={40}
@@ -84,19 +83,14 @@ export default function Navbar({ isDarkMode, setIsDarkMode }: NavbarProps) {
           }`}
         >
           {navigationItems.map(({ id, label }) => (
-            <m.li
-              key={id}
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.95 }}
-              transition={{ type: "spring", stiffness: 400 }}
-            >
+            <li key={id}>
               <a
+                className="font-ovo transition-colors hover:text-primary"
                 href={`#${id}`}
-                className="font-ovo transition-all duration-300"
               >
                 {label}
               </a>
-            </m.li>
+            </li>
           ))}
         </ul>
 
@@ -113,7 +107,8 @@ export default function Navbar({ isDarkMode, setIsDarkMode }: NavbarProps) {
           >
             <Image
               src={isDarkMode ? assets.sun_icon : assets.moon_icon}
-              alt="Toggle dark mode"
+              alt=""
+              role="presentation"
               className="w-6"
             />
           </m.button>
@@ -140,7 +135,8 @@ export default function Navbar({ isDarkMode, setIsDarkMode }: NavbarProps) {
           >
             <Image
               src={isDarkMode ? assets.menu_white : assets.menu_black}
-              alt="Open menu"
+              alt=""
+              role="presentation"
               className="w-6"
             />
           </m.button>
@@ -178,7 +174,8 @@ export default function Navbar({ isDarkMode, setIsDarkMode }: NavbarProps) {
               >
                 <Image
                   src={isDarkMode ? assets.close_white : assets.close_black}
-                  alt="Close menu"
+                  alt=""
+                  role="presentation"
                   className="w-5"
                 />
               </m.button>

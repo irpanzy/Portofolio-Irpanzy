@@ -69,6 +69,16 @@ const config = {
         auto: "repeat(auto-fit, minmax(300px, 1fr))",
       },
       keyframes: {
+        "hero-fade": {
+          "0%": {
+            opacity: "0",
+            transform: "translate3d(0, 14px, 0)",
+          },
+          "100%": {
+            opacity: "1",
+            transform: "translate3d(0, 0, 0)",
+          },
+        },
         "toast-in": {
           "0%": {
             opacity: "0",
@@ -91,6 +101,7 @@ const config = {
         },
       },
       animation: {
+        "hero-fade": "hero-fade 0.6s ease-out forwards",
         "toast-in": "toast-in 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards",
         "toast-out": "toast-out 0.25s cubic-bezier(0.4, 0, 1, 1) forwards",
       },

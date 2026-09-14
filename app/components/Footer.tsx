@@ -12,7 +12,7 @@ export default function Footer({ isDarkMode }: FooterProps) {
       <div className="py-6">
         <Image
           src={isDarkMode ? assets.logo_dark : assets.logo}
-          alt="logo"
+          alt="Irpanzy"
           className="mx-auto mb-2"
           width={144}
           height={48}
@@ -22,11 +22,13 @@ export default function Footer({ isDarkMode }: FooterProps) {
         <div className="mx-auto flex w-max items-center gap-2">
           <a
             href="mailto:irfanmuria04@gmail.com"
+            aria-label="Send email to irfanmuria04@gmail.com"
             className="flex items-center gap-2"
           >
             <Image
               src={isDarkMode ? assets.mail_icon_dark : assets.mail_icon}
-              alt="email"
+              alt=""
+              role="presentation"
               className=""
               width={24}
               height={24}
@@ -44,14 +46,20 @@ export default function Footer({ isDarkMode }: FooterProps) {
         </p>
         <ul className="mt-4 flex items-center justify-center gap-5 sm:mt-0">
           <li>
-            <a target="_blank" href="https://github.com/irpanzy">
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              href="https://github.com/irpanzy"
+              aria-label="GitHub Profile"
+            >
               <Image
                 src={
                   isDarkMode
                     ? assets.github_logo_white
                     : assets.github_logo_dark
                 }
-                alt="github"
+                alt=""
+                role="presentation"
                 className=""
                 width={40}
                 height={40}
@@ -61,14 +69,20 @@ export default function Footer({ isDarkMode }: FooterProps) {
             </a>
           </li>
           <li>
-            <a target="_blank" href="https://www.linkedin.com/in/irfanmuria/">
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              href="https://www.linkedin.com/in/irfanmuria/"
+              aria-label="LinkedIn Profile"
+            >
               <Image
                 src={
                   isDarkMode
                     ? assets.linkedin_logo_white
                     : assets.linkedin_logo_blue
                 }
-                alt="linkedin"
+                alt=""
+                role="presentation"
                 className=""
                 width={40}
                 height={40}
@@ -78,20 +92,26 @@ export default function Footer({ isDarkMode }: FooterProps) {
             </a>
           </li>
           <li>
-            <a target="_blank" href="https://www.instagram.com/irfanmuriaa/">
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              href="https://www.instagram.com/irfanmuriaa/"
+              aria-label="Instagram Profile"
+            >
               <Image
                 src={
                   isDarkMode
                     ? assets.instagram_logo_white
                     : assets.instagram_logo_dark
                 }
-                alt="instagram"
+                alt=""
+                role="presentation"
                 className=""
                 width={40}
                 height={40}
                 loading="lazy"
                 style={{ width: "40px", height: "40px" }}
-              />{" "}
+              />
             </a>
           </li>
         </ul>

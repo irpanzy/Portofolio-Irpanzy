@@ -48,65 +48,41 @@ export default function Header({
       id="home"
       className="mx-auto flex w-10/12 max-w-3xl flex-col items-center justify-center gap-4 pb-6 pt-[100px] text-center xl:min-h-screen"
     >
-      <m.div
-        initial={{ scale: 0.85, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        transition={{ duration: 0.5, type: "spring", stiffness: 120 }}
-      >
-        <div className="border-primary/20 relative h-32 w-32 overflow-hidden rounded-full border-2 shadow-md">
-          <Image
-            src={avatar}
-            className="object-cover"
-            alt="Hero Avatar"
-            fill
-            sizes="128px"
-            priority
-            fetchPriority="high"
-            quality={90}
-          />
-        </div>
-      </m.div>
+      <div className="border-primary/20 relative h-32 w-32 animate-hero-fade overflow-hidden rounded-full border-2 shadow-md">
+        <Image
+          src={avatar}
+          className="object-cover"
+          alt="Foto Profil Irfan Muria"
+          fill
+          sizes="128px"
+          priority
+          fetchPriority="high"
+          quality={90}
+        />
+      </div>
 
       {greeting && (
-        <m.p
-          initial={{ y: -10, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.4 }}
-          className="mb-3 flex items-center justify-center gap-2 font-ovo text-xl sm:text-2xl md:text-3xl lg:text-4xl"
-        >
+        <p className="mb-3 flex animate-hero-fade items-center justify-center gap-2 font-ovo text-xl sm:text-2xl md:text-3xl lg:text-4xl">
           <span>{greeting}</span>
           <HandHeartIcon className="h-6 w-6 shrink-0 text-primary sm:h-7 sm:w-7 md:h-8 md:w-8" />
-        </m.p>
+        </p>
       )}
 
       {title && (
-        <m.h1
-          initial={{ y: -15, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.5 }}
-          className="font-ovo text-3xl sm:text-5xl md:text-6xl lg:text-7xl"
-        >
+        <h1 className="animate-hero-fade font-ovo text-3xl sm:text-5xl md:text-6xl lg:text-7xl">
           {title}
-        </m.h1>
+        </h1>
       )}
 
       {description && (
-        <m.p
-          initial={{ y: 15, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="mx-auto max-w-xl font-ovo sm:max-w-2xl md:max-w-3xl lg:max-w-3xl"
-        >
+        <p className="mx-auto max-w-xl animate-hero-fade font-ovo sm:max-w-2xl md:max-w-3xl lg:max-w-3xl">
           {description}
-        </m.p>
+        </p>
       )}
 
       {resumeLink && (
-        <div className="mt-4 flex min-h-[52px] flex-col items-center gap-4 sm:flex-row">
+        <div className="mt-4 flex min-h-[52px] animate-hero-fade flex-col items-center gap-4 sm:flex-row">
           <m.a
-            initial={{ y: 15, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.4 }}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             href={resumeLink}
