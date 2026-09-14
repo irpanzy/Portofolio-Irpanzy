@@ -4,13 +4,23 @@ import { useAbout } from "@/hooks/useApi";
 import React from "react";
 import { m } from "framer-motion";
 import { Code2, Server, Cloud } from "lucide-react";
+import type { About as AboutType } from "@/types";
 
 interface AboutProps {
   isDarkMode: boolean;
+  data?: AboutType | null;
+  isLoading?: boolean;
 }
 
-export default function About({ isDarkMode }: AboutProps) {
-  const { data: about, isLoading: isLoadingAbout } = useAbout();
+export default function About({
+  isDarkMode,
+  data: propData,
+  isLoading: propIsLoading,
+}: AboutProps) {
+  const { data: queryData, isLoading: queryIsLoading } = useAbout();
+  const about = propData !== undefined ? propData : queryData;
+  const isLoadingAbout =
+    propIsLoading !== undefined ? propIsLoading : !propData && queryIsLoading;
 
   return (
     <m.div

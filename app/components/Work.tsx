@@ -6,13 +6,23 @@ import { m } from "framer-motion";
 import { CircleArrowOutUpRight, ExternalLink, Github, Eye } from "lucide-react";
 import { useProjects } from "@/hooks/useApi";
 import { getTechIcon } from "@/lib/iconUtils";
+import type { Project } from "@/types";
 
 interface WorkProps {
   isDarkMode: boolean;
+  data?: Project[];
+  isLoading?: boolean;
 }
 
-export default function Work({ isDarkMode }: WorkProps) {
-  const { data: projects, isLoading } = useProjects();
+export default function Work({
+  isDarkMode,
+  data: propData,
+  isLoading: propIsLoading,
+}: WorkProps) {
+  const { data: queryData, isLoading: queryIsLoading } = useProjects();
+  const projects = propData !== undefined ? propData : queryData;
+  const isLoading =
+    propIsLoading !== undefined ? propIsLoading : !propData && queryIsLoading;
 
   const visibleProjects = projects?.filter((project) => project.isVisible);
 

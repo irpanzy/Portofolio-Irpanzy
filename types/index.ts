@@ -8,3 +8,4 @@ export * from "./techStack";
 export * from "./about";
 export * from "./contact";
 export * from "./chat";
+export * from "./portfolio";

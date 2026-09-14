@@ -24,19 +24,46 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import PdfThumbnail from "@/components/PdfThumbnail";
-import type { ExperienceAttachment } from "@/types";
+import { getPdfPageImageUrl, getPdfTotalPages } from "@/lib/pdfUtils";
+import type {
+  Experience as ExperienceType,
+  ExperienceAttachment,
+} from "@/types";
 
 interface ExperienceProps {
   isDarkMode: boolean;
+  data?: ExperienceType[];
+  isLoading?: boolean;
 }
 
-export default function Experience({ isDarkMode }: ExperienceProps) {
-  const { data: experiences, isLoading } = useExperiences();
+export default function Experience({
+  isDarkMode,
+  data: propData,
+  isLoading: propIsLoading,
+}: ExperienceProps) {
+  const { data: queryData, isLoading: queryIsLoading } = useExperiences();
+  const experiences = propData !== undefined ? propData : queryData;
+  const isLoading =
+    propIsLoading !== undefined ? propIsLoading : !propData && queryIsLoading;
   const [selectedAttachment, setSelectedAttachment] = useState<{
     attachment: ExperienceAttachment;
     list: ExperienceAttachment[];
     index: number;
   } | null>(null);
+  const [pdfPage, setPdfPage] = useState(1);
+  const [pdfTotalPages, setPdfTotalPages] = useState(1);
+
+  React.useEffect(() => {
+    setPdfPage(1);
+    const url = selectedAttachment?.attachment.url;
+    if (url && url.toLowerCase().includes(".pdf")) {
+      getPdfTotalPages(url).then((total) => {
+        setPdfTotalPages(total);
+      });
+    } else {
+      setPdfTotalPages(1);
+    }
+  }, [selectedAttachment?.attachment.url]);
 
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString("en-US", {
@@ -97,6 +124,7 @@ export default function Experience({ isDarkMode }: ExperienceProps) {
       direction === "prev"
         ? (index - 1 + list.length) % list.length
         : (index + 1) % list.length;
+    setPdfPage(1);
     setSelectedAttachment({
       attachment: list[newIndex],
       list,
@@ -350,6 +378,18 @@ export default function Experience({ isDarkMode }: ExperienceProps) {
               const isPdf = selectedAttachment.attachment.url
                 ?.toLowerCase()
                 .includes(".pdf");
+              const isImageKitPdf =
+                isPdf &&
+                selectedAttachment.attachment.url
+                  ?.toLowerCase()
+                  .includes("imagekit.io");
+              const pdfPageUrl = isImageKitPdf
+                ? getPdfPageImageUrl(
+                    selectedAttachment.attachment.url,
+                    pdfPage,
+                    selectedAttachment.attachment.title
+                  )
+                : selectedAttachment.attachment.url;
 
               return (
                 <div className="relative flex flex-col items-center">
@@ -357,13 +397,14 @@ export default function Experience({ isDarkMode }: ExperienceProps) {
                   <div className="relative h-[48vh] max-h-[58vh] min-h-[300px] w-full overflow-hidden rounded-xl border border-gray-200/80 bg-black/5 sm:aspect-[16/10] sm:h-auto sm:max-h-[66vh] sm:min-h-[50vh] sm:rounded-2xl dark:border-gray-800 dark:bg-black/70">
                     <AnimatePresence mode="wait">
                       <m.div
-                        key={selectedAttachment.attachment.url}
+                        key={`${selectedAttachment.attachment.url}-${isPdf ? pdfPage : 0}`}
                         initial={{ opacity: 0, scale: 0.96 }}
                         animate={{ opacity: 1, scale: 1 }}
                         exit={{ opacity: 0, scale: 0.96 }}
                         transition={{ duration: 0.2, ease: "easeOut" }}
                         drag={
-                          !isPdf && selectedAttachment.list.length > 1
+                          selectedAttachment.list.length > 1 ||
+                          (isPdf && pdfTotalPages > 1)
                             ? "x"
                             : false
                         }
@@ -371,33 +412,85 @@ export default function Experience({ isDarkMode }: ExperienceProps) {
                         dragElastic={0.2}
                         onDragEnd={(_, info) => {
                           if (info.offset.x < -40) {
-                            handleNavigateAttachment("next");
+                            if (isPdf && pdfPage < pdfTotalPages) {
+                              setPdfPage((p) => p + 1);
+                            } else if (selectedAttachment.list.length > 1) {
+                              handleNavigateAttachment("next");
+                            }
                           } else if (info.offset.x > 40) {
-                            handleNavigateAttachment("prev");
+                            if (isPdf && pdfPage > 1) {
+                              setPdfPage((p) => p - 1);
+                            } else if (selectedAttachment.list.length > 1) {
+                              handleNavigateAttachment("prev");
+                            }
                           }
                         }}
                         className="relative h-full w-full"
                       >
                         {isPdf ? (
-                          <div className="relative flex h-full w-full flex-col">
-                            <iframe
-                              src={`${selectedAttachment.attachment.url}#view=FitH`}
-                              className="h-full w-full rounded-xl border-0 bg-white"
-                              title={selectedAttachment.attachment.title}
-                            />
-                          </div>
+                          isImageKitPdf ? (
+                            <div className="relative flex h-full w-full items-center justify-center p-1">
+                              <Image
+                                src={pdfPageUrl}
+                                alt={`${selectedAttachment.attachment.title} - Page ${pdfPage}`}
+                                fill
+                                className="object-contain"
+                                sizes="(max-width: 768px) 94vw, 1200px"
+                                priority
+                              />
+                            </div>
+                          ) : (
+                            <div className="relative flex h-full w-full flex-col">
+                              <iframe
+                                src={`${selectedAttachment.attachment.url}#view=FitH`}
+                                className="h-full w-full rounded-xl border-0 bg-white"
+                                title={selectedAttachment.attachment.title}
+                              />
+                            </div>
+                          )
                         ) : (
                           <Image
                             src={selectedAttachment.attachment.url}
                             alt={selectedAttachment.attachment.title}
                             fill
                             className="object-contain"
-                            sizes="(max-width: 768px) 94vw, 800px"
+                            sizes="(max-width: 768px) 94vw, 1200px"
                             priority
                           />
                         )}
                       </m.div>
                     </AnimatePresence>
+
+                    {/* PDF Multi-page Floating Indicator & Controls (Top overlay) */}
+                    {isPdf && pdfTotalPages > 1 && (
+                      <div className="absolute top-2.5 z-20 flex items-center gap-1 rounded-full border border-white/20 bg-black/60 px-2 py-1 shadow-lg backdrop-blur-md">
+                        <button
+                          type="button"
+                          disabled={pdfPage <= 1}
+                          onClick={() => setPdfPage((p) => Math.max(1, p - 1))}
+                          className="flex h-5 w-5 items-center justify-center rounded-full text-white/80 transition-colors hover:bg-white/20 hover:text-white active:scale-95 disabled:opacity-30"
+                          title="Previous Page"
+                          aria-label="Previous Page"
+                        >
+                          <ChevronLeft className="h-3.5 w-3.5" />
+                        </button>
+                        <span className="px-1 text-[11px] font-medium text-white">
+                          Page {pdfPage} / {pdfTotalPages}
+                        </span>
+                        <button
+                          type="button"
+                          disabled={pdfPage >= pdfTotalPages}
+                          onClick={() =>
+                            setPdfPage((p) => Math.min(pdfTotalPages, p + 1))
+                          }
+                          className="flex h-5 w-5 items-center justify-center rounded-full text-white/80 transition-colors hover:bg-white/20 hover:text-white active:scale-95 disabled:opacity-30"
+                          title="Next Page"
+                          aria-label="Next Page"
+                        >
+                          <ChevronRight className="h-3.5 w-3.5" />
+                        </button>
+                      </div>
+                    )}
 
                     {/* Previous / Next Floating Buttons on Image (Desktop only to prevent blocking subject on mobile) */}
                     {selectedAttachment.list.length > 1 && (
@@ -439,7 +532,7 @@ export default function Experience({ isDarkMode }: ExperienceProps) {
                             <ChevronLeft className="h-3.5 w-3.5" />
                           </button>
                           <span className="px-1.5 text-[11px] font-semibold text-gray-700 sm:text-xs dark:text-gray-300">
-                            {selectedAttachment.index + 1} /{" "}
+                            Doc {selectedAttachment.index + 1} /{" "}
                             {selectedAttachment.list.length}
                           </span>
                           <button
@@ -454,10 +547,45 @@ export default function Experience({ isDarkMode }: ExperienceProps) {
                         </div>
                       )}
                       {isPdf && (
-                        <span className="inline-flex shrink-0 items-center gap-1 rounded-full border border-rose-500/20 bg-rose-500/10 px-2 py-0.5 text-[10px] font-semibold text-rose-600 dark:text-rose-400">
-                          <FileText className="h-2.5 w-2.5" />
-                          PDF
-                        </span>
+                        <div className="flex items-center gap-1">
+                          <span className="inline-flex shrink-0 items-center gap-1 rounded-full border border-rose-500/20 bg-rose-500/10 px-2 py-0.5 text-[10px] font-semibold text-rose-600 dark:text-rose-400">
+                            <FileText className="h-2.5 w-2.5" />
+                            PDF
+                          </span>
+                          {pdfTotalPages > 1 && (
+                            <div className="flex items-center gap-0.5 rounded-full border border-gray-200/80 bg-gray-100 p-0.5 sm:gap-1 dark:border-gray-700/60 dark:bg-gray-800">
+                              <button
+                                type="button"
+                                disabled={pdfPage <= 1}
+                                onClick={() =>
+                                  setPdfPage((p) => Math.max(1, p - 1))
+                                }
+                                title="Previous Page"
+                                aria-label="Previous Page"
+                                className="flex h-5 w-5 items-center justify-center rounded-full text-gray-600 transition-colors hover:bg-white hover:text-gray-900 active:scale-90 disabled:opacity-30 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                              >
+                                <ChevronLeft className="h-3 w-3" />
+                              </button>
+                              <span className="px-1 text-[11px] font-semibold text-gray-700 sm:text-xs dark:text-gray-300">
+                                Page {pdfPage} / {pdfTotalPages}
+                              </span>
+                              <button
+                                type="button"
+                                disabled={pdfPage >= pdfTotalPages}
+                                onClick={() =>
+                                  setPdfPage((p) =>
+                                    Math.min(pdfTotalPages, p + 1)
+                                  )
+                                }
+                                title="Next Page"
+                                aria-label="Next Page"
+                                className="flex h-5 w-5 items-center justify-center rounded-full text-gray-600 transition-colors hover:bg-white hover:text-gray-900 active:scale-90 disabled:opacity-30 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                              >
+                                <ChevronRight className="h-3 w-3" />
+                              </button>
+                            </div>
+                          )}
+                        </div>
                       )}
                     </div>
 

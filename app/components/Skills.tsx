@@ -22,6 +22,8 @@ import { getTechIcon } from "@/lib/iconUtils";
 
 interface SkillsProps {
   isDarkMode: boolean;
+  data?: TechStack[];
+  isLoading?: boolean;
 }
 
 const categoryConfigs: {
@@ -74,8 +76,15 @@ const categoryConfigs: {
   },
 ];
 
-export default function Skills({ isDarkMode }: SkillsProps) {
-  const { data: techStack, isLoading: isLoadingTechStack } = useTechStack();
+export default function Skills({
+  isDarkMode,
+  data: propData,
+  isLoading: propIsLoading,
+}: SkillsProps) {
+  const { data: queryData, isLoading: queryIsLoading } = useTechStack();
+  const techStack = propData !== undefined ? propData : queryData;
+  const isLoadingTechStack =
+    propIsLoading !== undefined ? propIsLoading : !propData && queryIsLoading;
 
   const [isMobile, setIsMobile] = React.useState(false);
   const [expandedCategories, setExpandedCategories] = React.useState<

@@ -6,9 +6,21 @@ import React from "react";
 import { m } from "framer-motion";
 import { DownloadIcon, HandHeartIcon } from "lucide-react";
 import { useHero } from "@/hooks/useApi";
+import type { Hero } from "@/types";
 
-export default function Header() {
-  const { data: hero, isLoading } = useHero();
+interface HeaderProps {
+  data?: Hero | null;
+  isLoading?: boolean;
+}
+
+export default function Header({
+  data: propData,
+  isLoading: propIsLoading,
+}: HeaderProps = {}) {
+  const { data: queryData, isLoading: queryIsLoading } = useHero();
+  const hero = propData !== undefined ? propData : queryData;
+  const isLoading =
+    propIsLoading !== undefined ? propIsLoading : !propData && queryIsLoading;
 
   if (isLoading) {
     return (

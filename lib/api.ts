@@ -16,6 +16,7 @@ import type {
   ContactResponse,
   ChatRequest,
   ChatResponse,
+  PortfolioAllData,
 } from "@/types";
 
 export const projectsApi = {
@@ -325,7 +326,16 @@ export const chatApi = {
   },
 };
 
+export const portfolioApi = {
+  getAll: async () => {
+    const response =
+      await axiosInstance.get<ApiResponse<PortfolioAllData>>("/portfolio/all");
+    return response.data;
+  },
+};
+
 export const api = {
+  portfolio: portfolioApi,
   hero: heroApi,
   about: aboutApi,
   techStack: techStackApi,

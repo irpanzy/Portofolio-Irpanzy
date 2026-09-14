@@ -12,6 +12,7 @@ import type {
 import { toast } from "./use-toast";
 
 export const queryKeys = {
+  portfolioAll: ["portfolio", "all"] as const,
   hero: ["hero"] as const,
   projects: ["projects"] as const,
   project: (id: string) => ["projects", id] as const,
@@ -24,6 +25,37 @@ export const queryKeys = {
   techStack: (category?: string) =>
     category ? (["techStack", category] as const) : (["techStack"] as const),
   about: ["about"] as const,
+};
+
+export const usePortfolioAll = () => {
+  const queryClient = useQueryClient();
+
+  return useQuery({
+    queryKey: queryKeys.portfolioAll,
+    queryFn: async () => {
+      const response = await api.portfolio.getAll();
+      const data = response.data;
+
+      if (data) {
+        if (data.hero) queryClient.setQueryData(queryKeys.hero, data.hero);
+        if (data.about) queryClient.setQueryData(queryKeys.about, data.about);
+        if (data.projects)
+          queryClient.setQueryData(queryKeys.projects, data.projects);
+        if (data.experiences)
+          queryClient.setQueryData(queryKeys.experiences, data.experiences);
+        if (data.educations)
+          queryClient.setQueryData(queryKeys.educations, data.educations);
+        if (data.services)
+          queryClient.setQueryData(queryKeys.services, data.services);
+        if (data.techstacks)
+          queryClient.setQueryData(queryKeys.techStack(), data.techstacks);
+      }
+
+      return data;
+    },
+    staleTime: 10 * 60 * 1000,
+    gcTime: 30 * 60 * 1000,
+  });
 };
 
 export const useHero = () => {

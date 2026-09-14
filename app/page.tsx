@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 import Header from "./components/Header";
 import Navbar from "./components/Navbar";
 import MotionProvider from "./components/MotionProvider";
+import { usePortfolioAll } from "@/hooks/useApi";
 
 const About = dynamic(() => import("./components/About"), {
   loading: () => <div className="min-h-screen" />,
@@ -34,6 +35,7 @@ const Footer = dynamic(() => import("./components/Footer"), {
 });
 
 export default function Home() {
+  const { data: portfolio, isLoading } = usePortfolioAll();
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [mounted, setMounted] = useState(false);
 
@@ -68,12 +70,32 @@ export default function Home() {
     <MotionProvider>
       <Navbar isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} />
       <main>
-        <Header />
-        <About isDarkMode={isDarkMode} />
-        <Education isDarkMode={isDarkMode} />
-        <Experience isDarkMode={isDarkMode} />
-        <Work isDarkMode={isDarkMode} />
-        <Skills isDarkMode={isDarkMode} />
+        <Header data={portfolio?.hero} isLoading={isLoading} />
+        <About
+          data={portfolio?.about}
+          isLoading={isLoading}
+          isDarkMode={isDarkMode}
+        />
+        <Education
+          data={portfolio?.educations}
+          isLoading={isLoading}
+          isDarkMode={isDarkMode}
+        />
+        <Experience
+          data={portfolio?.experiences}
+          isLoading={isLoading}
+          isDarkMode={isDarkMode}
+        />
+        <Work
+          data={portfolio?.projects}
+          isLoading={isLoading}
+          isDarkMode={isDarkMode}
+        />
+        <Skills
+          data={portfolio?.techstacks}
+          isLoading={isLoading}
+          isDarkMode={isDarkMode}
+        />
         <Contact isDarkMode={isDarkMode} />
       </main>
       <Footer isDarkMode={isDarkMode} />

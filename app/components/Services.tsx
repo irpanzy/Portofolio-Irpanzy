@@ -4,13 +4,23 @@ import { useServices } from "@/hooks/useApi";
 import { DynamicIcon } from "@/lib/iconUtils";
 import React from "react";
 import { m } from "framer-motion";
+import type { Service } from "@/types";
 
 interface ServicesProps {
   isDarkMode: boolean;
+  data?: Service[];
+  isLoading?: boolean;
 }
 
-export default function Services({ isDarkMode }: ServicesProps) {
-  const { data: services, isLoading } = useServices();
+export default function Services({
+  isDarkMode,
+  data: propData,
+  isLoading: propIsLoading,
+}: ServicesProps) {
+  const { data: queryData, isLoading: queryIsLoading } = useServices();
+  const services = propData !== undefined ? propData : queryData;
+  const isLoading =
+    propIsLoading !== undefined ? propIsLoading : !propData && queryIsLoading;
 
   return (
     <m.div
