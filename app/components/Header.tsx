@@ -81,24 +81,16 @@ export default function Header({
       )}
 
       {resumeLink && (
-        <div className="mt-4 flex min-h-[52px] animate-hero-fade flex-col items-center gap-4 sm:flex-row">
-          <m.a
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+        <div className="mt-5 flex animate-hero-fade items-center justify-center">
+          <a
             href={resumeLink}
             target="_blank"
             rel="noopener noreferrer"
-            className="group flex items-center gap-2 rounded-full border-[0.5px] border-gray-700 px-10 py-3 transition duration-300 ease-in-out hover:bg-lightHover hover:shadow-lg dark:border-gray-500 dark:hover:bg-darkHover"
+            className="group inline-flex items-center gap-2.5 rounded-full border border-black/15 bg-white/70 px-6 py-2.5 font-ovo text-sm font-medium text-zinc-800 shadow-sm backdrop-blur-sm transition-all duration-300 hover:border-black/30 hover:bg-black/5 hover:shadow-md active:scale-95 dark:border-white/20 dark:bg-white/5 dark:text-zinc-200 dark:hover:border-white/40 dark:hover:bg-white/10"
           >
             <span>My Resume</span>
-            <m.div
-              initial={false}
-              whileHover={{ rotate: 360 }}
-              transition={{ duration: 0.6, ease: "easeInOut" }}
-            >
-              <DownloadIcon className="w-4 group-hover:animate-pulse" />
-            </m.div>
-          </m.a>
+            <DownloadIcon className="h-4 w-4 transition-transform duration-300 group-hover:translate-y-0.5" />
+          </a>
         </div>
       )}
     </div>

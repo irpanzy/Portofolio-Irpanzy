@@ -62,7 +62,7 @@ export default function Work({
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         transition={{ duration: 0.5, delay: 0.7 }}
-        className="mx-auto mb-12 mt-5 max-w-3xl text-center font-ovo text-sm text-gray-600 md:text-base dark:text-gray-300"
+        className="mx-auto mb-12 mt-5 max-w-3xl text-justify font-ovo text-sm text-gray-600 md:text-base dark:text-gray-300"
       >
         A showcase of real-world projects built with modern web technologies -
         from Fullstack applications to scalable backend systems and RESTful
@@ -242,26 +242,30 @@ export default function Work({
         <p className="text-center text-gray-500">No projects to display</p>
       )}
 
-      <m.a
-        initial={{ y: 30, opacity: 0 }}
-        whileInView={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.5, delay: 0.5 }}
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-        href="https://github.com/irpanzy?tab=repositories"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="group mx-auto mt-10 flex w-max items-center justify-center gap-2 rounded-full border-[0.5px] border-gray-700 px-10 py-3 transition duration-300 ease-in-out hover:bg-lightHover hover:shadow-lg dark:border-white dark:text-white dark:hover:bg-darkHover"
-      >
-        Show More
-        <m.div
-          initial={false}
-          whileHover={{ rotate: 360 }}
-          transition={{ duration: 0.6, ease: "easeInOut" }}
+      <div className="mt-12 flex justify-center">
+        <a
+          href="https://github.com/irpanzy?tab=repositories"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="hover:border-primary/40 dark:hover:border-primary/50 group relative inline-flex items-center gap-3 rounded-full border border-black/10 bg-white/80 px-5 py-2.5 shadow-[0_4px_20px_rgba(0,0,0,0.06)] backdrop-blur-xl transition-all duration-300 hover:-translate-y-0.5 hover:bg-white/95 hover:shadow-[0_8px_30px_rgba(168,85,247,0.18)] active:scale-95 dark:border-white/15 dark:bg-[#150028]/60 dark:shadow-[0_4px_20px_rgba(0,0,0,0.4)] dark:hover:bg-[#1a0033]/80 dark:hover:shadow-[0_8px_30px_rgba(168,85,247,0.25)]"
         >
-          <CircleArrowOutUpRight className="w-4 group-hover:animate-pulse" />
-        </m.div>
-      </m.a>
+          {/* Ambient Glow behind button on hover */}
+          <div className="from-primary/30 pointer-events-none absolute -inset-0.5 -z-10 rounded-full bg-gradient-to-r to-blue-500/30 opacity-0 blur-md transition-opacity duration-300 group-hover:opacity-100" />
+
+          {/* GitHub Icon Badge */}
+          <span className="group-hover:bg-primary/10 dark:group-hover:bg-primary/20 flex h-6 w-6 items-center justify-center rounded-full bg-black/5 text-zinc-800 transition-colors duration-300 group-hover:text-primary dark:bg-white/10 dark:text-zinc-200 dark:group-hover:text-primary">
+            <Github className="h-3.5 w-3.5" />
+          </span>
+
+          {/* Text & Label */}
+          <span className="font-ovo text-sm font-medium text-zinc-800 transition-colors duration-300 group-hover:text-primary dark:text-zinc-200 dark:group-hover:text-primary">
+            Show More
+          </span>
+
+          {/* Arrow Icon */}
+          <CircleArrowOutUpRight className="h-4 w-4 text-zinc-400 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-primary dark:text-zinc-400" />
+        </a>
+      </div>
     </m.div>
   );
 }
