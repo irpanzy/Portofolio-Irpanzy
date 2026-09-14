@@ -1,38 +1,60 @@
 import { assets } from "@/assets/assets";
-import { Signature } from "lucide-react";
+import {
+  Briefcase,
+  Cpu,
+  GraduationCap,
+  Home,
+  Layers,
+  Mail,
+  Signature,
+  User,
+} from "lucide-react";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
-import { AnimatePresence, m } from "framer-motion";
+import { m } from "framer-motion";
 
 interface NavbarProps {
   isDarkMode: boolean;
   setIsDarkMode: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
+const NAVIGATION_ITEMS = [
+  { id: "home", label: "Home", icon: Home },
+  { id: "about", label: "About", icon: User },
+  { id: "education", label: "Education", icon: GraduationCap },
+  { id: "experience", label: "Experience", icon: Briefcase },
+  { id: "work", label: "Projects", icon: Layers },
+  { id: "skills", label: "Skills", icon: Cpu },
+  { id: "contact", label: "Contact", icon: Mail },
+] as const;
+
 export default function Navbar({ isDarkMode, setIsDarkMode }: NavbarProps) {
   const [isScroll, setIsScroll] = useState(false);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-  const openSideMenu = () => setIsMenuOpen(true);
-  const closeSideMenu = () => setIsMenuOpen(false);
+  const [activeSection, setActiveSection] = useState("home");
+  const [isAtBottom, setIsAtBottom] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScroll(window.scrollY > 50);
+
+      const scrollPositionBottom = window.innerHeight + window.scrollY;
+      const threshold = document.documentElement.scrollHeight - 160;
+      setIsAtBottom(scrollPositionBottom >= threshold);
+
+      const scrollPosition = window.scrollY + 200;
+      for (let i = NAVIGATION_ITEMS.length - 1; i >= 0; i--) {
+        const section = document.getElementById(NAVIGATION_ITEMS[i].id);
+        if (section && section.offsetTop <= scrollPosition) {
+          setActiveSection(NAVIGATION_ITEMS[i].id);
+          break;
+        }
+      }
     };
+
     window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
-  const navigationItems = [
-    { id: "home", label: "Home" },
-    { id: "about", label: "About Me" },
-    { id: "education", label: "Education" },
-    { id: "experience", label: "Experience" },
-    { id: "work", label: "Projects" },
-    { id: "skills", label: "Skills" },
-    { id: "contact", label: "Contact" },
-  ];
 
   return (
     <>
@@ -48,11 +70,11 @@ export default function Navbar({ isDarkMode, setIsDarkMode }: NavbarProps) {
         />
       </div>
 
-      {/* Navbar */}
-      <m.nav
-        className={`fixed z-50 flex w-full items-center justify-between px-5 py-4 lg:px-[8%] ${
+      {/* Top Navbar */}
+      <nav
+        className={`fixed left-0 right-0 top-0 z-40 flex items-center justify-between px-5 py-3 transition-all duration-300 lg:px-[8%] ${
           isScroll
-            ? "bg-white bg-opacity-50 shadow-sm backdrop-blur-lg dark:bg-darkTheme dark:shadow-white/20"
+            ? "bg-white/70 shadow-sm backdrop-blur-md dark:bg-darkTheme/70 dark:shadow-white/10"
             : ""
         }`}
       >
@@ -70,139 +92,103 @@ export default function Navbar({ isDarkMode, setIsDarkMode }: NavbarProps) {
             width={112}
             height={40}
             priority
-            style={{ width: "auto", height: "40px" }}
+            style={{ width: "auto", height: "38px" }}
           />
         </m.a>
 
-        {/* Desktop Menu */}
+        {/* Desktop Menu (Centered Pill) */}
         <ul
-          className={`hidden items-center gap-6 rounded-full px-10 py-3 xl:flex xl:gap-8 ${
+          className={`hidden items-center gap-6 rounded-full px-8 py-2.5 xl:flex xl:gap-8 ${
             isScroll
-              ? ""
-              : "bg-white bg-opacity-50 shadow-sm dark:border dark:border-white/50 dark:bg-transparent"
+              ? "bg-white/60 shadow-sm backdrop-blur-md dark:border dark:border-white/10 dark:bg-white/5"
+              : "border border-black/5 bg-white/40 shadow-sm dark:border-white/10 dark:bg-transparent"
           }`}
         >
-          {navigationItems.map(({ id, label }) => (
-            <li key={id}>
-              <a
-                className="font-ovo transition-colors hover:text-primary"
-                href={`#${id}`}
-              >
-                {label}
-              </a>
-            </li>
-          ))}
+          {NAVIGATION_ITEMS.map(({ id, label }) => {
+            const isActive = activeSection === id;
+            return (
+              <li key={id}>
+                <a
+                  className={`py-1 font-ovo text-[15px] transition-colors ${
+                    isActive
+                      ? "font-semibold text-primary"
+                      : "text-gray-700 hover:text-primary dark:text-gray-300 dark:hover:text-white"
+                  }`}
+                  href={`#${id}`}
+                >
+                  {label}
+                </a>
+              </li>
+            );
+          })}
         </ul>
 
-        {/* Right-side Controls */}
-        <div className="flex items-center gap-4">
+        {/* Controls */}
+        <div className="flex items-center gap-3">
           {/* Dark Mode Toggle */}
           <m.button
             whileTap={{ rotate: 90 }}
-            whileHover={{ scale: 1.1 }}
-            transition={{ duration: 0.3 }}
+            whileHover={{ scale: 1.08 }}
+            transition={{ duration: 0.2 }}
             onClick={() => setIsDarkMode((prev: boolean) => !prev)}
             aria-label="Toggle dark mode"
             type="button"
+            className="flex h-9 w-9 items-center justify-center rounded-full border border-black/5 bg-white/60 p-1.5 shadow-sm transition-all hover:bg-black/5 dark:border-white/10 dark:bg-white/10 dark:hover:bg-white/20"
           >
             <Image
               src={isDarkMode ? assets.sun_icon : assets.moon_icon}
               alt=""
               role="presentation"
-              className="w-6"
+              className="h-5 w-5"
             />
           </m.button>
 
           {/* Contact Button (Desktop) */}
           <m.a
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            transition={{ type: "spring", stiffness: 300 }}
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.97 }}
             href="#contact"
-            className="ml-4 hidden items-center gap-3 rounded-full border border-gray-500 px-4 py-2 font-ovo transition-colors duration-300 xl:flex"
+            className="hidden items-center gap-2.5 rounded-full border border-gray-400/80 px-4 py-1.5 font-ovo text-sm transition-colors duration-300 hover:border-primary hover:bg-lightHover xl:flex dark:border-gray-600 dark:hover:border-primary dark:hover:bg-darkHover"
           >
             Say Hello
             <Signature color={isDarkMode ? "white" : "black"} className="w-4" />
           </m.a>
-
-          {/* Mobile Menu Button */}
-          <m.button
-            className="ml-3 block xl:hidden"
-            onClick={openSideMenu}
-            whileTap={{ scale: 0.9 }}
-            aria-label="Open mobile navigation menu"
-            type="button"
-          >
-            <Image
-              src={isDarkMode ? assets.menu_white : assets.menu_black}
-              alt=""
-              role="presentation"
-              className="w-6"
-            />
-          </m.button>
         </div>
-      </m.nav>
+      </nav>
 
-      {/* Backdrop (optional, bisa klik untuk tutup) */}
-      <AnimatePresence>
-        {isMenuOpen && (
-          <>
-            <m.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 0.5 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.3 }}
-              className="fixed inset-0 z-40 bg-black xl:hidden"
-              onClick={closeSideMenu}
-            />
-            {/* Mobile Menu */}
-            <m.div
-              initial={{ x: "100%" }}
-              animate={{ x: 0 }}
-              exit={{ x: "100%" }}
-              transition={{ duration: 0.4 }}
-              className="fixed bottom-0 right-0 top-0 z-50 flex h-screen w-56 flex-col gap-4 bg-rose-50 px-10 py-20 shadow-lg sm:w-64 md:w-72 xl:hidden dark:bg-darkHover dark:text-white"
-            >
-              {/* Close Button */}
-              <m.button
-                className="absolute right-[21px] top-[34px] cursor-pointer"
-                onClick={closeSideMenu}
-                whileHover={{ scale: 1.2 }}
-                whileTap={{ scale: 0.9 }}
-                aria-label="Close mobile navigation menu"
-                type="button"
+      {/* Floating Bottom Dock (Mobile Only) */}
+      <div
+        className={`fixed bottom-5 left-1/2 z-50 -translate-x-1/2 transition-all duration-300 xl:hidden ${
+          isAtBottom
+            ? "pointer-events-none translate-y-24 opacity-0"
+            : "translate-y-0 opacity-100"
+        }`}
+      >
+        <div className="flex items-center gap-1 rounded-full border border-black/10 bg-white/85 p-1.5 shadow-[0_8px_30px_rgb(0,0,0,0.12)] backdrop-blur-2xl dark:border-white/15 dark:bg-[#0f001c]/85 dark:shadow-[0_8px_30px_rgb(0,0,0,0.6)]">
+          {NAVIGATION_ITEMS.map(({ id, label, icon: Icon }) => {
+            const isActive = activeSection === id;
+            return (
+              <m.a
+                key={id}
+                href={`#${id}`}
+                aria-label={label}
+                whileTap={{ scale: 0.88 }}
+                className={`flex h-10 w-10 items-center justify-center rounded-full transition-all duration-200 ${
+                  isActive
+                    ? "bg-primary/15 dark:bg-primary/25 text-primary"
+                    : "text-gray-600 hover:bg-black/5 hover:text-black dark:text-gray-400 dark:hover:bg-white/10 dark:hover:text-white"
+                }`}
               >
-                <Image
-                  src={isDarkMode ? assets.close_white : assets.close_black}
-                  alt=""
-                  role="presentation"
-                  className="w-5"
+                <Icon
+                  className={`h-4 w-4 transition-transform duration-200 ${
+                    isActive ? "scale-110 stroke-[2.2]" : "stroke-[1.8]"
+                  }`}
                 />
-              </m.button>
-
-              {/* Menu Items */}
-              <ul className="flex flex-col gap-4">
-                {navigationItems.map(({ id, label }) => (
-                  <m.li
-                    key={id}
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    transition={{ type: "spring", stiffness: 400 }}
-                  >
-                    <a
-                      href={`#${id}`}
-                      onClick={closeSideMenu}
-                      className="font-ovo transition-all duration-300"
-                    >
-                      {label}
-                    </a>
-                  </m.li>
-                ))}
-              </ul>
-            </m.div>
-          </>
-        )}
-      </AnimatePresence>
+              </m.a>
+            );
+          })}
+        </div>
+      </div>
     </>
   );
 }
