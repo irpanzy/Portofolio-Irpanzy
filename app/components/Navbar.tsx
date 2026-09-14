@@ -108,10 +108,12 @@ export default function Navbar({ isDarkMode, setIsDarkMode }: NavbarProps) {
             whileHover={{ scale: 1.1 }}
             transition={{ duration: 0.3 }}
             onClick={() => setIsDarkMode((prev: boolean) => !prev)}
+            aria-label="Toggle dark mode"
+            type="button"
           >
             <Image
               src={isDarkMode ? assets.sun_icon : assets.moon_icon}
-              alt="toggle"
+              alt="Toggle dark mode"
               className="w-6"
             />
           </m.button>
@@ -133,10 +135,12 @@ export default function Navbar({ isDarkMode, setIsDarkMode }: NavbarProps) {
             className="ml-3 block xl:hidden"
             onClick={openSideMenu}
             whileTap={{ scale: 0.9 }}
+            aria-label="Open mobile navigation menu"
+            type="button"
           >
             <Image
               src={isDarkMode ? assets.menu_white : assets.menu_black}
-              alt="menu"
+              alt="Open menu"
               className="w-6"
             />
           </m.button>
@@ -164,36 +168,40 @@ export default function Navbar({ isDarkMode, setIsDarkMode }: NavbarProps) {
               className="fixed bottom-0 right-0 top-0 z-50 flex h-screen w-56 flex-col gap-4 bg-rose-50 px-10 py-20 shadow-lg sm:w-64 md:w-72 xl:hidden dark:bg-darkHover dark:text-white"
             >
               {/* Close Button */}
-              <m.div
+              <m.button
                 className="absolute right-[21px] top-[34px] cursor-pointer"
                 onClick={closeSideMenu}
                 whileHover={{ scale: 1.2 }}
                 whileTap={{ scale: 0.9 }}
+                aria-label="Close mobile navigation menu"
+                type="button"
               >
                 <Image
                   src={isDarkMode ? assets.close_white : assets.close_black}
-                  alt="close"
+                  alt="Close menu"
                   className="w-5"
                 />
-              </m.div>
+              </m.button>
 
               {/* Menu Items */}
-              {navigationItems.map(({ id, label }) => (
-                <m.li
-                  key={id}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  transition={{ type: "spring", stiffness: 400 }}
-                >
-                  <a
-                    href={`#${id}`}
-                    onClick={closeSideMenu}
-                    className="font-ovo transition-all duration-300"
+              <ul className="flex flex-col gap-4">
+                {navigationItems.map(({ id, label }) => (
+                  <m.li
+                    key={id}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    transition={{ type: "spring", stiffness: 400 }}
                   >
-                    {label}
-                  </a>
-                </m.li>
-              ))}
+                    <a
+                      href={`#${id}`}
+                      onClick={closeSideMenu}
+                      className="font-ovo transition-all duration-300"
+                    >
+                      {label}
+                    </a>
+                  </m.li>
+                ))}
+              </ul>
             </m.div>
           </>
         )}

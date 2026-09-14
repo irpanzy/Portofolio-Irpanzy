@@ -13,6 +13,13 @@ interface HeaderProps {
   isLoading?: boolean;
 }
 
+const DEFAULT_HERO: Partial<Hero> = {
+  greeting: "Hi! I'm Irfan Muria",
+  title: "Fullstack Developer based in Indonesia.",
+  description:
+    "I build modern fullstack apps with React, Node.js, Express, Next.js, Laravel, and Cloud technologies.",
+};
+
 export default function Header({
   data: propData,
   isLoading: propIsLoading,
@@ -22,25 +29,11 @@ export default function Header({
   const isLoading =
     propIsLoading !== undefined ? propIsLoading : !propData && queryIsLoading;
 
-  if (isLoading) {
-    return (
-      <div
-        id="home"
-        className="mx-auto flex w-10/12 max-w-3xl animate-pulse flex-col items-center justify-center gap-4 pb-6 pt-[100px] text-center xl:min-h-screen"
-      >
-        <div className="h-32 w-32 rounded-full bg-gray-300 dark:bg-gray-700" />
-        <div className="h-8 w-64 rounded bg-gray-300 dark:bg-gray-700" />
-        <div className="h-14 w-full max-w-2xl rounded bg-gray-300 dark:bg-gray-700" />
-        <div className="h-16 w-full max-w-xl rounded bg-gray-300 dark:bg-gray-700" />
-        <div className="h-12 w-44 rounded-full bg-gray-300 dark:bg-gray-700" />
-      </div>
-    );
-  }
-
   const avatar = hero?.avatarImage || assets.profile_img;
-  const greeting = hero?.greeting;
-  const title = hero?.title;
-  const description = hero?.description;
+  const greeting = hero?.greeting || (isLoading ? DEFAULT_HERO.greeting : "");
+  const title = hero?.title || (isLoading ? DEFAULT_HERO.title : "");
+  const description =
+    hero?.description || (isLoading ? DEFAULT_HERO.description : "");
   const resumeLink = hero?.resumeLink;
 
   return (
@@ -49,9 +42,9 @@ export default function Header({
       className="mx-auto flex w-10/12 max-w-3xl flex-col items-center justify-center gap-4 pb-6 pt-[100px] text-center xl:min-h-screen"
     >
       <m.div
-        initial={{ scale: 0 }}
-        whileInView={{ scale: 1 }}
-        transition={{ duration: 0.8, type: "spring", stiffness: 100 }}
+        initial={{ scale: 0.85, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        transition={{ duration: 0.5, type: "spring", stiffness: 120 }}
       >
         <div className="border-primary/20 relative h-32 w-32 overflow-hidden rounded-full border-2 shadow-md">
           <Image
@@ -68,9 +61,9 @@ export default function Header({
       </m.div>
 
       <m.p
-        initial={{ y: -20, opacity: 0 }}
-        whileInView={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.6, delay: 0.3 }}
+        initial={{ y: -10, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.4 }}
         className="mb-3 flex items-center justify-center gap-2 font-ovo text-xl sm:text-2xl md:text-3xl lg:text-4xl"
       >
         <span>{greeting}</span>
@@ -78,29 +71,24 @@ export default function Header({
       </m.p>
 
       <m.h1
-        initial={{ y: -30, opacity: 0 }}
-        whileInView={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.8, delay: 0.4 }}
+        initial={{ y: -15, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.5 }}
         className="font-ovo text-3xl sm:text-5xl md:text-6xl lg:text-7xl"
       >
         {title}
       </m.h1>
 
-      <m.p
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        transition={{ duration: 0.6, delay: 0.7 }}
-        className="mx-auto max-w-xl font-ovo sm:max-w-2xl md:max-w-3xl lg:max-w-3xl"
-      >
+      <p className="mx-auto max-w-xl font-ovo transition-opacity duration-300 sm:max-w-2xl md:max-w-3xl lg:max-w-3xl">
         {description}
-      </m.p>
+      </p>
 
-      {resumeLink && (
-        <div className="mt-4 flex flex-col items-center gap-4 sm:flex-row">
+      <div className="mt-4 flex min-h-[52px] flex-col items-center gap-4 sm:flex-row">
+        {resumeLink ? (
           <m.a
-            initial={{ y: 30, opacity: 0 }}
-            whileInView={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.5 }}
+            initial={{ y: 15, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.4 }}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             href={resumeLink}
@@ -117,8 +105,15 @@ export default function Header({
               <DownloadIcon className="w-4 group-hover:animate-pulse" />
             </m.div>
           </m.a>
-        </div>
-      )}
+        ) : (
+          <a
+            href="#contact"
+            className="group flex items-center gap-2 rounded-full border-[0.5px] border-gray-700 px-10 py-3 transition duration-300 ease-in-out hover:bg-lightHover hover:shadow-lg dark:border-gray-500 dark:hover:bg-darkHover"
+          >
+            <span>Contact Me</span>
+          </a>
+        )}
+      </div>
     </div>
   );
 }

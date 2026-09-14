@@ -87,7 +87,7 @@ export default function Contact({ isDarkMode }: ContactProps) {
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         transition={{ duration: 0.5, delay: 0.7 }}
-        className="mx-auto mb-12 mt-5 max-w-3xl text-center font-ovo text-sm text-gray-600 md:text-base dark:text-gray-300"
+        className="mx-auto mb-12 mt-5 max-w-3xl text-center font-ovo text-sm text-gray-700 md:text-base dark:text-gray-200"
       >
         Have a project in mind or just want to say hi? Let&apos;s connect and
         bring your ideas to life. I&apos;m always open to new collaborations and
@@ -108,6 +108,7 @@ export default function Contact({ isDarkMode }: ContactProps) {
             transition={{ duration: 0.6, delay: 1.1 }}
             type="text"
             placeholder="Enter your name"
+            aria-label="Your Name"
             required
             name="name"
             disabled={isLoading}
@@ -119,6 +120,7 @@ export default function Contact({ isDarkMode }: ContactProps) {
             transition={{ duration: 0.6, delay: 1.1 }}
             type="email"
             placeholder="Enter your email"
+            aria-label="Your Email"
             required
             name="email"
             disabled={isLoading}
@@ -133,6 +135,7 @@ export default function Contact({ isDarkMode }: ContactProps) {
           rows={6}
           name="message"
           placeholder="Enter your message"
+          aria-label="Your Message"
           required
           disabled={isLoading}
           className="mb-6 w-full rounded-md border-[0.5px] border-gray-400 bg-white p-4 outline-none dark:border-white/90 dark:bg-darkHover/30"

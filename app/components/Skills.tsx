@@ -207,9 +207,9 @@ export default function Skills({
                         >
                           <IconComponent className="h-4 w-4" />
                         </div>
-                        <h4 className="font-outfit text-base font-bold text-gray-900 dark:text-white">
+                        <h3 className="font-outfit text-base font-bold text-gray-900 dark:text-white">
                           {label}
-                        </h4>
+                        </h3>
                       </div>
                       <span className="inline-flex items-center rounded-full border border-gray-200/80 bg-gray-50 px-2.5 py-0.5 font-outfit text-xs font-semibold text-gray-600 dark:border-white/10 dark:bg-white/5 dark:text-gray-300">
                         {items.length} {items.length === 1 ? "Skill" : "Skills"}
