@@ -66,7 +66,7 @@ export default function Header({
       {greeting && (
         <p className="mb-1 flex animate-hero-fade items-center justify-center gap-2 font-ovo text-xl leading-none text-[#783E30] sm:text-2xl md:text-3xl dark:text-[#D6BC9E]">
           <span>{greeting}</span>
-          <HandHeartIcon className="h-[0.85em] w-[0.85em] shrink-0 -translate-y-[2px] text-[#783E30] dark:text-[#B39070]" />
+          <HandHeartIcon className="h-[0.80em] w-[0.80em] shrink-0 -translate-y-[2px] text-[#783E30] dark:text-[#B39070]" />
         </p>
       )}
 

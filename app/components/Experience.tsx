@@ -257,38 +257,6 @@ export default function Experience({
                     </div>
                   )}
 
-                  {exp.responsibilities && exp.responsibilities.length > 0 && (
-                    <div className="space-y-3">
-                      <div className="flex items-center gap-2">
-                        <span className="flex h-6 w-6 items-center justify-center rounded-md bg-[#783E30]/10 text-[#783E30] dark:bg-[#B39070]/15 dark:text-[#B39070]">
-                          <ListChecks className="h-3.5 w-3.5" />
-                        </span>
-                        <span className="font-outfit text-xs font-semibold uppercase tracking-wider text-[#783E30] dark:text-[#B39070]">
-                          Key Responsibilities
-                        </span>
-                      </div>
-                      <ul className="space-y-2.5 pl-1 text-sm leading-relaxed text-[#59493E] dark:text-[#D6BC9E]">
-                        {exp.responsibilities.map((responsibility, idx) => (
-                          <m.li
-                            key={idx}
-                            initial={{ opacity: 0, x: -15 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            transition={{
-                              duration: 0.35,
-                              delay: 0.05 * idx,
-                            }}
-                            className="flex items-start gap-3"
-                          >
-                            <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#783E30]/70 dark:bg-[#B39070]/80" />
-                            <span className="text-justify font-outfit">
-                              {responsibility}
-                            </span>
-                          </m.li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
-
                   {/* Certificates & Documentation Gallery */}
                   {attachments.length > 0 && (
                     <div className="mt-6 border-t border-[#B39070]/15 pt-5 dark:border-[#B39070]/10">
