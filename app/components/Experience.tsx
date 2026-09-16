@@ -128,7 +128,7 @@ export default function Experience({
         initial={{ opacity: 0, y: -20 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.3 }}
-        className="mb-2 text-center font-ovo text-lg"
+        className="mb-2 text-center font-ovo text-lg text-[#783E30] dark:text-[#B39070]"
       >
         Professional Journey
       </m.p>
@@ -144,7 +144,7 @@ export default function Experience({
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         transition={{ duration: 0.5, delay: 0.7 }}
-        className="mx-auto mb-12 mt-5 max-w-3xl text-center font-ovo text-sm text-gray-600 md:text-base dark:text-gray-300"
+        className="mx-auto mb-12 mt-5 max-w-3xl text-center font-outfit text-sm text-[#59493E] md:text-base dark:text-[#C5B8A5]"
       >
         Real-world experience building scalable applications and working with
         modern web technologies in professional environments.
@@ -155,11 +155,13 @@ export default function Experience({
           {Array.from({ length: 3 }).map((_, i) => (
             <div
               key={i}
-              className="animate-pulse rounded-lg bg-gray-200 p-8 dark:bg-gray-800"
+              className="rounded-3xl border border-[#B39070]/20 bg-[#FAF6F0]/60 p-8 backdrop-blur-md dark:border-[#B39070]/15 dark:bg-[#2D1A17]/60"
             >
-              <div className="mb-4 h-6 w-3/4 rounded bg-gray-300 dark:bg-gray-700"></div>
-              <div className="mb-2 h-4 w-1/2 rounded bg-gray-300 dark:bg-gray-700"></div>
-              <div className="h-4 w-1/3 rounded bg-gray-300 dark:bg-gray-700"></div>
+              <div className="animate-pulse space-y-4">
+                <div className="h-6 w-1/3 rounded-md bg-[#B39070]/20" />
+                <div className="h-4 w-1/2 rounded bg-[#B39070]/20" />
+                <div className="h-4 w-1/4 rounded bg-[#B39070]/20" />
+              </div>
             </div>
           ))}
         </div>
@@ -176,27 +178,33 @@ export default function Experience({
             return (
               <m.div
                 key={exp._id}
-                initial={{ opacity: 0, x: -50 }}
+                initial={{ opacity: 0, x: -30 }}
                 whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6, delay: 1 + index * 0.2 }}
-                className="relative border-l-2 border-gray-300 pb-12 pl-8 last:pb-0 dark:border-gray-600"
+                transition={{ duration: 0.6, delay: 0.2 + index * 0.15 }}
+                className="relative border-l border-[#B39070]/30 pb-12 pl-6 last:pb-0 sm:pl-8 dark:border-[#B39070]/20"
               >
-                <div className="absolute -left-2 top-0 h-4 w-4 rounded-full border-4 border-white bg-[#77BEF0] dark:border-darkTheme"></div>
+                {/* Glowing rustic timeline node */}
+                <div className="absolute -left-[7px] top-1 flex h-3.5 w-3.5 items-center justify-center">
+                  <span className="absolute h-full w-full rounded-full bg-[#783E30]/30 opacity-40 dark:bg-[#B39070]/30" />
+                  <span className="shadow-2xs h-3 w-3 rounded-full border-2 border-[#783E30] bg-[#FAF6F0] dark:border-[#B39070] dark:bg-[#190E0C]" />
+                </div>
 
+                {/* Glass Card */}
                 <m.div
-                  whileHover={{ scale: 1.02 }}
-                  className="rounded-lg border border-gray-200 bg-white p-6 font-outfit shadow-md transition-all duration-300 hover:shadow-lg dark:border-gray-600 dark:bg-darkHover/30"
+                  whileHover={{ y: -3 }}
+                  transition={{ duration: 0.25 }}
+                  className="glass-card rounded-3xl p-6 font-outfit transition-all duration-300 hover:border-[#783E30]/40 sm:p-8 dark:hover:border-[#B39070]/40"
                 >
-                  <div className="mb-4 flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
+                  <div className="mb-5 flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
                     <div className="flex items-start gap-4">
                       {exp.logo && (
                         <m.div
                           initial={{ opacity: 0, scale: 0.8 }}
                           whileInView={{ opacity: 1, scale: 1 }}
-                          transition={{ duration: 0.5, delay: 1.1 }}
+                          transition={{ duration: 0.5, delay: 0.1 }}
                           className="flex-shrink-0"
                         >
-                          <div className="flex h-12 w-12 items-center justify-center rounded-lg border border-gray-200 bg-white p-2 shadow-sm md:h-14 md:w-14 dark:border-gray-600 dark:bg-gray-800">
+                          <div className="shadow-2xs flex h-12 w-12 items-center justify-center rounded-2xl border border-[#B39070]/20 bg-[#FAF6F0]/80 p-2 md:h-14 md:w-14 dark:border-[#B39070]/15 dark:bg-[#2D1A17]/80">
                             <Image
                               src={exp.logo}
                               alt={`${exp.company} logo`}
@@ -211,75 +219,84 @@ export default function Experience({
                       )}
 
                       <div className="flex-grow">
-                        <h3 className="font-ovo text-xl font-semibold text-gray-800 dark:text-white">
+                        <h3 className="font-ovo text-xl font-semibold tracking-tight text-[#2B1810] sm:text-2xl dark:text-[#FAF6F0]">
                           {exp.position}
                         </h3>
-                        <div className="mt-1 flex items-center gap-2 font-medium text-[#77BEF0]">
-                          <Building2 className="h-4 w-4" />
+                        <div className="mt-1 flex items-center gap-2 text-sm font-medium text-[#783E30] sm:text-base dark:text-[#D6BC9E]">
+                          <Building2 className="h-4 w-4 shrink-0" />
                           <span>{exp.company}</span>
                         </div>
                       </div>
                     </div>
 
                     <div className="mt-2 flex flex-wrap gap-2 md:ml-4 md:mt-0 md:flex-col md:items-end md:gap-1.5">
-                      <span className="shadow-xs inline-flex items-center gap-1.5 rounded-lg border border-gray-200/60 bg-gray-50/80 px-2.5 py-1 text-xs font-medium text-gray-600 dark:border-gray-700/60 dark:bg-gray-800/60 dark:text-gray-300">
-                        <Calendar className="h-3.5 w-3.5 text-[#77BEF0]" />
+                      <span className="shadow-2xs inline-flex items-center gap-1.5 rounded-full border border-[#B39070]/25 bg-[#FAF6F0]/80 px-3 py-1 text-xs font-medium text-[#59493E] dark:border-[#B39070]/20 dark:bg-[#2D1A17]/60 dark:text-[#C5B8A5]">
+                        <Calendar className="h-3.5 w-3.5 text-[#783E30] dark:text-[#B39070]" />
                         <span>{getPeriod(exp)}</span>
                       </span>
-                      <span className="shadow-xs inline-flex items-center gap-1.5 rounded-lg border border-gray-200/60 bg-gray-50/80 px-2.5 py-1 text-xs font-medium text-gray-600 dark:border-gray-700/60 dark:bg-gray-800/60 dark:text-gray-300">
-                        <MapPin className="h-3.5 w-3.5 text-[#77BEF0]" />
+                      <span className="shadow-2xs inline-flex items-center gap-1.5 rounded-full border border-[#B39070]/25 bg-[#FAF6F0]/80 px-3 py-1 text-xs font-medium text-[#59493E] dark:border-[#B39070]/20 dark:bg-[#2D1A17]/60 dark:text-[#C5B8A5]">
+                        <MapPin className="h-3.5 w-3.5 text-[#783E30] dark:text-[#B39070]" />
                         <span>{exp.location}</span>
                       </span>
                     </div>
                   </div>
 
                   {exp.description && (
-                    <div className="mb-5 rounded-r-xl border border-l-4 border-gray-100 border-l-[#77BEF0] bg-slate-50/70 p-4 shadow-sm dark:border-gray-700/60 dark:border-l-[#77BEF0] dark:bg-darkHover/40">
-                      <div className="mb-2 flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">
-                        <Briefcase className="h-3.5 w-3.5 text-[#77BEF0]" />
-                        <span>Role Overview</span>
+                    <div className="shadow-2xs mb-5 rounded-2xl border border-[#B39070]/20 bg-[#FAF6F0]/80 p-4 backdrop-blur-sm sm:p-5 dark:border-[#B39070]/15 dark:bg-[#1E110F]/60">
+                      <div className="mb-2.5 flex items-center gap-2">
+                        <span className="flex h-6 w-6 items-center justify-center rounded-md bg-[#783E30]/10 text-[#783E30] dark:bg-[#B39070]/15 dark:text-[#B39070]">
+                          <Briefcase className="h-3.5 w-3.5" />
+                        </span>
+                        <span className="font-outfit text-xs font-semibold uppercase tracking-wider text-[#783E30] dark:text-[#B39070]">
+                          Role Overview
+                        </span>
                       </div>
-                      <p className="text-justify text-sm leading-relaxed text-gray-700 dark:text-gray-200">
+                      <p className="font-outfit text-sm leading-relaxed text-[#59493E] sm:text-[15px] dark:text-[#D6BC9E]">
                         {exp.description}
                       </p>
                     </div>
                   )}
 
                   {exp.responsibilities && exp.responsibilities.length > 0 && (
-                    <div>
-                      <div className="mb-3 flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">
-                        <ListChecks className="h-3.5 w-3.5 text-[#77BEF0]" />
-                        <span>Key Responsibilities</span>
+                    <div className="space-y-3">
+                      <div className="flex items-center gap-2">
+                        <span className="flex h-6 w-6 items-center justify-center rounded-md bg-[#783E30]/10 text-[#783E30] dark:bg-[#B39070]/15 dark:text-[#B39070]">
+                          <ListChecks className="h-3.5 w-3.5" />
+                        </span>
+                        <span className="font-outfit text-xs font-semibold uppercase tracking-wider text-[#783E30] dark:text-[#B39070]">
+                          Key Responsibilities
+                        </span>
                       </div>
-                      <m.ul className="space-y-2 text-sm leading-relaxed text-gray-600 dark:text-gray-300">
+                      <ul className="space-y-2.5 pl-1 text-sm leading-relaxed text-[#59493E] dark:text-[#D6BC9E]">
                         {exp.responsibilities.map((responsibility, idx) => (
                           <m.li
                             key={idx}
-                            initial={{ opacity: 0, x: -20 }}
+                            initial={{ opacity: 0, x: -15 }}
                             whileInView={{ opacity: 1, x: 0 }}
                             transition={{
-                              duration: 0.4,
-                              delay: 1.2 + idx * 0.1,
+                              duration: 0.35,
+                              delay: 0.05 * idx,
                             }}
                             className="flex items-start gap-3"
                           >
-                            <div className="mt-2 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-[#77BEF0]"></div>
-                            <span className="text-justify">
+                            <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#783E30]/70 dark:bg-[#B39070]/80" />
+                            <span className="text-justify font-outfit">
                               {responsibility}
                             </span>
                           </m.li>
                         ))}
-                      </m.ul>
+                      </ul>
                     </div>
                   )}
 
                   {/* Certificates & Documentation Gallery */}
                   {attachments.length > 0 && (
-                    <div className="mt-5 border-t border-gray-100 pt-4 dark:border-gray-700/60">
-                      <div className="mb-3 flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">
-                        <Award className="h-3.5 w-3.5 text-[#77BEF0]" />
+                    <div className="mt-6 border-t border-[#B39070]/15 pt-5 dark:border-[#B39070]/10">
+                      <div className="mb-3 flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-widest text-[#783E30] dark:text-[#B39070]">
+                        <Award className="h-3.5 w-3.5 text-[#783E30] dark:text-[#B39070]" />
                         <span>
-                          Certificates & Documentation ({attachments.length})
+                          Certificates &amp; Documentation ({attachments.length}
+                          )
                         </span>
                       </div>
                       <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4">
@@ -290,8 +307,8 @@ export default function Experience({
                             <m.button
                               key={attIdx}
                               type="button"
-                              whileHover={{ scale: 1.03 }}
-                              whileTap={{ scale: 0.97 }}
+                              whileHover={{ scale: 1.02 }}
+                              whileTap={{ scale: 0.98 }}
                               onClick={() =>
                                 setSelectedAttachment({
                                   attachment: att,
@@ -299,9 +316,9 @@ export default function Experience({
                                   index: attIdx,
                                 })
                               }
-                              className="group relative flex flex-col overflow-hidden rounded-xl border border-gray-200 bg-gray-50 text-left shadow-sm transition-all hover:border-[#77BEF0] hover:shadow-md dark:border-gray-700 dark:bg-gray-800/60"
+                              className="shadow-2xs group relative flex flex-col overflow-hidden rounded-2xl border border-[#B39070]/25 bg-[#FAF6F0]/70 text-left transition-all hover:border-[#783E30] hover:shadow-md dark:border-[#B39070]/20 dark:bg-[#2D1A17]/60 dark:hover:border-[#B39070]"
                             >
-                              <div className="relative aspect-[4/3] w-full overflow-hidden bg-gray-100 dark:bg-gray-800">
+                              <div className="relative aspect-[4/3] w-full overflow-hidden bg-[#B39070]/10 dark:bg-[#3E211E]/40">
                                 {isPdf ? (
                                   <PdfThumbnail
                                     url={att.url}
@@ -316,12 +333,12 @@ export default function Experience({
                                     sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, 25vw"
                                   />
                                 )}
-                                <div className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 transition-opacity group-hover:opacity-100">
-                                  <Eye className="h-5 w-5 text-white drop-shadow" />
+                                <div className="backdrop-blur-2xs absolute inset-0 flex items-center justify-center bg-[#190E0C]/40 opacity-0 transition-opacity group-hover:opacity-100">
+                                  <Eye className="drop-shadow-xs h-5 w-5 text-[#FAF6F0]" />
                                 </div>
                               </div>
                               <div className="p-2.5">
-                                <p className="line-clamp-1 text-xs font-medium text-gray-800 dark:text-gray-200">
+                                <p className="line-clamp-1 text-xs font-medium text-[#2B1810] dark:text-[#FAF6F0]">
                                   {att.title}
                                 </p>
                               </div>
@@ -343,14 +360,14 @@ export default function Experience({
         open={!!selectedAttachment}
         onOpenChange={(open) => !open && setSelectedAttachment(null)}
       >
-        <DialogContent className="w-[calc(100vw-20px)] max-w-3xl overflow-hidden rounded-2xl border border-gray-200/80 bg-white/95 p-3.5 shadow-2xl backdrop-blur-xl sm:w-[92vw] sm:rounded-3xl sm:p-5 dark:border-gray-800/80 dark:bg-gray-900/95">
+        <DialogContent className="w-[calc(100vw-20px)] max-w-3xl overflow-hidden rounded-3xl border border-[#B39070]/30 bg-[#FAF6F0]/95 p-4 shadow-2xl backdrop-blur-2xl sm:w-[92vw] sm:p-6 dark:border-[#B39070]/20 dark:bg-[#190E0C]/95">
           <DialogHeader className="mb-2">
             <div className="flex items-center justify-between gap-2 pr-8 sm:pr-10">
-              <DialogTitle className="flex items-center gap-2 text-sm font-semibold sm:text-base md:text-lg">
-                <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-[#77BEF0]/15 text-[#2170a8] dark:bg-[#77BEF0]/20 dark:text-[#90cdf4]">
+              <DialogTitle className="flex items-center gap-2.5 text-sm font-semibold sm:text-base md:text-lg">
+                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-[#783E30]/15 text-[#783E30] dark:bg-[#B39070]/20 dark:text-[#B39070]">
                   <Award className="h-4 w-4" />
                 </div>
-                <span className="line-clamp-1">
+                <span className="line-clamp-1 font-ovo text-[#2B1810] dark:text-[#FAF6F0]">
                   {selectedAttachment?.attachment.title || "Document Preview"}
                 </span>
               </DialogTitle>
@@ -365,7 +382,7 @@ export default function Experience({
               return (
                 <div className="relative flex flex-col items-center">
                   {/* Main Media Container with Animated Presence */}
-                  <div className="relative h-[48vh] max-h-[58vh] min-h-[300px] w-full overflow-hidden rounded-xl border border-gray-200/80 bg-black/5 sm:aspect-[16/10] sm:h-auto sm:max-h-[66vh] sm:min-h-[50vh] sm:rounded-2xl dark:border-gray-800 dark:bg-black/70">
+                  <div className="relative h-[48vh] max-h-[58vh] min-h-[300px] w-full overflow-hidden rounded-2xl border border-[#B39070]/20 bg-black/5 sm:aspect-[16/10] sm:h-auto sm:max-h-[66vh] sm:min-h-[50vh] dark:border-[#B39070]/15 dark:bg-black/60">
                     <AnimatePresence mode="wait">
                       <m.div
                         key={selectedAttachment.attachment.url}
@@ -393,7 +410,7 @@ export default function Experience({
                           <div className="relative flex h-full w-full flex-col">
                             <iframe
                               src={`${selectedAttachment.attachment.url}#view=FitH`}
-                              className="h-full w-full rounded-xl border-0 bg-white"
+                              className="h-full w-full rounded-2xl border-0 bg-white"
                               title={selectedAttachment.attachment.title}
                             />
                           </div>
@@ -410,7 +427,7 @@ export default function Experience({
                       </m.div>
                     </AnimatePresence>
 
-                    {/* Previous / Next Floating Buttons on Image (Desktop only to prevent blocking subject on mobile) */}
+                    {/* Previous / Next Floating Buttons on Image */}
                     {selectedAttachment.list.length > 1 && (
                       <>
                         <button
@@ -436,20 +453,20 @@ export default function Experience({
                   </div>
 
                   {/* Footer Bar: Controls, Counter & Open Full Image/PDF */}
-                  <div className="mt-3 flex w-full items-center justify-between gap-2 px-0.5 text-xs text-gray-500 dark:text-gray-400">
-                    <div className="flex min-w-0 items-center gap-1.5 sm:gap-2">
+                  <div className="mt-4 flex w-full items-center justify-between gap-2 px-0.5 text-xs text-[#59493E] dark:text-[#C5B8A5]">
+                    <div className="flex min-w-0 items-center gap-2">
                       {selectedAttachment.list.length > 1 && (
-                        <div className="flex items-center gap-0.5 rounded-full border border-gray-200/80 bg-gray-100 p-0.5 sm:gap-1 dark:border-gray-700/60 dark:bg-gray-800">
+                        <div className="flex items-center gap-1 rounded-full border border-[#B39070]/25 bg-[#FAF6F0]/80 p-1 dark:border-[#B39070]/20 dark:bg-[#2D1A17]/70">
                           <button
                             type="button"
                             onClick={() => handleNavigateAttachment("prev")}
                             title="Previous Document"
                             aria-label="Previous Document"
-                            className="flex h-6 w-6 items-center justify-center rounded-full text-gray-600 transition-colors hover:bg-white hover:text-gray-900 active:scale-90 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                            className="flex h-6 w-6 items-center justify-center rounded-full text-[#59493E] transition-colors hover:bg-[#B39070]/15 hover:text-[#783E30] active:scale-90 dark:text-[#C5B8A5] dark:hover:bg-[#B39070]/20 dark:hover:text-[#FAF6F0]"
                           >
                             <ChevronLeft className="h-3.5 w-3.5" />
                           </button>
-                          <span className="px-1.5 text-[11px] font-semibold text-gray-700 sm:text-xs dark:text-gray-300">
+                          <span className="px-1.5 text-[11px] font-semibold text-[#2B1810] sm:text-xs dark:text-[#FAF6F0]">
                             {selectedAttachment.index + 1} /{" "}
                             {selectedAttachment.list.length}
                           </span>
@@ -458,14 +475,14 @@ export default function Experience({
                             onClick={() => handleNavigateAttachment("next")}
                             title="Next Document"
                             aria-label="Next Document"
-                            className="flex h-6 w-6 items-center justify-center rounded-full text-gray-600 transition-colors hover:bg-white hover:text-gray-900 active:scale-90 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                            className="flex h-6 w-6 items-center justify-center rounded-full text-[#59493E] transition-colors hover:bg-[#B39070]/15 hover:text-[#783E30] active:scale-90 dark:text-[#C5B8A5] dark:hover:bg-[#B39070]/20 dark:hover:text-[#FAF6F0]"
                           >
                             <ChevronRight className="h-3.5 w-3.5" />
                           </button>
                         </div>
                       )}
                       {isPdf && (
-                        <span className="inline-flex shrink-0 items-center gap-1 rounded-full border border-rose-500/20 bg-rose-500/10 px-2 py-0.5 text-[10px] font-semibold text-rose-600 dark:text-rose-400">
+                        <span className="inline-flex shrink-0 items-center gap-1 rounded-full border border-[#783E30]/25 bg-[#783E30]/10 px-2 py-0.5 text-[10px] font-semibold text-[#783E30] dark:border-[#B39070]/30 dark:text-[#D6BC9E]">
                           <FileText className="h-2.5 w-2.5" />
                           PDF
                         </span>
@@ -476,7 +493,7 @@ export default function Experience({
                       href={selectedAttachment.attachment.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex shrink-0 items-center gap-1 whitespace-nowrap rounded-lg border border-gray-200 bg-gray-50 px-2.5 py-1 text-[11px] font-medium text-gray-700 transition-colors hover:bg-gray-100 hover:text-primary sm:text-xs dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
+                      className="shadow-2xs inline-flex shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full border border-[#B39070]/30 bg-[#FAF6F0]/80 px-3 py-1.5 text-xs font-medium text-[#2B1810] transition-colors hover:border-[#783E30] hover:text-[#783E30] dark:border-[#B39070]/20 dark:bg-[#2D1A17]/60 dark:text-[#FAF6F0] dark:hover:border-[#B39070]"
                     >
                       <span>{isPdf ? "Open PDF" : "Open Full"}</span>
                       <ExternalLink className="h-3 w-3" />

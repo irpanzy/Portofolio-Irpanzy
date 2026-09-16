@@ -11,7 +11,7 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
-import { m } from "framer-motion";
+import { m, AnimatePresence } from "framer-motion";
 
 interface NavbarProps {
   isDarkMode: boolean;
@@ -58,23 +58,11 @@ export default function Navbar({ isDarkMode, setIsDarkMode }: NavbarProps) {
 
   return (
     <>
-      {/* Background Header Color */}
-      <div className="fixed right-0 top-0 -z-10 w-11/12 translate-y-[-80%] dark:hidden">
-        <Image
-          src={assets.header_bg_color}
-          className="w-full"
-          alt=""
-          role="presentation"
-          priority
-          quality={75}
-        />
-      </div>
-
       {/* Top Navbar */}
       <nav
         className={`fixed left-0 right-0 top-0 z-40 flex items-center justify-between px-5 py-3 transition-all duration-300 lg:px-[8%] ${
           isScroll
-            ? "bg-white/70 shadow-sm backdrop-blur-md dark:bg-darkTheme/70 dark:shadow-white/10"
+            ? "shadow-xs border-b border-[#B39070]/20 bg-[#FAF6F0]/80 backdrop-blur-xl dark:border-[#B39070]/15 dark:bg-[#190E0C]/80 dark:shadow-black/40"
             : ""
         }`}
       >
@@ -84,11 +72,25 @@ export default function Navbar({ isDarkMode, setIsDarkMode }: NavbarProps) {
           aria-label="Irpanzy Home"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
+          className="relative block h-[38px] w-[112px] xl:mr-[60px]"
         >
           <Image
-            src={isDarkMode ? assets.logo_dark : assets.logo}
+            src={assets.logo}
             alt="Irpanzy"
-            className="cursor-pointer xl:mr-[60px]"
+            className={`cursor-pointer transition-opacity duration-500 ease-in-out ${
+              isDarkMode ? "pointer-events-none opacity-0" : "opacity-100"
+            }`}
+            width={112}
+            height={40}
+            priority
+            style={{ width: "auto", height: "38px" }}
+          />
+          <Image
+            src={assets.logo_dark}
+            alt="Irpanzy"
+            className={`absolute left-0 top-0 cursor-pointer transition-opacity duration-500 ease-in-out ${
+              isDarkMode ? "opacity-100" : "pointer-events-none opacity-0"
+            }`}
             width={112}
             height={40}
             priority
@@ -96,12 +98,12 @@ export default function Navbar({ isDarkMode, setIsDarkMode }: NavbarProps) {
           />
         </m.a>
 
-        {/* Desktop Menu (Centered Pill) */}
+        {/* Desktop Menu (Centered Glass Pill) */}
         <ul
           className={`hidden items-center gap-6 rounded-full px-8 py-2.5 xl:flex xl:gap-8 ${
             isScroll
-              ? "bg-white/60 shadow-sm backdrop-blur-md dark:border dark:border-white/10 dark:bg-white/5"
-              : "border border-black/5 bg-white/40 shadow-sm dark:border-white/10 dark:bg-transparent"
+              ? "border border-[#B39070]/25 bg-[#FAF6F0]/85 shadow-sm backdrop-blur-xl dark:border-[#B39070]/20 dark:bg-[#2D1A17]/70"
+              : "shadow-xs border border-[#B39070]/20 bg-[#FAF6F0]/60 backdrop-blur-md dark:border-[#B39070]/15 dark:bg-[#2D1A17]/40"
           }`}
         >
           {NAVIGATION_ITEMS.map(({ id, label }) => {
@@ -109,10 +111,10 @@ export default function Navbar({ isDarkMode, setIsDarkMode }: NavbarProps) {
             return (
               <li key={id}>
                 <a
-                  className={`py-1 font-ovo text-[15px] transition-colors ${
+                  className={`py-1 font-outfit text-[15px] font-medium transition-colors ${
                     isActive
-                      ? "font-semibold text-primary"
-                      : "text-gray-700 hover:text-primary dark:text-gray-300 dark:hover:text-white"
+                      ? "font-semibold text-[#783E30] dark:text-[#B39070]"
+                      : "text-[#59493E] hover:text-[#783E30] dark:text-[#C5B8A5] dark:hover:text-[#FAF6F0]"
                   }`}
                   href={`#${id}`}
                 >
@@ -127,20 +129,34 @@ export default function Navbar({ isDarkMode, setIsDarkMode }: NavbarProps) {
         <div className="flex items-center gap-3">
           {/* Dark Mode Toggle */}
           <m.button
-            whileTap={{ rotate: 90 }}
+            whileTap={{ scale: 0.9 }}
             whileHover={{ scale: 1.08 }}
-            transition={{ duration: 0.2 }}
             onClick={() => setIsDarkMode((prev: boolean) => !prev)}
             aria-label="Toggle dark mode"
             type="button"
-            className="flex h-9 w-9 items-center justify-center rounded-full border border-black/5 bg-white/60 p-1.5 shadow-sm transition-all hover:bg-black/5 dark:border-white/10 dark:bg-white/10 dark:hover:bg-white/20"
+            className={`shadow-xs relative flex h-9 w-9 items-center justify-center overflow-hidden rounded-full border backdrop-blur-md transition-all duration-300 ${
+              isScroll
+                ? "border-[#B39070]/25 bg-[#FAF6F0]/85 hover:bg-[#B39070]/15 dark:border-[#B39070]/20 dark:bg-[#2D1A17]/70 dark:hover:bg-[#B39070]/20"
+                : "border-[#B39070]/20 bg-[#FAF6F0]/60 hover:bg-[#B39070]/15 dark:border-[#B39070]/15 dark:bg-[#2D1A17]/40 dark:hover:bg-[#B39070]/20"
+            }`}
           >
-            <Image
-              src={isDarkMode ? assets.sun_icon : assets.moon_icon}
-              alt=""
-              role="presentation"
-              className="h-5 w-5"
-            />
+            <AnimatePresence mode="wait" initial={false}>
+              <m.div
+                key={isDarkMode ? "dark" : "light"}
+                initial={{ rotate: -90, scale: 0.4, opacity: 0 }}
+                animate={{ rotate: 0, scale: 1, opacity: 1 }}
+                exit={{ rotate: 90, scale: 0.4, opacity: 0 }}
+                transition={{ duration: 0.22, ease: "easeInOut" }}
+                className="flex items-center justify-center"
+              >
+                <Image
+                  src={isDarkMode ? assets.sun_icon : assets.moon_icon}
+                  alt=""
+                  role="presentation"
+                  className="h-5 w-5"
+                />
+              </m.div>
+            </AnimatePresence>
           </m.button>
 
           {/* Contact Button (Desktop) */}
@@ -148,10 +164,14 @@ export default function Navbar({ isDarkMode, setIsDarkMode }: NavbarProps) {
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.97 }}
             href="#contact"
-            className="hidden items-center gap-2.5 rounded-full border border-gray-400/80 px-4 py-1.5 font-ovo text-sm transition-colors duration-300 hover:border-primary hover:bg-lightHover xl:flex dark:border-gray-600 dark:hover:border-primary dark:hover:bg-darkHover"
+            className={`shadow-xs group hidden items-center gap-2.5 rounded-full border px-4 py-1.5 font-outfit text-sm font-medium backdrop-blur-md transition-all duration-300 xl:flex ${
+              isScroll
+                ? "border-[#B39070]/25 bg-[#FAF6F0]/85 text-[#59493E] hover:border-[#783E30] hover:bg-[#783E30]/10 hover:text-[#783E30] dark:border-[#B39070]/20 dark:bg-[#2D1A17]/70 dark:text-[#C5B8A5] dark:hover:border-[#B39070] dark:hover:bg-[#B39070]/15 dark:hover:text-[#FAF6F0]"
+                : "border-[#B39070]/20 bg-[#FAF6F0]/60 text-[#59493E] hover:border-[#783E30] hover:bg-[#783E30]/10 hover:text-[#783E30] dark:border-[#B39070]/15 dark:bg-[#2D1A17]/40 dark:text-[#C5B8A5] dark:hover:border-[#B39070] dark:hover:bg-[#B39070]/15 dark:hover:text-[#FAF6F0]"
+            }`}
           >
             Say Hello
-            <Signature color={isDarkMode ? "white" : "black"} className="w-4" />
+            <Signature className="w-4 text-[#59493E] transition-colors duration-300 group-hover:text-[#783E30] dark:text-[#C5B8A5] dark:group-hover:text-[#FAF6F0]" />
           </m.a>
         </div>
       </nav>
@@ -164,7 +184,7 @@ export default function Navbar({ isDarkMode, setIsDarkMode }: NavbarProps) {
             : "translate-y-0 opacity-100"
         }`}
       >
-        <div className="flex items-center gap-1 rounded-full border border-black/10 bg-white/85 p-1.5 shadow-[0_8px_30px_rgb(0,0,0,0.12)] backdrop-blur-2xl dark:border-white/15 dark:bg-[#0f001c]/85 dark:shadow-[0_8px_30px_rgb(0,0,0,0.6)]">
+        <div className="flex items-center gap-1 rounded-full border border-[#B39070]/30 bg-[#FAF6F0]/90 p-1.5 shadow-[0_8px_30px_rgba(120,62,48,0.12)] backdrop-blur-2xl dark:border-[#B39070]/20 dark:bg-[#1C0F0D]/90 dark:shadow-[0_8px_30px_rgba(0,0,0,0.6)]">
           {NAVIGATION_ITEMS.map(({ id, label, icon: Icon }) => {
             const isActive = activeSection === id;
             return (
@@ -175,8 +195,8 @@ export default function Navbar({ isDarkMode, setIsDarkMode }: NavbarProps) {
                 whileTap={{ scale: 0.88 }}
                 className={`flex h-10 w-10 items-center justify-center rounded-full transition-all duration-200 ${
                   isActive
-                    ? "bg-primary/15 dark:bg-primary/25 text-primary"
-                    : "text-gray-600 hover:bg-black/5 hover:text-black dark:text-gray-400 dark:hover:bg-white/10 dark:hover:text-white"
+                    ? "bg-[#783E30]/15 text-[#783E30] dark:bg-[#B39070]/20 dark:text-[#B39070]"
+                    : "text-[#59493E] hover:bg-[#B39070]/10 hover:text-[#783E30] dark:text-[#C5B8A5] dark:hover:bg-[#B39070]/10 dark:hover:text-[#FAF6F0]"
                 }`}
               >
                 <Icon

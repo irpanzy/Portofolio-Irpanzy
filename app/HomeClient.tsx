@@ -5,6 +5,7 @@ import dynamic from "next/dynamic";
 import Header from "./components/Header";
 import Navbar from "./components/Navbar";
 import MotionProvider from "./components/MotionProvider";
+import AmbientBackground from "./components/AmbientBackground";
 import { usePortfolioAll } from "@/hooks/useApi";
 import type { PortfolioAllData } from "@/types";
 
@@ -74,6 +75,7 @@ export default function HomeClient({ initialData }: HomeClientProps) {
 
   return (
     <MotionProvider>
+      <AmbientBackground />
       <Navbar isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} />
       <main>
         <Header data={portfolio?.hero} isLoading={isLoading} />

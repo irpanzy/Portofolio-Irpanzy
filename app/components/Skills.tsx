@@ -1,11 +1,8 @@
 "use client";
 
-import { useTechStack } from "@/hooks/useApi";
-import Image from "next/image";
 import React from "react";
 import { m } from "framer-motion";
 import {
-  Star,
   Code2,
   Layout,
   Server,
@@ -15,10 +12,13 @@ import {
   Wrench,
   ChevronDown,
   ChevronUp,
+  Star,
   type LucideIcon,
 } from "lucide-react";
-import type { TechCategory, TechStack } from "@/types";
+import Image from "next/image";
+import { useTechStack } from "@/hooks/useApi";
 import { getTechIcon } from "@/lib/iconUtils";
+import type { TechCategory, TechStack } from "@/types";
 
 interface SkillsProps {
   isDarkMode: boolean;
@@ -36,43 +36,50 @@ const categoryConfigs: {
     key: "languages",
     label: "Languages",
     icon: Code2,
-    iconColor: "text-amber-500 bg-amber-50 dark:bg-amber-950/40",
+    iconColor:
+      "text-[#783E30] bg-[#783E30]/10 dark:text-[#D6BC9E] dark:bg-[#783E30]/20",
   },
   {
     key: "frontend",
     label: "Frontend",
     icon: Layout,
-    iconColor: "text-blue-500 bg-blue-50 dark:bg-blue-950/40",
+    iconColor:
+      "text-[#B39070] bg-[#B39070]/15 dark:text-[#FAF6F0] dark:bg-[#B39070]/25",
   },
   {
     key: "backend",
     label: "Backend",
     icon: Server,
-    iconColor: "text-emerald-500 bg-emerald-50 dark:bg-emerald-950/40",
+    iconColor:
+      "text-[#6E6755] bg-[#6E6755]/15 dark:text-[#C5B8A5] dark:bg-[#6E6755]/25",
   },
   {
     key: "mobile",
     label: "Mobile",
     icon: Smartphone,
-    iconColor: "text-purple-500 bg-purple-50 dark:bg-purple-950/40",
+    iconColor:
+      "text-[#783E30] bg-[#783E30]/10 dark:text-[#D6BC9E] dark:bg-[#783E30]/20",
   },
   {
     key: "database",
     label: "Database",
     icon: Database,
-    iconColor: "text-rose-500 bg-rose-50 dark:bg-rose-950/40",
+    iconColor:
+      "text-[#B39070] bg-[#B39070]/15 dark:text-[#FAF6F0] dark:bg-[#B39070]/25",
   },
   {
     key: "devops_cloud",
     label: "DevOps & Cloud",
     icon: Cloud,
-    iconColor: "text-cyan-500 bg-cyan-50 dark:bg-cyan-950/40",
+    iconColor:
+      "text-[#6E6755] bg-[#6E6755]/15 dark:text-[#C5B8A5] dark:bg-[#6E6755]/25",
   },
   {
     key: "tools",
     label: "Tools",
     icon: Wrench,
-    iconColor: "text-indigo-500 bg-indigo-50 dark:bg-indigo-950/40",
+    iconColor:
+      "text-[#B39070] bg-[#B39070]/15 dark:text-[#FAF6F0] dark:bg-[#B39070]/25",
   },
 ];
 
@@ -142,7 +149,7 @@ export default function Skills({
         initial={{ opacity: 0, y: -20 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.3 }}
-        className="mb-2 text-center font-ovo text-lg"
+        className="mb-2 text-center font-ovo text-lg text-[#783E30] dark:text-[#B39070]"
       >
         What I Use
       </m.p>
@@ -158,7 +165,7 @@ export default function Skills({
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         transition={{ duration: 0.5, delay: 0.7 }}
-        className="mx-auto mb-12 mt-5 max-w-3xl text-center font-ovo text-sm text-gray-600 md:text-base dark:text-gray-300"
+        className="mx-auto mb-12 mt-5 max-w-3xl text-center font-outfit text-sm text-[#59493E] md:text-base dark:text-[#C5B8A5]"
       >
         A categorized look at the languages, frameworks, databases, and tools I
         use to craft modern digital solutions.
@@ -170,7 +177,7 @@ export default function Skills({
           {Array.from({ length: 4 }).map((_, i) => (
             <div
               key={i}
-              className="h-44 animate-pulse rounded-2xl border border-gray-200/60 bg-gray-100/60 p-5 dark:border-white/5 dark:bg-white/5"
+              className="h-44 animate-pulse rounded-3xl border border-[#B39070]/20 bg-[#FAF6F0]/60 p-5 backdrop-blur-md dark:border-[#B39070]/15 dark:bg-[#2D1A17]/60"
             />
           ))}
         </div>
@@ -193,25 +200,25 @@ export default function Skills({
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.4 }}
-                  className="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-gray-200/80 bg-white/80 p-5 shadow-sm backdrop-blur-md transition-all duration-300 hover:border-[#77BEF0]/50 hover:shadow-lg dark:border-white/10 dark:bg-[#1a0033]/60 dark:hover:border-[#77BEF0]/40"
+                  className="glass-card group relative flex flex-col justify-between overflow-hidden rounded-3xl p-5 transition-all duration-300 hover:border-[#783E30]/40 dark:hover:border-[#B39070]/40"
                 >
                   {/* Ambient Glow */}
-                  <div className="pointer-events-none absolute -right-10 -top-10 h-28 w-28 rounded-full bg-[#77BEF0]/10 opacity-0 blur-xl transition-opacity duration-300 group-hover:opacity-100" />
+                  <div className="pointer-events-none absolute -right-10 -top-10 h-28 w-28 rounded-full bg-[#B39070]/15 opacity-0 blur-xl transition-opacity duration-300 group-hover:opacity-100" />
 
                   <div>
                     {/* Category Header */}
-                    <div className="mb-4 flex items-center justify-between border-b border-gray-100 pb-3 dark:border-white/5">
+                    <div className="mb-4 flex items-center justify-between border-b border-[#B39070]/15 pb-3 dark:border-[#B39070]/10">
                       <div className="flex items-center gap-2.5">
                         <div
-                          className={`flex h-8 w-8 items-center justify-center rounded-lg ${iconColor}`}
+                          className={`flex h-8 w-8 items-center justify-center rounded-xl ${iconColor}`}
                         >
                           <IconComponent className="h-4 w-4" />
                         </div>
-                        <h3 className="font-outfit text-base font-bold text-gray-900 dark:text-white">
+                        <h3 className="font-outfit text-base font-bold text-[#2B1810] dark:text-[#FAF6F0]">
                           {label}
                         </h3>
                       </div>
-                      <span className="inline-flex items-center rounded-full border border-gray-200/80 bg-gray-50 px-2.5 py-0.5 font-outfit text-xs font-semibold text-gray-600 dark:border-white/10 dark:bg-white/5 dark:text-gray-300">
+                      <span className="shadow-2xs inline-flex items-center rounded-full border border-[#B39070]/25 bg-[#FAF6F0]/80 px-2.5 py-0.5 font-outfit text-xs font-semibold text-[#59493E] dark:border-[#B39070]/20 dark:bg-[#2D1A17]/60 dark:text-[#C5B8A5]">
                         {items.length} {items.length === 1 ? "Skill" : "Skills"}
                       </span>
                     </div>
@@ -224,8 +231,8 @@ export default function Skills({
                         return (
                           <m.div
                             key={`${key}-${tool._id}`}
-                            whileHover={{ scale: 1.04, y: -2 }}
-                            className="shadow-xs flex flex-col items-center justify-center gap-1.5 rounded-xl border border-gray-200/70 bg-white/90 p-2.5 text-center transition-all duration-200 hover:border-[#77BEF0] hover:bg-[#77BEF0]/5 hover:shadow-sm dark:border-white/10 dark:bg-white/5 dark:hover:border-[#77BEF0]/60 dark:hover:bg-[#77BEF0]/10"
+                            whileHover={{ scale: 1.05, y: -2 }}
+                            className="shadow-2xs hover:shadow-xs flex flex-col items-center justify-center gap-1.5 rounded-2xl border border-[#B39070]/20 bg-[#FAF6F0]/70 p-2.5 text-center transition-all duration-200 hover:border-[#783E30] hover:bg-[#783E30]/5 dark:border-[#B39070]/15 dark:bg-[#2D1A17]/60 dark:hover:border-[#B39070] dark:hover:bg-[#B39070]/10"
                           >
                             <div className="relative flex h-9 w-9 items-center justify-center">
                               {iconSrc ? (
@@ -238,13 +245,13 @@ export default function Skills({
                                   loading="lazy"
                                 />
                               ) : (
-                                <div className="flex h-full w-full items-center justify-center rounded-md bg-gray-100 text-[10px] font-bold text-gray-600 dark:bg-gray-800 dark:text-gray-300">
+                                <div className="flex h-full w-full items-center justify-center rounded-lg bg-[#B39070]/15 text-[10px] font-bold text-[#59493E] dark:bg-[#B39070]/20 dark:text-[#C5B8A5]">
                                   {tool.title.substring(0, 2).toUpperCase()}
                                 </div>
                               )}
                             </div>
 
-                            <span className="w-full truncate font-outfit text-xs font-semibold text-gray-800 dark:text-gray-200">
+                            <span className="w-full truncate font-outfit text-xs font-semibold text-[#2B1810] dark:text-[#FAF6F0]">
                               {tool.title}
                             </span>
 
@@ -259,8 +266,8 @@ export default function Skills({
                                     key={i}
                                     className={`h-2.5 w-2.5 ${
                                       i < (tool.proficiencyLevel || 0)
-                                        ? "fill-amber-400 text-amber-400"
-                                        : "text-gray-300 dark:text-gray-600"
+                                        ? "fill-[#B39070] text-[#B39070]"
+                                        : "text-[#B39070]/30 dark:text-[#B39070]/20"
                                     }`}
                                   />
                                 ))}
@@ -275,11 +282,11 @@ export default function Skills({
 
                     {/* Show More / Show Less Button */}
                     {hasMore && (
-                      <div className="mt-3.5 flex justify-center border-t border-gray-100/80 pt-2.5 dark:border-white/5">
+                      <div className="mt-3.5 flex justify-center border-t border-[#B39070]/15 pt-2.5 dark:border-[#B39070]/10">
                         <button
                           type="button"
                           onClick={() => toggleCategory(key)}
-                          className="shadow-2xs inline-flex items-center gap-1.5 rounded-full border border-gray-200/80 bg-gray-50/80 px-3 py-1 font-outfit text-xs font-semibold text-gray-700 transition-all duration-200 hover:border-[#77BEF0] hover:bg-[#77BEF0]/10 hover:text-[#2573ab] dark:border-white/10 dark:bg-white/5 dark:text-gray-300 dark:hover:border-[#77BEF0] dark:hover:text-[#90cdf4]"
+                          className="shadow-2xs inline-flex items-center gap-1.5 rounded-full border border-[#B39070]/30 bg-[#FAF6F0]/80 px-3 py-1 font-outfit text-xs font-semibold text-[#59493E] transition-all duration-200 hover:border-[#783E30] hover:bg-[#783E30]/10 hover:text-[#783E30] dark:border-[#B39070]/20 dark:bg-[#2D1A17]/60 dark:text-[#C5B8A5] dark:hover:border-[#B39070] dark:hover:text-[#FAF6F0]"
                         >
                           {isExpanded ? (
                             <>
@@ -288,7 +295,7 @@ export default function Skills({
                             </>
                           ) : (
                             <>
-                              <span>Show More (+{items.length - limit})</span>
+                              <span>Show All ({items.length})</span>
                               <ChevronDown className="h-3.5 w-3.5" />
                             </>
                           )}
@@ -302,9 +309,7 @@ export default function Skills({
           )}
         </div>
       ) : (
-        <div className="py-8 text-center text-sm text-gray-500">
-          No tech stack items found.
-        </div>
+        <p className="text-center text-[#6E6755]">No tech stack to display</p>
       )}
     </m.div>
   );

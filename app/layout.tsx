@@ -176,7 +176,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         />
       </head>
       <body
-        className={`${outfit.className} ${ovo.className} overflow-x-hidden leading-8 antialiased dark:bg-darkTheme dark:text-white`}
+        className={`${outfit.className} ${ovo.className} overflow-x-hidden leading-8 antialiased dark:bg-darkTheme dark:text-[#f5ebe1]`}
         suppressHydrationWarning
       >
         <script

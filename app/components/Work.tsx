@@ -29,7 +29,9 @@ export default function Work({
   if (isLoading) {
     return (
       <div className="w-full scroll-mt-20 px-[12%] py-6">
-        <p className="text-center">Loading projects...</p>
+        <p className="text-center font-outfit text-[#6E6755] dark:text-[#A89F8B]">
+          Loading projects...
+        </p>
       </div>
     );
   }
@@ -40,13 +42,13 @@ export default function Work({
       whileInView={{ opacity: 1 }}
       transition={{ duration: 1 }}
       id="work"
-      className="w-full scroll-mt-20 px-[12%] py-6"
+      className="w-full scroll-mt-20 px-[8%] py-8 md:px-[12%]"
     >
       <m.p
         initial={{ opacity: 0, y: -20 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.3 }}
-        className="mb-2 text-center font-ovo text-lg"
+        className="mb-2 text-center font-ovo text-lg text-[#783E30] dark:text-[#B39070]"
       >
         A Glimpse of My Journey
       </m.p>
@@ -62,7 +64,7 @@ export default function Work({
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         transition={{ duration: 0.5, delay: 0.7 }}
-        className="mx-auto mb-12 mt-5 max-w-3xl text-justify font-ovo text-sm text-gray-600 md:text-base dark:text-gray-300"
+        className="mx-auto mb-12 mt-5 max-w-3xl text-center font-outfit text-sm text-[#59493E] md:text-base dark:text-[#C5B8A5]"
       >
         A showcase of real-world projects built with modern web technologies -
         from Fullstack applications to scalable backend systems and RESTful
@@ -87,17 +89,17 @@ export default function Work({
                 whileHover={{ y: -6 }}
                 transition={{ duration: 0.3 }}
                 key={project._id}
-                className="group relative flex flex-col overflow-hidden rounded-2xl border border-gray-200/80 bg-white/70 shadow-sm backdrop-blur-md transition-all duration-300 hover:border-[#77BEF0]/60 hover:shadow-xl hover:shadow-[#77BEF0]/10 dark:border-white/10 dark:bg-[#18002c]/70 dark:hover:border-[#77BEF0]/50 dark:hover:shadow-purple-500/10"
+                className="glass-card group relative flex flex-col overflow-hidden rounded-3xl transition-all duration-300 hover:border-[#783E30]/50 hover:shadow-xl dark:hover:border-[#B39070]/50"
               >
                 {/* Ambient Top Glow */}
-                <div className="pointer-events-none absolute -right-16 -top-16 h-36 w-36 rounded-full bg-[#77BEF0]/10 opacity-0 blur-2xl transition-opacity duration-300 group-hover:opacity-100" />
+                <div className="pointer-events-none absolute -right-16 -top-16 h-36 w-36 rounded-full bg-[#B39070]/15 opacity-0 blur-2xl transition-opacity duration-300 group-hover:opacity-100" />
 
                 {/* Project Showcase Container */}
-                <div className="flex flex-col border-b border-gray-100 bg-gray-100/80 p-2 dark:border-white/10 dark:bg-black/50">
-                  {/* Top Space for Live Badge (Fixed height for uniform alignment) */}
+                <div className="flex flex-col border-b border-[#B39070]/15 bg-[#FAF6F0]/40 p-2 dark:border-[#B39070]/10 dark:bg-black/30">
+                  {/* Top Space for Live Badge */}
                   <div className="mb-1 flex h-4 items-center justify-end px-1">
                     {hasDemoLink ? (
-                      <span className="inline-flex h-4 items-center gap-1 rounded-full border border-emerald-500/30 bg-emerald-50 px-2 font-outfit text-[9px] font-medium leading-none text-emerald-700 shadow-sm backdrop-blur-md dark:bg-emerald-950/80 dark:text-emerald-300">
+                      <span className="shadow-2xs inline-flex h-4 items-center gap-1 rounded-full border border-emerald-600/30 bg-emerald-500/10 px-2 font-outfit text-[9px] font-medium leading-none text-emerald-700 backdrop-blur-md dark:border-emerald-400/30 dark:bg-emerald-500/15 dark:text-emerald-300">
                         <span className="relative flex h-1 w-1">
                           <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-500 opacity-75" />
                           <span className="relative inline-flex h-1 w-1 rounded-full bg-emerald-500" />
@@ -110,7 +112,7 @@ export default function Work({
                   </div>
 
                   {/* Project Image Container */}
-                  <div className="relative aspect-[16/10] w-full overflow-hidden rounded-xl border border-gray-200/70 bg-white shadow-sm dark:border-transparent dark:bg-gray-900/30">
+                  <div className="shadow-2xs relative aspect-[16/10] w-full overflow-hidden rounded-2xl border border-[#B39070]/20 bg-[#FAF6F0]/80 dark:border-[#B39070]/15 dark:bg-[#190E0C]/60">
                     <Image
                       src={project.bgImage}
                       alt={project.title}
@@ -122,7 +124,7 @@ export default function Work({
                     />
 
                     {/* Hover Actions (Desktop) */}
-                    <div className="absolute inset-0 z-20 hidden items-center justify-center gap-3 bg-black/60 backdrop-blur-sm transition-all duration-300 md:flex md:opacity-0 md:group-hover:opacity-100">
+                    <div className="backdrop-blur-xs absolute inset-0 z-20 hidden items-center justify-center gap-3 bg-[#190E0C]/60 transition-all duration-300 md:flex md:opacity-0 md:group-hover:opacity-100">
                       {hasDemoLink && (
                         <m.a
                           whileHover={{ scale: 1.05 }}
@@ -130,7 +132,7 @@ export default function Work({
                           href={project.demoLink}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center gap-2 rounded-full bg-[#77BEF0] px-4 py-2 font-outfit text-xs font-semibold text-gray-950 shadow-lg shadow-[#77BEF0]/30 transition-colors hover:bg-[#5dafe8]"
+                          className="inline-flex items-center gap-2 rounded-full bg-[#783E30] px-4 py-2 font-outfit text-xs font-semibold text-[#FAF6F0] shadow-lg shadow-[#783E30]/30 transition-colors hover:bg-[#924D3D]"
                           onClick={(e) => e.stopPropagation()}
                         >
                           <ExternalLink className="h-3.5 w-3.5" />
@@ -158,10 +160,10 @@ export default function Work({
                 {/* Card Content */}
                 <div className="flex flex-1 flex-col justify-between p-5 font-outfit">
                   <div>
-                    <h3 className="mb-2 font-outfit text-lg font-bold text-gray-900 transition-colors group-hover:text-[#388dc8] dark:text-white dark:group-hover:text-[#77BEF0]">
+                    <h3 className="mb-2 font-outfit text-lg font-bold text-[#2B1810] transition-colors group-hover:text-[#783E30] dark:text-[#FAF6F0] dark:group-hover:text-[#D6BC9E]">
                       {project.title}
                     </h3>
-                    <p className="mb-4 text-justify font-outfit text-xs leading-relaxed text-gray-600 sm:text-sm dark:text-gray-300">
+                    <p className="mb-4 text-justify font-outfit text-xs leading-relaxed text-[#59493E] sm:text-sm dark:text-[#C5B8A5]">
                       {project.description}
                     </p>
 
@@ -179,7 +181,7 @@ export default function Work({
                             return (
                               <div
                                 key={techIndex}
-                                className="inline-flex items-center gap-1.5 rounded-md border border-gray-200/80 bg-gray-50/90 px-2.5 py-1 text-xs font-medium text-gray-700 transition-colors hover:border-[#77BEF0]/50 dark:border-white/10 dark:bg-white/5 dark:text-gray-300 dark:hover:border-[#77BEF0]/40"
+                                className="shadow-2xs inline-flex items-center gap-1.5 rounded-full border border-[#B39070]/25 bg-[#FAF6F0]/80 px-2.5 py-1 text-xs font-medium text-[#59493E] transition-colors hover:border-[#783E30]/50 dark:border-[#B39070]/20 dark:bg-[#2D1A17]/60 dark:text-[#C5B8A5] dark:hover:border-[#B39070]/50"
                                 title={title}
                               >
                                 {icon ? (
@@ -191,7 +193,7 @@ export default function Work({
                                     className="h-3.5 w-3.5 shrink-0 object-contain"
                                   />
                                 ) : (
-                                  <span className="flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded bg-gray-200 text-[8px] font-bold text-gray-700 dark:bg-gray-700 dark:text-gray-200">
+                                  <span className="flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded bg-[#B39070]/20 text-[8px] font-bold text-[#59493E] dark:text-[#C5B8A5]">
                                     {title.substring(0, 2).toUpperCase()}
                                   </span>
                                 )}
@@ -208,13 +210,13 @@ export default function Work({
 
                   {/* Bottom Action Buttons (Visible only on mobile/tablet) */}
                   {(hasDemoLink || hasGithubLink) && (
-                    <div className="mt-auto flex items-center gap-2 border-t border-gray-100 pt-3 md:hidden dark:border-white/10">
+                    <div className="mt-auto flex items-center gap-2 border-t border-[#B39070]/15 pt-3 md:hidden dark:border-[#B39070]/10">
                       {hasDemoLink && (
                         <a
                           href={project.demoLink}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-lg border border-[#77BEF0]/40 bg-[#77BEF0]/10 px-3 py-2 text-xs font-semibold text-[#297bb6] transition-all hover:bg-[#77BEF0] hover:text-white dark:bg-[#77BEF0]/15 dark:text-[#90cdf4] dark:hover:bg-[#77BEF0] dark:hover:text-gray-950"
+                          className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-full border border-[#783E30]/30 bg-[#783E30]/10 px-3 py-2 text-xs font-semibold text-[#783E30] transition-all hover:bg-[#783E30] hover:text-[#FAF6F0] dark:bg-[#783E30]/20 dark:text-[#D6BC9E]"
                         >
                           <ExternalLink className="h-3.5 w-3.5" />
                           Live Demo
@@ -225,7 +227,7 @@ export default function Work({
                           href={project.githubLink}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-lg border border-gray-200 bg-gray-50 px-3 py-2 text-xs font-semibold text-gray-700 transition-all hover:bg-gray-800 hover:text-white dark:border-white/10 dark:bg-white/5 dark:text-gray-300 dark:hover:bg-white dark:hover:text-gray-950"
+                          className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-full border border-[#B39070]/30 bg-[#FAF6F0]/80 px-3 py-2 text-xs font-semibold text-[#2B1810] transition-all hover:bg-[#783E30] hover:text-white dark:border-[#B39070]/20 dark:bg-[#2D1A17]/60 dark:text-[#FAF6F0]"
                         >
                           <Github className="h-3.5 w-3.5" />
                           GitHub
@@ -239,7 +241,7 @@ export default function Work({
           })}
         </m.div>
       ) : (
-        <p className="text-center text-gray-500">No projects to display</p>
+        <p className="text-center text-[#6E6755]">No projects to display</p>
       )}
 
       <div className="mt-12 flex justify-center">
@@ -247,23 +249,23 @@ export default function Work({
           href="https://github.com/irpanzy?tab=repositories"
           target="_blank"
           rel="noopener noreferrer"
-          className="hover:border-primary/40 dark:hover:border-primary/50 group relative inline-flex items-center gap-3 rounded-full border border-black/10 bg-white/80 px-5 py-2.5 shadow-[0_4px_20px_rgba(0,0,0,0.06)] backdrop-blur-xl transition-all duration-300 hover:-translate-y-0.5 hover:bg-white/95 hover:shadow-[0_8px_30px_rgba(168,85,247,0.18)] active:scale-95 dark:border-white/15 dark:bg-[#150028]/60 dark:shadow-[0_4px_20px_rgba(0,0,0,0.4)] dark:hover:bg-[#1a0033]/80 dark:hover:shadow-[0_8px_30px_rgba(168,85,247,0.25)]"
+          className="group relative inline-flex items-center gap-3 rounded-full border border-[#B39070]/35 bg-[#FAF6F0]/85 px-5 py-2.5 shadow-sm backdrop-blur-xl transition-all duration-300 hover:-translate-y-0.5 hover:border-[#783E30] hover:shadow-md active:scale-95 dark:border-[#B39070]/25 dark:bg-[#2D1A17]/70 dark:hover:border-[#B39070]"
         >
           {/* Ambient Glow behind button on hover */}
-          <div className="from-primary/30 pointer-events-none absolute -inset-0.5 -z-10 rounded-full bg-gradient-to-r to-blue-500/30 opacity-0 blur-md transition-opacity duration-300 group-hover:opacity-100" />
+          <div className="pointer-events-none absolute -inset-0.5 -z-10 rounded-full bg-gradient-to-r from-[#783E30]/25 to-[#B39070]/25 opacity-0 blur-md transition-opacity duration-300 group-hover:opacity-100" />
 
           {/* GitHub Icon Badge */}
-          <span className="group-hover:bg-primary/10 dark:group-hover:bg-primary/20 flex h-6 w-6 items-center justify-center rounded-full bg-black/5 text-zinc-800 transition-colors duration-300 group-hover:text-primary dark:bg-white/10 dark:text-zinc-200 dark:group-hover:text-primary">
+          <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[#B39070]/15 text-[#2B1810] transition-colors duration-300 group-hover:text-[#783E30] dark:text-[#FAF6F0] dark:group-hover:text-[#B39070]">
             <Github className="h-3.5 w-3.5" />
           </span>
 
           {/* Text & Label */}
-          <span className="font-ovo text-sm font-medium text-zinc-800 transition-colors duration-300 group-hover:text-primary dark:text-zinc-200 dark:group-hover:text-primary">
-            Show More
+          <span className="font-outfit text-xs font-semibold tracking-wide text-[#2B1810] transition-colors duration-300 group-hover:text-[#783E30] sm:text-sm dark:text-[#FAF6F0] dark:group-hover:text-[#B39070]">
+            Show More on GitHub
           </span>
 
-          {/* Arrow Icon */}
-          <CircleArrowOutUpRight className="h-4 w-4 text-zinc-400 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-primary dark:text-zinc-400" />
+          {/* Directional Icon with Micro-interaction */}
+          <CircleArrowOutUpRight className="h-3.5 w-3.5 text-[#6E6755] transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-[#783E30] dark:text-[#C5B8A5] dark:group-hover:text-[#B39070]" />
         </a>
       </div>
     </m.div>

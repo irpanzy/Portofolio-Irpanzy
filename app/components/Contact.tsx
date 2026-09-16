@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { m } from "framer-motion";
 import { toast } from "@/hooks/use-toast";
-import { Send } from "lucide-react";
+import { Send, Loader2 } from "lucide-react";
 import axios from "axios";
 
 interface ContactProps {
@@ -65,13 +65,13 @@ export default function Contact({ isDarkMode }: ContactProps) {
       whileInView={{ opacity: 1 }}
       transition={{ duration: 1 }}
       id="contact"
-      className="w-full scroll-mt-20 bg-[url('/footer-bg-color.png')] bg-[length:90%_auto] bg-center bg-no-repeat px-[12%] py-6 font-outfit dark:bg-none"
+      className="w-full scroll-mt-20 px-[8%] py-12 font-outfit md:px-[12%]"
     >
       <m.p
         initial={{ opacity: 0, y: -20 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.3 }}
-        className="mb-2 text-center font-ovo text-lg"
+        className="mb-2 text-center font-ovo text-lg text-[#783E30] dark:text-[#B39070]"
       >
         Connect With Me
       </m.p>
@@ -87,7 +87,7 @@ export default function Contact({ isDarkMode }: ContactProps) {
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         transition={{ duration: 0.5, delay: 0.7 }}
-        className="mx-auto mb-12 mt-5 max-w-3xl text-center font-ovo text-sm text-gray-700 md:text-base dark:text-gray-200"
+        className="mx-auto mb-12 mt-5 max-w-3xl text-center font-outfit text-sm text-[#59493E] md:text-base dark:text-[#C5B8A5]"
       >
         Have a project in mind or just want to say hi? Let&apos;s connect and
         bring your ideas to life. I&apos;m always open to new collaborations and
@@ -95,64 +95,66 @@ export default function Contact({ isDarkMode }: ContactProps) {
       </m.p>
 
       <m.form
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.9 }}
         onSubmit={onSubmit}
-        className="mx-auto max-w-2xl"
+        className="glass-card mx-auto max-w-2xl rounded-3xl p-6 sm:p-10"
       >
-        <div className="mb-8 mt-10 grid grid-cols-auto gap-6">
+        <div className="mb-6 grid grid-cols-1 gap-5 sm:grid-cols-2">
           <m.input
-            initial={{ opacity: 0, x: -50 }}
+            initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, delay: 1.1 }}
+            transition={{ duration: 0.5, delay: 1 }}
             type="text"
             placeholder="Enter your name"
             aria-label="Your Name"
             required
             name="name"
             disabled={isLoading}
-            className="flex-1 rounded-md border-[0.5px] border-gray-400 bg-white p-3 outline-none dark:border-white/90 dark:bg-darkHover/30"
+            className="glass-input outline-hidden w-full rounded-2xl p-3.5 text-sm placeholder:text-[#59493E]/60 dark:placeholder:text-[#C5B8A5]/50"
           />
           <m.input
-            initial={{ opacity: 0, x: -50 }}
+            initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, delay: 1.1 }}
+            transition={{ duration: 0.5, delay: 1 }}
             type="email"
             placeholder="Enter your email"
             aria-label="Your Email"
             required
             name="email"
             disabled={isLoading}
-            className="flex-1 rounded-md border-[0.5px] border-gray-400 bg-white p-3 outline-none dark:border-white/90 dark:bg-darkHover/30"
+            className="glass-input outline-hidden w-full rounded-2xl p-3.5 text-sm placeholder:text-[#59493E]/60 dark:placeholder:text-[#C5B8A5]/50"
           />
         </div>
 
         <m.textarea
-          initial={{ y: 100, opacity: 0 }}
+          initial={{ y: 20, opacity: 0 }}
           whileInView={{ y: 0, opacity: 1 }}
-          transition={{ delay: 1.3, duration: 0.6 }}
-          rows={6}
+          transition={{ delay: 1.1, duration: 0.5 }}
+          rows={5}
           name="message"
           placeholder="Enter your message"
           aria-label="Your Message"
           required
           disabled={isLoading}
-          className="mb-6 w-full rounded-md border-[0.5px] border-gray-400 bg-white p-4 outline-none dark:border-white/90 dark:bg-darkHover/30"
-        ></m.textarea>
+          className="glass-input outline-hidden mb-6 w-full resize-none rounded-2xl p-4 text-sm placeholder:text-[#59493E]/60 dark:placeholder:text-[#C5B8A5]/50"
+        />
 
         <div className="flex justify-center">
           <button
             type="submit"
             disabled={isLoading}
-            className={`group inline-flex items-center justify-center gap-2.5 rounded-full border px-7 py-2.5 font-ovo text-sm font-medium shadow-sm backdrop-blur-sm transition-all duration-300 active:scale-95 ${
+            className={`group inline-flex items-center justify-center gap-2.5 rounded-full px-8 py-3 font-outfit text-sm font-semibold shadow-md transition-all duration-300 active:scale-95 ${
               isLoading
-                ? "cursor-not-allowed border-gray-300 bg-gray-100 text-gray-400 dark:border-white/10 dark:bg-white/5 dark:text-gray-500"
-                : "border-black/15 bg-white/70 text-zinc-800 hover:border-black/30 hover:bg-black/5 hover:shadow-md dark:border-white/20 dark:bg-white/5 dark:text-zinc-200 dark:hover:border-white/40 dark:hover:bg-white/10"
+                ? "cursor-not-allowed border border-[#B39070]/20 bg-[#FAF6F0]/50 text-[#6E6755] opacity-60"
+                : "border border-[#B39070]/30 bg-gradient-to-r from-[#783E30] to-[#924D3D] text-[#FAF6F0] shadow-[#783E30]/25 hover:shadow-lg hover:shadow-[#783E30]/30 dark:from-[#B39070] dark:to-[#C5A585] dark:text-[#190E0C] dark:shadow-black/40"
             }`}
           >
             <span>{isLoading ? "Sending..." : "Submit Now"}</span>
-            {!isLoading && (
+            {isLoading ? (
+              <Loader2 className="h-4 w-4 animate-spin" />
+            ) : (
               <Send className="h-4 w-4 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
             )}
           </button>

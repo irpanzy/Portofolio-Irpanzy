@@ -100,16 +100,25 @@ body {
       system-ui,
       -apple-system,
       sans-serif;
+    background-color: #faf6f0;
+  }
+
+  html.dark {
+    background-color: #190e0c;
   }
 
   body {
-    background-color: hsl(var(--background));
-    color: hsl(var(--foreground));
-    transition: colors 300ms;
+    background-color: #faf6f0;
+    color: #2b1810;
+    transition:
+      background-color 300ms ease,
+      color 300ms ease;
   }
 
-  body.dark {
-    background-color: #11001f;
+  .dark body,
+  html.dark body {
+    background-color: #190e0c;
+    color: #f5ebe1;
   }
 }
 
@@ -134,5 +143,77 @@ body {
     transform: translateZ(0);
     backface-visibility: hidden;
     perspective: 1000px;
+  }
+
+  /* Rustic Earthline Glassmorphism Utilities */
+  .glass-card {
+    backdrop-filter: blur(20px) saturate(150%);
+    -webkit-backdrop-filter: blur(20px) saturate(150%);
+    background-color: rgba(250, 246, 240, 0.75);
+    border: 1px solid rgba(179, 144, 112, 0.22);
+    box-shadow:
+      0 8px 32px 0 rgba(120, 62, 48, 0.05),
+      inset 0 1px 1px 0 rgba(255, 255, 255, 0.8);
+    transition:
+      background-color 300ms ease,
+      border-color 300ms ease,
+      box-shadow 300ms ease;
+  }
+
+  .dark .glass-card {
+    background-color: rgba(45, 23, 20, 0.65);
+    border: 1px solid rgba(179, 144, 112, 0.18);
+    box-shadow:
+      0 8px 32px 0 rgba(0, 0, 0, 0.45),
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.08);
+  }
+
+  .glass-pill {
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    background-color: rgba(250, 246, 240, 0.8);
+    border: 1px solid rgba(179, 144, 112, 0.28);
+    box-shadow: 0 4px 16px 0 rgba(120, 62, 48, 0.04);
+    transition:
+      background-color 300ms ease,
+      border-color 300ms ease,
+      box-shadow 300ms ease;
+  }
+
+  .dark .glass-pill {
+    background-color: rgba(62, 33, 30, 0.5);
+    border: 1px solid rgba(179, 144, 112, 0.22);
+    box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.35);
+  }
+
+  .glass-input {
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    background-color: rgba(255, 255, 255, 0.6);
+    border: 1px solid rgba(179, 144, 112, 0.25);
+    color: #2b1810;
+    transition:
+      background-color 300ms ease,
+      border-color 300ms ease,
+      box-shadow 300ms ease,
+      color 300ms ease;
+  }
+
+  .glass-input:focus {
+    background-color: rgba(255, 255, 255, 0.85);
+    border-color: #783e30;
+    box-shadow: 0 0 0 3px rgba(120, 62, 48, 0.15);
+  }
+
+  .dark .glass-input {
+    background-color: rgba(45, 23, 20, 0.5);
+    border: 1px solid rgba(179, 144, 112, 0.22);
+    color: #f5ebe1;
+  }
+
+  .dark .glass-input:focus {
+    background-color: rgba(45, 23, 20, 0.8);
+    border-color: #b39070;
+    box-shadow: 0 0 0 3px rgba(179, 144, 112, 0.2);
   }
 }

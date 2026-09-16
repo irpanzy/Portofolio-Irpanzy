@@ -3,7 +3,6 @@
 import { assets } from "@/assets/assets";
 import Image from "next/image";
 import React from "react";
-import { m } from "framer-motion";
 import { DownloadIcon, HandHeartIcon } from "lucide-react";
 import { useHero } from "@/hooks/useApi";
 import type { Hero } from "@/types";
@@ -28,11 +27,11 @@ export default function Header({
         id="home"
         className="mx-auto flex w-10/12 max-w-3xl animate-pulse flex-col items-center justify-center gap-4 pb-6 pt-[100px] text-center xl:min-h-screen"
       >
-        <div className="h-32 w-32 rounded-full bg-gray-300 dark:bg-gray-700" />
-        <div className="h-8 w-64 rounded bg-gray-300 dark:bg-gray-700" />
-        <div className="h-14 w-full max-w-2xl rounded bg-gray-300 dark:bg-gray-700" />
-        <div className="h-16 w-full max-w-xl rounded bg-gray-300 dark:bg-gray-700" />
-        <div className="h-12 w-44 rounded-full bg-gray-300 dark:bg-gray-700" />
+        <div className="h-32 w-32 rounded-full bg-[#B39070]/20" />
+        <div className="h-8 w-64 rounded-full bg-[#B39070]/20" />
+        <div className="h-14 w-full max-w-2xl rounded-2xl bg-[#B39070]/20" />
+        <div className="h-16 w-full max-w-xl rounded-2xl bg-[#B39070]/20" />
+        <div className="h-12 w-44 rounded-full bg-[#B39070]/20" />
       </div>
     );
   }
@@ -46,47 +45,50 @@ export default function Header({
   return (
     <div
       id="home"
-      className="mx-auto flex w-10/12 max-w-3xl flex-col items-center justify-center gap-4 pb-6 pt-[100px] text-center xl:min-h-screen"
+      className="relative mx-auto flex w-11/12 max-w-4xl flex-col items-center justify-center gap-4 pb-10 pt-[105px] text-center xl:min-h-screen"
     >
-      <div className="border-primary/20 relative h-32 w-32 animate-hero-fade overflow-hidden rounded-full border-2 shadow-md">
-        <Image
-          src={avatar}
-          className="object-cover"
-          alt="Foto Profil Irfan Muria"
-          fill
-          sizes="128px"
-          priority
-          fetchPriority="high"
-          quality={90}
-        />
+      {/* Avatar Container with Specular Glass Ring */}
+      <div className="relative h-32 w-32 animate-hero-fade overflow-hidden rounded-full border-2 border-[#B39070]/40 p-1 shadow-lg shadow-[#783E30]/10 backdrop-blur-md dark:border-[#B39070]/30 dark:shadow-black/40">
+        <div className="relative h-full w-full overflow-hidden rounded-full">
+          <Image
+            src={avatar}
+            className="object-cover"
+            alt="Foto Profil Irfan Muria"
+            fill
+            sizes="128px"
+            priority
+            fetchPriority="high"
+            quality={90}
+          />
+        </div>
       </div>
 
       {greeting && (
-        <p className="mb-3 flex animate-hero-fade items-center justify-center gap-2 font-ovo text-xl sm:text-2xl md:text-3xl lg:text-4xl">
+        <p className="mb-1 flex animate-hero-fade items-center justify-center gap-2 font-ovo text-xl leading-none text-[#783E30] sm:text-2xl md:text-3xl dark:text-[#D6BC9E]">
           <span>{greeting}</span>
-          <HandHeartIcon className="h-6 w-6 shrink-0 text-primary sm:h-7 sm:w-7 md:h-8 md:w-8" />
+          <HandHeartIcon className="h-[0.85em] w-[0.85em] shrink-0 -translate-y-[2px] text-[#783E30] dark:text-[#B39070]" />
         </p>
       )}
 
       {title && (
-        <h1 className="animate-hero-fade font-ovo text-3xl sm:text-5xl md:text-6xl lg:text-7xl">
+        <h1 className="animate-hero-fade font-ovo text-3xl font-normal tracking-tight text-[#2B1810] sm:text-5xl md:text-6xl lg:text-7xl dark:text-[#FAF6F0]">
           {title}
         </h1>
       )}
 
       {description && (
-        <p className="mx-auto max-w-xl animate-hero-fade font-ovo sm:max-w-2xl md:max-w-3xl lg:max-w-3xl">
+        <p className="mx-auto max-w-xl animate-hero-fade font-outfit text-sm leading-relaxed text-[#59493E] sm:max-w-2xl sm:text-base md:max-w-3xl dark:text-[#C5B8A5]">
           {description}
         </p>
       )}
 
       {resumeLink && (
-        <div className="mt-5 flex animate-hero-fade items-center justify-center">
+        <div className="mt-4 flex animate-hero-fade items-center justify-center">
           <a
             href={resumeLink}
             target="_blank"
             rel="noopener noreferrer"
-            className="group inline-flex items-center gap-2.5 rounded-full border border-black/15 bg-white/70 px-6 py-2.5 font-ovo text-sm font-medium text-zinc-800 shadow-sm backdrop-blur-sm transition-all duration-300 hover:border-black/30 hover:bg-black/5 hover:shadow-md active:scale-95 dark:border-white/20 dark:bg-white/5 dark:text-zinc-200 dark:hover:border-white/40 dark:hover:bg-white/10"
+            className="group inline-flex items-center gap-2.5 rounded-full border border-[#B39070]/35 bg-[#FAF6F0]/80 px-6 py-2.5 font-outfit text-sm font-semibold text-[#2B1810] shadow-sm backdrop-blur-md transition-all duration-300 hover:border-[#783E30] hover:bg-[#783E30]/10 hover:text-[#783E30] hover:shadow-md active:scale-95 dark:border-[#B39070]/30 dark:bg-[#3E211E]/40 dark:text-[#FAF6F0] dark:hover:border-[#B39070] dark:hover:bg-[#B39070]/15 dark:hover:text-[#FAF6F0]"
           >
             <span>My Resume</span>
             <DownloadIcon className="h-4 w-4 transition-transform duration-300 group-hover:translate-y-0.5" />

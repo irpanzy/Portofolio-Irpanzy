@@ -1,6 +1,7 @@
 import { assets } from "@/assets/assets";
 import Image from "next/image";
 import React from "react";
+import { Github, Linkedin, Instagram, Mail } from "lucide-react";
 
 interface FooterProps {
   isDarkMode: boolean;
@@ -8,64 +9,34 @@ interface FooterProps {
 
 export default function Footer({ isDarkMode }: FooterProps) {
   return (
-    <div>
+    <footer className="w-full">
       <div className="py-6">
-        <Image
-          src={isDarkMode ? assets.logo_dark : assets.logo}
-          alt="Irpanzy"
-          className="mx-auto mb-2"
-          width={144}
-          height={48}
-          loading="lazy"
-          style={{ width: "auto", height: "48px" }}
-        />
         <div className="mx-auto flex w-max items-center gap-2">
           <a
             href="mailto:irfanmuria04@gmail.com"
             aria-label="Send email to irfanmuria04@gmail.com"
-            className="flex items-center gap-2"
+            className="flex items-center gap-2 font-outfit text-sm text-[#59493E] transition-colors hover:text-[#783E30] dark:text-[#C5B8A5] dark:hover:text-[#FAF6F0]"
           >
-            <Image
-              src={isDarkMode ? assets.mail_icon_dark : assets.mail_icon}
-              alt=""
-              role="presentation"
-              className=""
-              width={24}
-              height={24}
-              loading="lazy"
-              style={{ width: "25px", height: "20px" }}
-            />
-            irfanmuria04@gmail.com
+            <Mail className="h-4 w-4 text-[#783E30] dark:text-[#B39070]" />
+            <span>irfanmuria04@gmail.com</span>
           </a>
         </div>
       </div>
 
-      <div className="mx-[10%] items-center justify-between border-t border-gray-400 py-6 text-center sm:flex">
+      <div className="mx-[10%] items-center justify-between border-t border-[#B39070]/20 py-6 text-center text-sm text-[#59493E] sm:flex dark:text-[#C5B8A5]">
         <p>
           &copy; {new Date().getFullYear()} Irfan Muria. All rights reserved
         </p>
-        <ul className="mt-4 flex items-center justify-center gap-5 sm:mt-0">
+        <ul className="mt-4 flex items-center justify-center gap-3 sm:mt-0">
           <li>
             <a
               target="_blank"
               rel="noopener noreferrer"
               href="https://github.com/irpanzy"
               aria-label="GitHub Profile"
+              className="shadow-2xs hover:shadow-xs flex h-10 w-10 items-center justify-center rounded-full border border-[#B39070]/25 bg-[#FAF6F0]/80 text-[#59493E] backdrop-blur-md transition-all duration-200 hover:border-[#783E30] hover:bg-[#783E30]/10 hover:text-[#783E30] active:scale-95 dark:border-[#B39070]/20 dark:bg-[#2D1A17]/60 dark:text-[#C5B8A5] dark:hover:border-[#B39070] dark:hover:text-[#FAF6F0]"
             >
-              <Image
-                src={
-                  isDarkMode
-                    ? assets.github_logo_white
-                    : assets.github_logo_dark
-                }
-                alt=""
-                role="presentation"
-                className=""
-                width={40}
-                height={40}
-                loading="lazy"
-                style={{ width: "40px", height: "40px" }}
-              />
+              <Github className="h-4 w-4" />
             </a>
           </li>
           <li>
@@ -74,21 +45,9 @@ export default function Footer({ isDarkMode }: FooterProps) {
               rel="noopener noreferrer"
               href="https://www.linkedin.com/in/irfanmuria/"
               aria-label="LinkedIn Profile"
+              className="shadow-2xs hover:shadow-xs flex h-10 w-10 items-center justify-center rounded-full border border-[#B39070]/25 bg-[#FAF6F0]/80 text-[#59493E] backdrop-blur-md transition-all duration-200 hover:border-[#783E30] hover:bg-[#783E30]/10 hover:text-[#783E30] active:scale-95 dark:border-[#B39070]/20 dark:bg-[#2D1A17]/60 dark:text-[#C5B8A5] dark:hover:border-[#B39070] dark:hover:text-[#FAF6F0]"
             >
-              <Image
-                src={
-                  isDarkMode
-                    ? assets.linkedin_logo_white
-                    : assets.linkedin_logo_blue
-                }
-                alt=""
-                role="presentation"
-                className=""
-                width={40}
-                height={40}
-                loading="lazy"
-                style={{ width: "40px", height: "40px" }}
-              />
+              <Linkedin className="h-4 w-4" />
             </a>
           </li>
           <li>
@@ -97,25 +56,13 @@ export default function Footer({ isDarkMode }: FooterProps) {
               rel="noopener noreferrer"
               href="https://www.instagram.com/irfanmuriaa/"
               aria-label="Instagram Profile"
+              className="shadow-2xs hover:shadow-xs flex h-10 w-10 items-center justify-center rounded-full border border-[#B39070]/25 bg-[#FAF6F0]/80 text-[#59493E] backdrop-blur-md transition-all duration-200 hover:border-[#783E30] hover:bg-[#783E30]/10 hover:text-[#783E30] active:scale-95 dark:border-[#B39070]/20 dark:bg-[#2D1A17]/60 dark:text-[#C5B8A5] dark:hover:border-[#B39070] dark:hover:text-[#FAF6F0]"
             >
-              <Image
-                src={
-                  isDarkMode
-                    ? assets.instagram_logo_white
-                    : assets.instagram_logo_dark
-                }
-                alt=""
-                role="presentation"
-                className=""
-                width={40}
-                height={40}
-                loading="lazy"
-                style={{ width: "40px", height: "40px" }}
-              />
+              <Instagram className="h-4 w-4" />
             </a>
           </li>
         </ul>
       </div>
-    </div>
+    </footer>
   );
 }

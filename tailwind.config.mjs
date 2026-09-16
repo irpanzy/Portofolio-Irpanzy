@@ -8,9 +8,16 @@ const config = {
   theme: {
     extend: {
       colors: {
-        lightHover: "#fcf4ff",
-        darkHover: "#2a004a",
-        darkTheme: "#11001f",
+        lightHover: "#f5eee6",
+        darkHover: "#2d1714",
+        darkTheme: "#190e0c",
+        rustic: {
+          terracotta: "#783E30",
+          sand: "#B39070",
+          espresso: "#3E211E",
+          olive: "#6E6755",
+          ivory: "#FAF6F0",
+        },
         background: "var(--background)",
         foreground: "var(--foreground)",
         card: {
