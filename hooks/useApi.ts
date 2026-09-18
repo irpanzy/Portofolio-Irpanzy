@@ -55,8 +55,9 @@ export const usePortfolioAll = (initialData?: PortfolioAllData | null) => {
       return data;
     },
     initialData: initialData || undefined,
-    staleTime: 10 * 60 * 1000,
-    gcTime: 30 * 60 * 1000,
+    staleTime: 30 * 1000,
+    gcTime: 10 * 60 * 1000,
+    refetchOnWindowFocus: true,
   });
 };
 
@@ -83,6 +84,7 @@ export const useCreateHero = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: queryKeys.hero });
+      queryClient.invalidateQueries({ queryKey: queryKeys.portfolioAll });
       toast.success("Hero data created successfully!");
       setLoading(false);
     },
@@ -107,6 +109,7 @@ export const useUpdateHero = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: queryKeys.hero });
+      queryClient.invalidateQueries({ queryKey: queryKeys.portfolioAll });
       toast.success("Hero data updated successfully!");
       setLoading(false);
     },
@@ -230,6 +233,7 @@ export const useCreateAbout = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: queryKeys.about });
+      queryClient.invalidateQueries({ queryKey: queryKeys.portfolioAll });
       toast.success("About data created successfully!");
       setLoading(false);
     },
@@ -254,6 +258,7 @@ export const useUpdateAbout = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: queryKeys.about });
+      queryClient.invalidateQueries({ queryKey: queryKeys.portfolioAll });
       toast.success("About data updated successfully!");
       setLoading(false);
     },
@@ -311,6 +316,7 @@ export const useCreateProject = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: queryKeys.projects });
+      queryClient.invalidateQueries({ queryKey: queryKeys.portfolioAll });
       toast.success("Project created successfully!");
     },
     onError: (error: any) => {
@@ -331,6 +337,7 @@ export const useUpdateProject = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: queryKeys.projects });
+      queryClient.invalidateQueries({ queryKey: queryKeys.portfolioAll });
       toast.success("Project updated successfully!");
     },
     onError: (error: any) => {
@@ -351,6 +358,7 @@ export const useDeleteProject = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: queryKeys.projects });
+      queryClient.invalidateQueries({ queryKey: queryKeys.portfolioAll });
       toast.success("Project deleted successfully!");
     },
     onError: (error: any) => {
@@ -371,6 +379,7 @@ export const useReorderProjects = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: queryKeys.projects });
+      queryClient.invalidateQueries({ queryKey: queryKeys.portfolioAll });
       toast.success("Projects order updated successfully!");
     },
     onError: (error: any) => {
@@ -391,6 +400,7 @@ export const useCreateExperience = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: queryKeys.experiences });
+      queryClient.invalidateQueries({ queryKey: queryKeys.portfolioAll });
       toast.success("Experience created successfully!");
     },
     onError: (error: any) => {
@@ -411,6 +421,7 @@ export const useUpdateExperience = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: queryKeys.experiences });
+      queryClient.invalidateQueries({ queryKey: queryKeys.portfolioAll });
       toast.success("Experience updated successfully!");
     },
     onError: (error: any) => {
@@ -431,6 +442,7 @@ export const useDeleteExperience = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: queryKeys.experiences });
+      queryClient.invalidateQueries({ queryKey: queryKeys.portfolioAll });
       toast.success("Experience deleted successfully!");
     },
     onError: (error: any) => {
@@ -451,6 +463,7 @@ export const useReorderExperiences = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: queryKeys.experiences });
+      queryClient.invalidateQueries({ queryKey: queryKeys.portfolioAll });
       toast.success("Experiences order updated successfully!");
     },
     onError: (error: any) => {
@@ -471,6 +484,7 @@ export const useCreateEducation = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: queryKeys.educations });
+      queryClient.invalidateQueries({ queryKey: queryKeys.portfolioAll });
       toast.success("Education created successfully!");
     },
     onError: (error: any) => {
@@ -491,6 +505,7 @@ export const useUpdateEducation = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: queryKeys.educations });
+      queryClient.invalidateQueries({ queryKey: queryKeys.portfolioAll });
       toast.success("Education updated successfully!");
     },
     onError: (error: any) => {
@@ -511,6 +526,7 @@ export const useDeleteEducation = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: queryKeys.educations });
+      queryClient.invalidateQueries({ queryKey: queryKeys.portfolioAll });
       toast.success("Education deleted successfully!");
     },
     onError: (error: any) => {
@@ -531,6 +547,7 @@ export const useReorderEducations = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: queryKeys.educations });
+      queryClient.invalidateQueries({ queryKey: queryKeys.portfolioAll });
       toast.success("Educations order updated successfully!");
     },
     onError: (error: any) => {
@@ -551,6 +568,7 @@ export const useCreateService = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: queryKeys.services });
+      queryClient.invalidateQueries({ queryKey: queryKeys.portfolioAll });
       toast.success("Service created successfully!");
     },
     onError: (error: any) => {
@@ -571,6 +589,7 @@ export const useUpdateService = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: queryKeys.services });
+      queryClient.invalidateQueries({ queryKey: queryKeys.portfolioAll });
       toast.success("Service updated successfully!");
     },
     onError: (error: any) => {
@@ -591,6 +610,7 @@ export const useDeleteService = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: queryKeys.services });
+      queryClient.invalidateQueries({ queryKey: queryKeys.portfolioAll });
       toast.success("Service deleted successfully!");
     },
     onError: (error: any) => {
@@ -611,6 +631,7 @@ export const useCreateTechStack = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: queryKeys.techStack() });
+      queryClient.invalidateQueries({ queryKey: queryKeys.portfolioAll });
       toast.success("Tech stack created successfully!");
     },
     onError: (error: any) => {
@@ -632,6 +653,7 @@ export const useUpdateTechStack = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: queryKeys.techStack() });
       queryClient.invalidateQueries({ queryKey: queryKeys.projects });
+      queryClient.invalidateQueries({ queryKey: queryKeys.portfolioAll });
       toast.success("Tech stack updated successfully!");
     },
     onError: (error: any) => {
@@ -653,6 +675,7 @@ export const useDeleteTechStack = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: queryKeys.techStack() });
       queryClient.invalidateQueries({ queryKey: queryKeys.projects });
+      queryClient.invalidateQueries({ queryKey: queryKeys.portfolioAll });
       toast.success("Tech stack deleted successfully!");
     },
     onError: (error: any) => {
@@ -673,6 +696,7 @@ export const useReorderTechStacks = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: queryKeys.techStack() });
+      queryClient.invalidateQueries({ queryKey: queryKeys.portfolioAll });
       toast.success("Tech stacks order updated successfully!");
     },
     onError: (error: any) => {
