@@ -8,10 +8,12 @@
 
 html {
   scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
   overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
 }
 
 @layer base {
@@ -147,8 +149,11 @@ body {
 
   /* Rustic Earthline Glassmorphism Utilities */
   .glass-card {
-    backdrop-filter: blur(20px) saturate(150%);
-    -webkit-backdrop-filter: blur(20px) saturate(150%);
+    backdrop-filter: blur(16px) saturate(140%);
+    -webkit-backdrop-filter: blur(16px) saturate(140%);
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+    -webkit-mask-image: -webkit-radial-gradient(white, black);
     background-color: rgba(250, 246, 240, 0.75);
     border: 1px solid rgba(179, 144, 112, 0.22);
     box-shadow:
@@ -169,8 +174,11 @@ body {
   }
 
   .glass-pill {
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+    -webkit-mask-image: -webkit-radial-gradient(white, black);
     background-color: rgba(250, 246, 240, 0.8);
     border: 1px solid rgba(179, 144, 112, 0.28);
     box-shadow: 0 4px 16px 0 rgba(120, 62, 48, 0.04);

@@ -1,41 +1,19 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import dynamic from "next/dynamic";
 import Header from "./components/Header";
 import Navbar from "./components/Navbar";
 import MotionProvider from "./components/MotionProvider";
 import AmbientBackground from "./components/AmbientBackground";
 import { usePortfolioAll } from "@/hooks/useApi";
 import type { PortfolioAllData } from "@/types";
-
-const About = dynamic(() => import("./components/About"), {
-  loading: () => <div className="min-h-screen" />,
-  ssr: true,
-});
-const Education = dynamic(() => import("./components/Education"), {
-  loading: () => <div className="min-h-screen" />,
-  ssr: false,
-});
-const Experience = dynamic(() => import("./components/Experience"), {
-  loading: () => <div className="min-h-screen" />,
-  ssr: false,
-});
-const Work = dynamic(() => import("./components/Work"), {
-  loading: () => <div className="min-h-screen" />,
-  ssr: false,
-});
-const Skills = dynamic(() => import("./components/Skills"), {
-  loading: () => <div className="min-h-screen" />,
-  ssr: false,
-});
-const Contact = dynamic(() => import("./components/Contact"), {
-  loading: () => <div className="min-h-screen" />,
-  ssr: false,
-});
-const Footer = dynamic(() => import("./components/Footer"), {
-  ssr: false,
-});
+import About from "./components/About";
+import Education from "./components/Education";
+import Experience from "./components/Experience";
+import Work from "./components/Work";
+import Skills from "./components/Skills";
+import Contact from "./components/Contact";
+import Footer from "./components/Footer";
 
 interface HomeClientProps {
   initialData?: PortfolioAllData | null;
