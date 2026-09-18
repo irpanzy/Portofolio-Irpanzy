@@ -55,7 +55,7 @@ export default function HomeClient({ initialData }: HomeClientProps) {
     <MotionProvider>
       <AmbientBackground />
       <Navbar isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} />
-      <main>
+      <main className="relative z-10">
         <Header data={portfolio?.hero} isLoading={isLoading} />
         <About
           data={portfolio?.about}

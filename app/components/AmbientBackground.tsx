@@ -6,22 +6,13 @@ export default function AmbientBackground() {
   return (
     <div
       aria-hidden="true"
-      className="pointer-events-none fixed inset-0 -z-20 overflow-hidden [isolation:isolate] [transform:translate3d(0,0,0)]"
+      className="pointer-events-none fixed inset-0 z-0 overflow-hidden"
     >
-      {/* Top Left Terracotta Glow */}
-      <div className="absolute -left-20 -top-24 h-[550px] w-[550px] rounded-full bg-[#783E30]/15 blur-[90px] transition-colors duration-500 ease-in-out dark:bg-[#783E30]/25" />
+      {/* Light Mode Gradients - Pure CSS Radial Gradients for 60fps Safari rendering */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_0%_0%,rgba(120,62,48,0.08)_0%,transparent_50%),radial-gradient(circle_at_100%_15%,rgba(179,144,112,0.12)_0%,transparent_50%),radial-gradient(circle_at_50%_45%,rgba(110,103,85,0.06)_0%,transparent_50%),radial-gradient(circle_at_100%_75%,rgba(120,62,48,0.08)_0%,transparent_50%),radial-gradient(circle_at_20%_95%,rgba(179,144,112,0.1)_0%,transparent_50%)] opacity-70 transition-opacity duration-700 dark:opacity-0" />
 
-      {/* Top Right Warm Sand Glow */}
-      <div className="dark:bg-[#B39070]/18 absolute -right-24 top-10 h-[600px] w-[600px] rounded-full bg-[#B39070]/20 blur-[100px] transition-colors duration-500 ease-in-out" />
-
-      {/* Center Olive Earth Glow */}
-      <div className="dark:bg-[#6E6755]/18 absolute left-1/3 top-[42%] h-[650px] w-[650px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#6E6755]/15 blur-[100px] transition-colors duration-500 ease-in-out" />
-
-      {/* Mid Right Terracotta Hearth */}
-      <div className="bg-[#783E30]/12 absolute -right-32 top-[65%] h-[500px] w-[500px] rounded-full blur-[90px] transition-colors duration-500 ease-in-out dark:bg-[#783E30]/20" />
-
-      {/* Bottom Sand Pool */}
-      <div className="bg-[#B39070]/18 absolute -bottom-32 left-1/4 h-[600px] w-[600px] rounded-full blur-[100px] transition-colors duration-500 ease-in-out dark:bg-[#B39070]/20" />
+      {/* Dark Mode Gradients - Pure CSS Radial Gradients for 60fps Safari rendering */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_0%_0%,rgba(120,62,48,0.2)_0%,transparent_50%),radial-gradient(circle_at_100%_15%,rgba(179,144,112,0.14)_0%,transparent_50%),radial-gradient(circle_at_50%_45%,rgba(110,103,85,0.1)_0%,transparent_50%),radial-gradient(circle_at_100%_75%,rgba(120,62,48,0.16)_0%,transparent_50%),radial-gradient(circle_at_20%_95%,rgba(179,144,112,0.14)_0%,transparent_50%)] opacity-0 transition-opacity duration-700 dark:opacity-100" />
     </div>
   );
 }

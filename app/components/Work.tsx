@@ -390,7 +390,8 @@ export default function Work({
                           paginate(-1);
                         }
                       }}
-                      className="relative h-full w-full cursor-grab active:cursor-grabbing"
+                      className="relative h-full w-full cursor-grab touch-pan-y active:cursor-grabbing"
+                      style={{ touchAction: "pan-y" }}
                     >
                       <Image
                         src={currentProject.bgImage}
@@ -404,12 +405,6 @@ export default function Work({
 
                       {/* Subtle Top & Bottom Gradient Shadows */}
                       <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/20" />
-
-                      {/* Floating Interactive Badge (Swipe cue for mobile / Preview hint) */}
-                      {/* <div className="pointer-events-none absolute bottom-3 right-3 flex items-center gap-1.5 rounded-full border border-white/20 bg-black/40 px-3 py-1 font-outfit text-[11px] font-medium text-white backdrop-blur-md sm:bottom-4 sm:right-4">
-                        <Sparkles className="h-3 w-3 text-[#FAF6F0]" />
-                        <span>Drag / Swipe to change</span>
-                      </div> */}
                     </m.div>
                   </AnimatePresence>
                 </div>
