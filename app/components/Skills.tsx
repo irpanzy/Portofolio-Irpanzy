@@ -1,8 +1,16 @@
 "use client";
 
-import React, { useMemo, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { m, AnimatePresence } from "framer-motion";
 import {
+  ChevronLeft,
+  ChevronRight,
   Code2,
   Layout,
   Server,
@@ -50,6 +58,39 @@ export default function Skills({
   const [selectedCategory, setSelectedCategory] =
     useState<TechCategory>("languages");
 
+  // Scroll hint state for mobile tab bar
+  const tabsRef = useRef<HTMLDivElement>(null);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(false);
+  const [hasScrolled, setHasScrolled] = useState(false);
+
+  const checkTabScroll = useCallback(() => {
+    const el = tabsRef.current;
+    if (!el) return;
+    setCanScrollLeft(el.scrollLeft > 4);
+    setCanScrollRight(el.scrollLeft < el.scrollWidth - el.clientWidth - 4);
+  }, []);
+
+  useEffect(() => {
+    const el = tabsRef.current;
+    if (!el) return;
+
+    const onScroll = () => {
+      checkTabScroll();
+      if (!hasScrolled && el.scrollLeft > 10) setHasScrolled(true);
+    };
+
+    checkTabScroll();
+    el.addEventListener("scroll", onScroll, { passive: true });
+    const observer = new ResizeObserver(checkTabScroll);
+    observer.observe(el);
+
+    return () => {
+      el.removeEventListener("scroll", onScroll);
+      observer.disconnect();
+    };
+  }, [checkTabScroll, hasScrolled]);
+
   // Filter and deduplicate skills
   const allSkills = useMemo(() => {
     if (!techStack || techStack.length === 0) return [];
@@ -89,7 +130,7 @@ export default function Skills({
   return (
     <m.div
       id="skills"
-      className="relative w-full scroll-mt-20 px-4 py-16 md:px-12 lg:px-[10%]"
+      className="relative w-full scroll-mt-20 overflow-hidden px-4 py-16 md:px-12 lg:px-[10%]"
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       viewport={{ once: true }}
@@ -131,76 +172,133 @@ export default function Skills({
       </div>
 
       {/* Interactive Category Tabs Bar */}
-      <div className="relative z-10 mx-auto mb-12 flex w-full justify-center px-2">
-        <div className="no-scrollbar flex max-w-full items-center gap-1.5 overflow-x-auto rounded-full border border-[#B39070]/25 bg-[#FAF6F0]/80 p-1.5 shadow-sm backdrop-blur-xl sm:flex-wrap sm:justify-center sm:overflow-visible dark:border-[#B39070]/20 dark:bg-[#2D1A17]/70">
-          {CATEGORIES.map(({ key, label, icon: IconComponent }) => {
-            const isSelected = selectedCategory === key;
-            const count = countPerCategory[key] || 0;
-            if (count === 0) return null;
+      <div className="relative z-10 mx-auto mb-8 w-full px-2 md:mb-12">
+        <div className="relative mx-auto flex justify-center">
+          {/* Left fade mask — mobile only */}
+          <m.div
+            animate={{ opacity: canScrollLeft ? 1 : 0 }}
+            transition={{ duration: 0.2 }}
+            className="pointer-events-none absolute left-0 top-0 z-20 h-full w-8 rounded-l-full bg-gradient-to-r from-[#FAF6F0] to-transparent md:hidden dark:from-[#2D1A17]"
+          />
 
-            return (
-              <button
-                key={key}
-                type="button"
-                onClick={() => setSelectedCategory(key)}
-                className={`relative flex shrink-0 items-center gap-2 rounded-full px-3.5 py-1.5 font-outfit text-xs font-semibold transition-colors duration-300 sm:px-4 sm:py-2 sm:text-sm ${
-                  isSelected
-                    ? "text-[#FAF6F0] dark:text-[#1C0F0D]"
-                    : "text-[#59493E] hover:text-[#783E30] dark:text-[#C5B8A5] dark:hover:text-[#FAF6F0]"
-                }`}
-              >
-                {/* Active Pill Indicator via Framer Motion */}
-                {isSelected && (
-                  <m.div
-                    layoutId="activeCategoryTab"
-                    className="absolute inset-0 rounded-full bg-[#783E30] shadow-md shadow-[#783E30]/20 dark:bg-[#B39070] dark:shadow-black/30"
-                    transition={{
-                      type: "spring",
-                      stiffness: 400,
-                      damping: 32,
-                    }}
-                  />
-                )}
-                <span className="relative z-10 flex items-center gap-1.5">
-                  <IconComponent className="h-3.5 w-3.5" />
-                  <span>{label}</span>
-                  <span
-                    className={`ml-0.5 rounded-full px-1.5 py-0.5 text-[10px] font-bold ${
-                      isSelected
-                        ? "bg-white/20 text-white dark:bg-black/20 dark:text-[#1C0F0D]"
-                        : "bg-[#B39070]/20 text-[#59493E] dark:bg-[#B39070]/20 dark:text-[#C5B8A5]"
-                    }`}
-                  >
-                    {count}
+          <div
+            ref={tabsRef}
+            className="no-scrollbar flex max-w-full items-center gap-1.5 overflow-x-auto rounded-full border border-[#B39070]/25 bg-[#FAF6F0]/80 p-1.5 shadow-sm backdrop-blur-xl md:flex-wrap md:justify-center md:overflow-visible dark:border-[#B39070]/20 dark:bg-[#2D1A17]/70"
+          >
+            {CATEGORIES.map(({ key, label, icon: IconComponent }) => {
+              const isSelected = selectedCategory === key;
+              const count = countPerCategory[key] || 0;
+              if (count === 0) return null;
+
+              return (
+                <button
+                  key={key}
+                  type="button"
+                  onClick={() => setSelectedCategory(key)}
+                  className={`relative flex shrink-0 items-center gap-1.5 rounded-full px-3 py-2 font-outfit text-xs font-semibold transition-colors duration-300 md:gap-2 md:px-4 md:text-sm ${
+                    isSelected
+                      ? "text-[#FAF6F0] dark:text-[#1C0F0D]"
+                      : "text-[#59493E] hover:text-[#783E30] dark:text-[#C5B8A5] dark:hover:text-[#FAF6F0]"
+                  }`}
+                >
+                  {/* Active Pill Indicator via Framer Motion */}
+                  {isSelected && (
+                    <m.div
+                      layoutId="activeCategoryTab"
+                      className="absolute inset-0 rounded-full bg-[#783E30] shadow-md shadow-[#783E30]/20 dark:bg-[#B39070] dark:shadow-black/30"
+                      transition={{
+                        type: "spring",
+                        stiffness: 300,
+                        damping: 30,
+                        mass: 0.8,
+                      }}
+                    />
+                  )}
+                  <span className="relative z-10 flex items-center gap-1 md:gap-1.5">
+                    <IconComponent className="h-3.5 w-3.5 md:h-4 md:w-4" />
+                    <span className="whitespace-nowrap">{label}</span>
+                    <span
+                      className={`ml-0.5 rounded-full px-1.5 py-0.5 text-[10px] font-bold ${
+                        isSelected
+                          ? "bg-white/20 text-white dark:bg-black/20 dark:text-[#1C0F0D]"
+                          : "bg-[#B39070]/20 text-[#59493E] dark:bg-[#B39070]/20 dark:text-[#C5B8A5]"
+                      }`}
+                    >
+                      {count}
+                    </span>
                   </span>
-                </span>
-              </button>
-            );
-          })}
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Right fade mask — mobile only */}
+          <m.div
+            animate={{ opacity: canScrollRight ? 1 : 0 }}
+            transition={{ duration: 0.2 }}
+            className="pointer-events-none absolute right-0 top-0 z-20 h-full w-8 rounded-r-full bg-gradient-to-l from-[#FAF6F0] to-transparent md:hidden dark:from-[#2D1A17]"
+          />
         </div>
+
+        {/* Swipe hint — mobile only, disappears after user scrolls */}
+        <AnimatePresence>
+          {!hasScrolled && canScrollRight && (
+            <m.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.4 }}
+              className="mt-3 flex items-center justify-center gap-1 md:hidden"
+            >
+              <m.span
+                animate={{ x: [0, -3, 0] }}
+                transition={{
+                  duration: 1.6,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+              >
+                <ChevronLeft className="h-3 w-3 text-[#B39070]/40 dark:text-[#B39070]/30" />
+              </m.span>
+              <span className="font-outfit text-[11px] font-medium text-[#B39070]/50 dark:text-[#B39070]/35">
+                Swipe for more categories
+              </span>
+              <m.span
+                animate={{ x: [0, 3, 0] }}
+                transition={{
+                  duration: 1.6,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+              >
+                <ChevronRight className="h-3 w-3 text-[#B39070]/40 dark:text-[#B39070]/30" />
+              </m.span>
+            </m.div>
+          )}
+        </AnimatePresence>
       </div>
 
       {/* Floating Capsule Cloud Canvas */}
-      <div className="relative z-10 mx-auto min-h-[260px] max-w-5xl">
+      <div className="relative z-10 mx-auto min-h-[220px] max-w-5xl md:min-h-[260px]">
         {isLoadingTechStack ? (
-          <div className="flex flex-wrap justify-center gap-3 md:gap-4">
+          <div className="flex flex-wrap justify-center gap-2.5 md:gap-3 lg:gap-4">
             {Array.from({ length: 16 }).map((_, i) => (
               <div
                 key={i}
-                className="h-12 w-36 animate-pulse rounded-full border border-[#B39070]/20 bg-[#FAF6F0]/60 dark:border-[#B39070]/15 dark:bg-[#2D1A17]/50"
+                className="h-10 w-28 animate-pulse rounded-full border border-[#B39070]/20 bg-[#FAF6F0]/60 md:h-12 md:w-36 dark:border-[#B39070]/15 dark:bg-[#2D1A17]/50"
               />
             ))}
           </div>
         ) : filteredSkills.length > 0 ? (
           <div className="flex justify-center">
-            <AnimatePresence mode="wait">
+            <AnimatePresence mode="popLayout">
               <m.div
                 key={selectedCategory}
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -8 }}
-                transition={{ duration: 0.18, ease: "easeInOut" }}
-                className="md:gap-4.5 flex flex-wrap items-center justify-center gap-3 sm:gap-4"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.35, ease: [0.25, 0.1, 0.25, 1] }}
+                className="flex flex-wrap items-center justify-center gap-2.5 md:gap-3.5 lg:gap-4"
               >
                 {filteredSkills.map((tool, index) => {
                   const iconSrc = getTechIcon(tool, isDarkMode);
@@ -208,22 +306,22 @@ export default function Skills({
                   return (
                     <m.div
                       key={`${selectedCategory}-${tool._id}`}
-                      initial={{ opacity: 0, scale: 0.92, y: 10 }}
-                      animate={{ opacity: 1, scale: 1, y: 0 }}
+                      initial={{ opacity: 0, y: 6 }}
+                      animate={{ opacity: 1, y: 0 }}
                       transition={{
-                        duration: 0.24,
-                        delay: Math.min(index * 0.025, 0.25),
-                        ease: "easeOut",
+                        duration: 0.4,
+                        delay: Math.min(index * 0.04, 0.35),
+                        ease: [0.25, 0.1, 0.25, 1],
                       }}
-                      whileHover={{ y: -3, scale: 1.04 }}
+                      whileHover={{ y: -3 }}
                       whileTap={{ scale: 0.97 }}
-                      className="group relative flex cursor-default items-center gap-3 rounded-full border border-[#B39070]/25 bg-[#FAF6F0]/85 py-2 pl-2.5 pr-4 shadow-sm backdrop-blur-md transition-all duration-200 hover:border-[#783E30] hover:shadow-[0_8px_20px_rgba(120,62,48,0.12)] dark:border-[#B39070]/20 dark:bg-[#2D1A17]/75 dark:hover:border-[#B39070] dark:hover:shadow-[0_8px_20px_rgba(179,144,112,0.15)]"
+                      className="group relative flex cursor-default items-center gap-2 rounded-full border border-[#B39070]/25 bg-[#FAF6F0]/85 py-1.5 pl-2 pr-3 shadow-sm backdrop-blur-md transition-[border-color,box-shadow] duration-200 hover:border-[#783E30] hover:shadow-[0_8px_20px_rgba(120,62,48,0.12)] md:gap-3 md:py-2 md:pl-2.5 md:pr-4 dark:border-[#B39070]/20 dark:bg-[#2D1A17]/75 dark:hover:border-[#B39070] dark:hover:shadow-[0_8px_20px_rgba(179,144,112,0.15)]"
                     >
                       {/* Subtle Ambient Glow on Hover */}
                       <div className="pointer-events-none absolute inset-0 rounded-full bg-gradient-to-r from-[#783E30]/10 via-[#B39070]/10 to-transparent opacity-0 transition-opacity duration-200 group-hover:opacity-100 dark:from-[#B39070]/15 dark:to-transparent" />
 
                       {/* Tech Logo Pill */}
-                      <div className="shadow-2xs relative flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-[#B39070]/20 bg-[#FAF6F0] p-1.5 transition-transform duration-200 group-hover:scale-110 dark:border-[#B39070]/20 dark:bg-[#1C0F0D]">
+                      <div className="shadow-2xs relative flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-[#B39070]/20 bg-[#FAF6F0] p-1.5 transition-transform duration-200 will-change-transform group-hover:scale-110 md:h-8 md:w-8 dark:border-[#B39070]/20 dark:bg-[#1C0F0D]">
                         {iconSrc ? (
                           <Image
                             src={iconSrc}
@@ -234,27 +332,27 @@ export default function Skills({
                             loading="lazy"
                           />
                         ) : (
-                          <span className="text-[11px] font-bold text-[#783E30] dark:text-[#B39070]">
+                          <span className="text-[10px] font-bold text-[#783E30] md:text-[11px] dark:text-[#B39070]">
                             {tool.title.substring(0, 2).toUpperCase()}
                           </span>
                         )}
                       </div>
 
                       {/* Tech Name */}
-                      <span className="relative z-10 font-outfit text-sm font-semibold tracking-tight text-[#2B1810] transition-colors group-hover:text-[#783E30] dark:text-[#FAF6F0] dark:group-hover:text-[#D6BC9E]">
+                      <span className="relative z-10 font-outfit text-xs font-semibold tracking-tight text-[#2B1810] transition-colors group-hover:text-[#783E30] md:text-sm dark:text-[#FAF6F0] dark:group-hover:text-[#D6BC9E]">
                         {tool.title}
                       </span>
 
                       {/* Minimalist Proficiency Level Dots */}
                       {tool.proficiencyLevel && tool.proficiencyLevel > 0 ? (
                         <div
-                          className="relative z-10 flex items-center gap-0.5 border-l border-[#B39070]/20 pl-2 dark:border-[#B39070]/20"
+                          className="relative z-10 flex items-center gap-0.5 border-l border-[#B39070]/20 pl-1.5 md:pl-2 dark:border-[#B39070]/20"
                           title={`Proficiency: ${tool.proficiencyLevel}/5`}
                         >
                           {Array.from({ length: 5 }).map((_, idx) => (
                             <span
                               key={idx}
-                              className={`h-1.5 w-1.5 rounded-full transition-colors duration-200 ${
+                              className={`h-1 w-1 rounded-full md:h-1.5 md:w-1.5 ${
                                 idx < (tool.proficiencyLevel || 0)
                                   ? "bg-[#783E30] dark:bg-[#B39070]"
                                   : "bg-[#B39070]/25 dark:bg-[#B39070]/20"
