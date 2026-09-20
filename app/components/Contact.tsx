@@ -79,7 +79,7 @@ export default function Contact({ isDarkMode }: ContactProps) {
         initial={{ opacity: 0, y: -20 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.5 }}
-        className="text-center font-ovo text-5xl"
+        className="text-center font-ovo text-5xl md:text-5xl"
       >
         Get In Touch
       </m.h2>

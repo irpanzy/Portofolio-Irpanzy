@@ -142,29 +142,26 @@ export default function Skills({
       {/* Section Header */}
       <div className="relative z-10 text-center">
         <m.p
-          initial={{ opacity: 0, y: -15 }}
+          initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="mb-2 font-ovo text-lg text-[#783E30] dark:text-[#B39070]"
+          transition={{ duration: 0.5, delay: 0.3 }}
+          className="mb-2 text-center font-ovo text-lg text-[#783E30] dark:text-[#B39070]"
         >
           What I Use
         </m.p>
         <m.h2
-          initial={{ opacity: 0, y: -15 }}
+          initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.3 }}
-          className="font-ovo text-4xl sm:text-5xl"
+          transition={{ duration: 0.5, delay: 0.5 }}
+          className="text-center font-ovo text-5xl md:text-5xl"
         >
           Skills &amp; Technologies
         </m.h2>
         <m.p
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.4 }}
-          className="mx-auto mb-10 mt-4 max-w-2xl font-outfit text-sm text-[#59493E] md:text-base dark:text-[#C5B8A5]"
+          transition={{ duration: 0.5, delay: 0.7 }}
+          className="mx-auto mb-12 mt-5 max-w-3xl text-center font-outfit text-sm text-[#59493E] md:text-base dark:text-[#C5B8A5]"
         >
           An interactive collection of modern languages, frameworks, databases,
           and developer tools I leverage to build resilient digital products.

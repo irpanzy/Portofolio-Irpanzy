@@ -162,29 +162,26 @@ export default function Work({
       {/* Section Header */}
       <div className="text-center">
         <m.p
-          initial={{ opacity: 0, y: -15 }}
+          initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-          viewport={{ once: true }}
-          className="mb-2 font-ovo text-base text-[#783E30] sm:text-lg dark:text-[#B39070]"
+          transition={{ duration: 0.5, delay: 0.3 }}
+          className="mb-2 text-center font-ovo text-lg text-[#783E30] dark:text-[#B39070]"
         >
           A Glimpse of My Journey
         </m.p>
         <m.h2
-          initial={{ opacity: 0, y: -15 }}
+          initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          viewport={{ once: true }}
-          className="font-ovo text-4xl text-[#2B1810] sm:text-5xl lg:text-6xl dark:text-[#FAF6F0]"
+          transition={{ duration: 0.5, delay: 0.5 }}
+          className="text-center font-ovo text-5xl md:text-5xl"
         >
           What I&apos;ve Built
         </m.h2>
         <m.p
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.3 }}
-          viewport={{ once: true }}
-          className="mx-auto mb-10 mt-4 max-w-2xl font-outfit text-sm text-[#59493E] sm:text-base dark:text-[#C5B8A5]"
+          transition={{ duration: 0.5, delay: 0.7 }}
+          className="mx-auto mb-12 mt-5 max-w-3xl text-center font-outfit text-sm text-[#59493E] md:text-base dark:text-[#C5B8A5]"
         >
           Interactive showcase of real-world fullstack web apps, scalable APIs,
           and robust digital solutions. Slide, click, or swipe to explore each
