@@ -27,13 +27,11 @@ export default function About({
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       transition={{ duration: 0.8 }}
-      viewport={{ once: true }}
     >
       <m.p
         initial={{ opacity: 0, y: -20 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.2 }}
-        viewport={{ once: true }}
         className="mb-2 text-center font-ovo text-lg text-[#783E30] dark:text-[#B39070]"
       >
         Introduction
@@ -42,7 +40,6 @@ export default function About({
         initial={{ opacity: 0, y: -20 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.3 }}
-        viewport={{ once: true }}
         className="text-center font-ovo text-5xl"
       >
         About Me
@@ -53,7 +50,6 @@ export default function About({
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.4 }}
-        viewport={{ once: true }}
         className="mx-auto my-10 max-w-4xl"
       >
         {isLoadingAbout ? (
@@ -93,7 +89,6 @@ export default function About({
                 initial={{ opacity: 0, y: 15 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.1 }}
-                viewport={{ once: true }}
                 className="backdrop-blur-xs group rounded-2xl border border-[#B39070]/15 bg-[#FAF6F0]/40 p-4 transition-all duration-200 hover:border-[#783E30]/40 dark:border-[#B39070]/10 dark:bg-[#3E211E]/30 dark:hover:border-[#B39070]/40"
               >
                 <p className="mb-1 font-ovo text-xs font-semibold uppercase tracking-widest text-[#783E30] dark:text-[#B39070]">
@@ -109,7 +104,6 @@ export default function About({
                 initial={{ opacity: 0, y: 15 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.25 }}
-                viewport={{ once: true }}
                 className="backdrop-blur-xs group rounded-2xl border border-[#B39070]/15 bg-[#FAF6F0]/40 p-4 transition-all duration-200 hover:border-[#783E30]/40 dark:border-[#B39070]/10 dark:bg-[#3E211E]/30 dark:hover:border-[#B39070]/40"
               >
                 <p className="mb-1 font-ovo text-xs font-semibold uppercase tracking-widest text-[#783E30] dark:text-[#B39070]">
@@ -125,7 +119,6 @@ export default function About({
                 initial={{ opacity: 0, y: 15 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.4 }}
-                viewport={{ once: true }}
                 className="backdrop-blur-xs group rounded-2xl border border-[#B39070]/15 bg-[#FAF6F0]/40 p-4 transition-all duration-200 hover:border-[#783E30]/40 dark:border-[#B39070]/10 dark:bg-[#3E211E]/30 dark:hover:border-[#B39070]/40"
               >
                 <p className="mb-1 font-ovo text-xs font-semibold uppercase tracking-widest text-[#783E30] dark:text-[#B39070]">

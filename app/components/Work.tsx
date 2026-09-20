@@ -155,7 +155,6 @@ export default function Work({
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       transition={{ duration: 0.8 }}
-      viewport={{ once: true }}
       id="work"
       className="w-full scroll-mt-20 px-[6%] py-12 sm:px-[8%] md:px-[10%] lg:px-[12%]"
     >
@@ -165,7 +164,6 @@ export default function Work({
           initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.3 }}
-          viewport={{ once: true }}
           className="mb-2 text-center font-ovo text-lg text-[#783E30] dark:text-[#B39070]"
         >
           A Glimpse of My Journey
@@ -174,7 +172,6 @@ export default function Work({
           initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.5 }}
-          viewport={{ once: true }}
           className="text-center font-ovo text-5xl md:text-5xl"
         >
           What I&apos;ve Built
@@ -183,7 +180,6 @@ export default function Work({
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.7 }}
-          viewport={{ once: true }}
           className="mx-auto mb-12 mt-5 max-w-3xl text-center font-outfit text-sm text-[#59493E] md:text-base dark:text-[#C5B8A5]"
         >
           Interactive showcase of real-world fullstack web apps, scalable APIs,
@@ -197,7 +193,6 @@ export default function Work({
           initial={{ opacity: 0, y: 25 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          viewport={{ once: true }}
           className="mx-auto max-w-6xl"
         >
           {/* Main Showcase Stage */}
@@ -427,7 +422,6 @@ export default function Work({
         initial={{ opacity: 0, y: 15 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.3 }}
-        viewport={{ once: true }}
         className="mt-12 flex justify-center"
       >
         <a

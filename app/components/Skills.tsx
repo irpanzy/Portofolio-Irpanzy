@@ -133,7 +133,6 @@ export default function Skills({
       className="relative w-full scroll-mt-20 overflow-hidden px-4 py-16 md:px-12 lg:px-[10%]"
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
-      viewport={{ once: true }}
       transition={{ duration: 0.8 }}
     >
       {/* Background Decorative Ambient Blur */}
@@ -145,7 +144,6 @@ export default function Skills({
           initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.3 }}
-          viewport={{ once: true }}
           className="mb-2 text-center font-ovo text-lg text-[#783E30] dark:text-[#B39070]"
         >
           What I Use
@@ -154,7 +152,6 @@ export default function Skills({
           initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.5 }}
-          viewport={{ once: true }}
           className="text-center font-ovo text-5xl md:text-5xl"
         >
           Skills &amp; Technologies
@@ -163,7 +160,6 @@ export default function Skills({
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.7 }}
-          viewport={{ once: true }}
           className="mx-auto mb-12 mt-5 max-w-3xl text-center font-outfit text-sm text-[#59493E] md:text-base dark:text-[#C5B8A5]"
         >
           An interactive collection of modern languages, frameworks, databases,
@@ -172,7 +168,12 @@ export default function Skills({
       </div>
 
       {/* Interactive Category Tabs Bar */}
-      <div className="relative z-10 mx-auto mb-8 w-full px-2 md:mb-12">
+      <m.div
+        initial={{ opacity: 0, y: 15 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.2 }}
+        className="relative z-10 mx-auto mb-8 w-full px-2 md:mb-12"
+      >
         <div className="relative mx-auto flex justify-center">
           {/* Left fade mask — mobile only */}
           <m.div
@@ -276,10 +277,15 @@ export default function Skills({
             </m.div>
           )}
         </AnimatePresence>
-      </div>
+      </m.div>
 
       {/* Floating Capsule Cloud Canvas */}
-      <div className="relative z-10 mx-auto min-h-[220px] max-w-5xl md:min-h-[260px]">
+      <m.div
+        initial={{ opacity: 0, y: 15 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.3 }}
+        className="relative z-10 mx-auto min-h-[220px] max-w-5xl md:min-h-[260px]"
+      >
         {isLoadingTechStack ? (
           <div className="flex flex-wrap justify-center gap-2.5 md:gap-3 lg:gap-4">
             {Array.from({ length: 16 }).map((_, i) => (
@@ -372,7 +378,7 @@ export default function Skills({
             No skills found in this category.
           </p>
         )}
-      </div>
+      </m.div>
     </m.div>
   );
 }
