@@ -145,6 +145,7 @@ export default function Skills({
           initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.3 }}
+          viewport={{ once: true }}
           className="mb-2 text-center font-ovo text-lg text-[#783E30] dark:text-[#B39070]"
         >
           What I Use
@@ -153,6 +154,7 @@ export default function Skills({
           initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.5 }}
+          viewport={{ once: true }}
           className="text-center font-ovo text-5xl md:text-5xl"
         >
           Skills &amp; Technologies
@@ -161,6 +163,7 @@ export default function Skills({
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.7 }}
+          viewport={{ once: true }}
           className="mx-auto mb-12 mt-5 max-w-3xl text-center font-outfit text-sm text-[#59493E] md:text-base dark:text-[#C5B8A5]"
         >
           An interactive collection of modern languages, frameworks, databases,

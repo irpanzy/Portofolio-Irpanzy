@@ -33,6 +33,7 @@ export default function About({
         initial={{ opacity: 0, y: -20 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.2 }}
+        viewport={{ once: true }}
         className="mb-2 text-center font-ovo text-lg text-[#783E30] dark:text-[#B39070]"
       >
         Introduction
@@ -41,6 +42,7 @@ export default function About({
         initial={{ opacity: 0, y: -20 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.3 }}
+        viewport={{ once: true }}
         className="text-center font-ovo text-5xl"
       >
         About Me
@@ -87,7 +89,13 @@ export default function About({
 
             {/* Architectural Focus Pillars */}
             <div className="mt-10 grid grid-cols-1 gap-6 border-t border-[#B39070]/20 pt-8 sm:grid-cols-3">
-              <div className="backdrop-blur-xs group rounded-2xl border border-[#B39070]/15 bg-[#FAF6F0]/40 p-4 transition-all duration-200 hover:border-[#783E30]/40 dark:border-[#B39070]/10 dark:bg-[#3E211E]/30 dark:hover:border-[#B39070]/40">
+              <m.div
+                initial={{ opacity: 0, y: 15 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.1 }}
+                viewport={{ once: true }}
+                className="backdrop-blur-xs group rounded-2xl border border-[#B39070]/15 bg-[#FAF6F0]/40 p-4 transition-all duration-200 hover:border-[#783E30]/40 dark:border-[#B39070]/10 dark:bg-[#3E211E]/30 dark:hover:border-[#B39070]/40"
+              >
                 <p className="mb-1 font-ovo text-xs font-semibold uppercase tracking-widest text-[#783E30] dark:text-[#B39070]">
                   Fullstack Craft
                 </p>
@@ -95,9 +103,15 @@ export default function About({
                   Building responsive, accessible, and delightful web &amp;
                   mobile interfaces.
                 </p>
-              </div>
+              </m.div>
 
-              <div className="backdrop-blur-xs group rounded-2xl border border-[#B39070]/15 bg-[#FAF6F0]/40 p-4 transition-all duration-200 hover:border-[#783E30]/40 dark:border-[#B39070]/10 dark:bg-[#3E211E]/30 dark:hover:border-[#B39070]/40">
+              <m.div
+                initial={{ opacity: 0, y: 15 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.25 }}
+                viewport={{ once: true }}
+                className="backdrop-blur-xs group rounded-2xl border border-[#B39070]/15 bg-[#FAF6F0]/40 p-4 transition-all duration-200 hover:border-[#783E30]/40 dark:border-[#B39070]/10 dark:bg-[#3E211E]/30 dark:hover:border-[#B39070]/40"
+              >
                 <p className="mb-1 font-ovo text-xs font-semibold uppercase tracking-widest text-[#783E30] dark:text-[#B39070]">
                   Architecture &amp; APIs
                 </p>
@@ -105,9 +119,15 @@ export default function About({
                   Designing robust, maintainable backends, RESTful APIs, and
                   database schemas.
                 </p>
-              </div>
+              </m.div>
 
-              <div className="backdrop-blur-xs group rounded-2xl border border-[#B39070]/15 bg-[#FAF6F0]/40 p-4 transition-all duration-200 hover:border-[#783E30]/40 dark:border-[#B39070]/10 dark:bg-[#3E211E]/30 dark:hover:border-[#B39070]/40">
+              <m.div
+                initial={{ opacity: 0, y: 15 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.4 }}
+                viewport={{ once: true }}
+                className="backdrop-blur-xs group rounded-2xl border border-[#B39070]/15 bg-[#FAF6F0]/40 p-4 transition-all duration-200 hover:border-[#783E30]/40 dark:border-[#B39070]/10 dark:bg-[#3E211E]/30 dark:hover:border-[#B39070]/40"
+              >
                 <p className="mb-1 font-ovo text-xs font-semibold uppercase tracking-widest text-[#783E30] dark:text-[#B39070]">
                   Performance &amp; Scale
                 </p>
@@ -115,7 +135,7 @@ export default function About({
                   Optimized for fast load times, core web vitals, and scalable
                   deployments.
                 </p>
-              </div>
+              </m.div>
             </div>
           </div>
         )}

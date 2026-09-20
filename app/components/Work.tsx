@@ -165,6 +165,7 @@ export default function Work({
           initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.3 }}
+          viewport={{ once: true }}
           className="mb-2 text-center font-ovo text-lg text-[#783E30] dark:text-[#B39070]"
         >
           A Glimpse of My Journey
@@ -173,6 +174,7 @@ export default function Work({
           initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.5 }}
+          viewport={{ once: true }}
           className="text-center font-ovo text-5xl md:text-5xl"
         >
           What I&apos;ve Built
@@ -181,6 +183,7 @@ export default function Work({
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.7 }}
+          viewport={{ once: true }}
           className="mx-auto mb-12 mt-5 max-w-3xl text-center font-outfit text-sm text-[#59493E] md:text-base dark:text-[#C5B8A5]"
         >
           Interactive showcase of real-world fullstack web apps, scalable APIs,
@@ -190,7 +193,13 @@ export default function Work({
       </div>
 
       {visibleProjects && visibleProjects.length > 0 && currentProject ? (
-        <div className="mx-auto max-w-6xl">
+        <m.div
+          initial={{ opacity: 0, y: 25 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          viewport={{ once: true }}
+          className="mx-auto max-w-6xl"
+        >
           {/* Main Showcase Stage */}
           <div className="glass-card relative overflow-hidden rounded-3xl border border-[#B39070]/30 bg-[#FAF6F0]/85 p-4 shadow-2xl transition-all duration-300 sm:p-6 lg:p-8 dark:border-[#B39070]/20 dark:bg-[#1C1210]/80">
             {/* Ambient Background Warm Glow */}
@@ -408,13 +417,19 @@ export default function Work({
               </div>
             </div>
           </div>
-        </div>
+        </m.div>
       ) : (
         <p className="text-center text-[#6E6755]">No projects to display</p>
       )}
 
       {/* GitHub External Repositories CTA */}
-      <div className="mt-12 flex justify-center">
+      <m.div
+        initial={{ opacity: 0, y: 15 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.3 }}
+        viewport={{ once: true }}
+        className="mt-12 flex justify-center"
+      >
         <a
           href="https://github.com/irpanzy?tab=repositories"
           target="_blank"
@@ -433,7 +448,7 @@ export default function Work({
 
           <CircleArrowOutUpRight className="h-3.5 w-3.5 text-[#6E6755] transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-[#783E30] dark:text-[#C5B8A5] dark:group-hover:text-[#B39070]" />
         </a>
-      </div>
+      </m.div>
     </m.div>
   );
 }
