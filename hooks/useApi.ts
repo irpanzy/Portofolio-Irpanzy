@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { api } from "@/lib/api";
 import { useGlobalLoading } from "./useGlobalLoading";
@@ -31,6 +32,28 @@ export const queryKeys = {
 export const usePortfolioAll = (initialData?: PortfolioAllData | null) => {
   const queryClient = useQueryClient();
 
+  useEffect(() => {
+    if (initialData) {
+      if (initialData.hero)
+        queryClient.setQueryData(queryKeys.hero, initialData.hero);
+      if (initialData.about)
+        queryClient.setQueryData(queryKeys.about, initialData.about);
+      if (initialData.projects)
+        queryClient.setQueryData(queryKeys.projects, initialData.projects);
+      if (initialData.experiences)
+        queryClient.setQueryData(
+          queryKeys.experiences,
+          initialData.experiences
+        );
+      if (initialData.educations)
+        queryClient.setQueryData(queryKeys.educations, initialData.educations);
+      if (initialData.services)
+        queryClient.setQueryData(queryKeys.services, initialData.services);
+      if (initialData.techstacks)
+        queryClient.setQueryData(queryKeys.techStack(), initialData.techstacks);
+    }
+  }, [initialData, queryClient]);
+
   return useQuery({
     queryKey: queryKeys.portfolioAll,
     queryFn: async () => {
@@ -61,7 +84,7 @@ export const usePortfolioAll = (initialData?: PortfolioAllData | null) => {
   });
 };
 
-export const useHero = () => {
+export const useHero = (options?: { enabled?: boolean }) => {
   return useQuery({
     queryKey: queryKeys.hero,
     queryFn: async () => {
@@ -69,6 +92,7 @@ export const useHero = () => {
       return response.data;
     },
     staleTime: 10 * 60 * 1000,
+    ...options,
   });
 };
 
@@ -122,7 +146,7 @@ export const useUpdateHero = () => {
   });
 };
 
-export const useProjects = () => {
+export const useProjects = (options?: { enabled?: boolean }) => {
   return useQuery({
     queryKey: queryKeys.projects,
     queryFn: async () => {
@@ -130,6 +154,7 @@ export const useProjects = () => {
       return response.data;
     },
     staleTime: 5 * 60 * 1000,
+    ...options,
   });
 };
 
@@ -144,7 +169,7 @@ export const useProject = (id: string) => {
   });
 };
 
-export const useExperiences = () => {
+export const useExperiences = (options?: { enabled?: boolean }) => {
   return useQuery({
     queryKey: queryKeys.experiences,
     queryFn: async () => {
@@ -152,6 +177,7 @@ export const useExperiences = () => {
       return response.data;
     },
     staleTime: 5 * 60 * 1000,
+    ...options,
   });
 };
 
@@ -177,7 +203,7 @@ export const useServices = () => {
   });
 };
 
-export const useEducations = () => {
+export const useEducations = (options?: { enabled?: boolean }) => {
   return useQuery({
     queryKey: queryKeys.educations,
     queryFn: async () => {
@@ -185,6 +211,7 @@ export const useEducations = () => {
       return response.data;
     },
     staleTime: 5 * 60 * 1000,
+    ...options,
   });
 };
 
@@ -199,7 +226,10 @@ export const useService = (id: string) => {
   });
 };
 
-export const useTechStack = (category?: string) => {
+export const useTechStack = (
+  category?: string,
+  options?: { enabled?: boolean }
+) => {
   return useQuery({
     queryKey: queryKeys.techStack(category),
     queryFn: async () => {
@@ -207,10 +237,11 @@ export const useTechStack = (category?: string) => {
       return response.data;
     },
     staleTime: 10 * 60 * 1000,
+    ...options,
   });
 };
 
-export const useAbout = () => {
+export const useAbout = (options?: { enabled?: boolean }) => {
   return useQuery({
     queryKey: queryKeys.about,
     queryFn: async () => {
@@ -218,6 +249,7 @@ export const useAbout = () => {
       return response.data;
     },
     staleTime: 10 * 60 * 1000,
+    ...options,
   });
 };
 
