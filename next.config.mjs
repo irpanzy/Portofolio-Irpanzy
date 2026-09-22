@@ -25,11 +25,6 @@ const nextConfig = {
 
   reactStrictMode: true,
 
-  onDemandEntries: {
-    maxInactiveAge: 25 * 1000,
-    pagesBufferLength: 2,
-  },
-
   experimental: {
     optimizePackageImports: [
       "framer-motion",

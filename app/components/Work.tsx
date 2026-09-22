@@ -26,7 +26,9 @@ export default function Work({
   data: propData,
   isLoading: propIsLoading,
 }: WorkProps) {
-  const { data: queryData, isLoading: queryIsLoading } = useProjects();
+  const { data: queryData, isLoading: queryIsLoading } = useProjects({
+    enabled: propData === undefined,
+  });
   const projects = propData !== undefined ? propData : queryData;
   const isLoading =
     propIsLoading !== undefined ? propIsLoading : !propData && queryIsLoading;

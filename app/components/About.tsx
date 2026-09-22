@@ -15,7 +15,9 @@ export default function About({
   data: propData,
   isLoading: propIsLoading,
 }: AboutProps) {
-  const { data: queryData, isLoading: queryIsLoading } = useAbout();
+  const { data: queryData, isLoading: queryIsLoading } = useAbout({
+    enabled: propData === undefined,
+  });
   const about = propData !== undefined ? propData : queryData;
   const isLoadingAbout =
     propIsLoading !== undefined ? propIsLoading : !propData && queryIsLoading;

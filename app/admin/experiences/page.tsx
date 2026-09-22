@@ -362,10 +362,35 @@ export default function ExperiencesPage() {
   }
 
   const formatDate = (dateString: string) => {
+    if (!dateString) return "";
+    const parts = dateString.split("T")[0].split("-");
+    if (parts.length >= 2) {
+      const year = parseInt(parts[0], 10);
+      const month = parseInt(parts[1], 10) - 1;
+      const day = parts[2] ? parseInt(parts[2], 10) : 1;
+      return new Date(year, month, day).toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "short",
+      });
+    }
     return new Date(dateString).toLocaleDateString("en-US", {
       year: "numeric",
       month: "short",
     });
+  };
+
+  const getPeriod = (exp: {
+    startDate: string;
+    endDate?: string;
+    current?: boolean;
+  }) => {
+    if (!exp.startDate) return "";
+    const start = formatDate(exp.startDate);
+    if (exp.current) return `${start} - Present`;
+    if (!exp.endDate) return start;
+    const end = formatDate(exp.endDate);
+    if (start === end) return start;
+    return `${start} - ${end}`;
   };
 
   return (
@@ -485,10 +510,7 @@ export default function ExperiencesPage() {
                       </TableCell>
                       <TableCell>{exp.company}</TableCell>
                       <TableCell>
-                        <div className="text-sm">
-                          {formatDate(exp.startDate)} -{" "}
-                          {exp.endDate ? formatDate(exp.endDate) : "Present"}
-                        </div>
+                        <div className="text-sm">{getPeriod(exp)}</div>
                       </TableCell>
                       <TableCell>
                         <Badge variant="outline">{exp.location}</Badge>

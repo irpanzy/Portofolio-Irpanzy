@@ -16,7 +16,9 @@ export default function Header({
   data: propData,
   isLoading: propIsLoading,
 }: HeaderProps = {}) {
-  const { data: queryData, isLoading: queryIsLoading } = useHero();
+  const { data: queryData, isLoading: queryIsLoading } = useHero({
+    enabled: propData === undefined,
+  });
   const hero = propData !== undefined ? propData : queryData;
   const isLoading =
     propIsLoading !== undefined ? propIsLoading : !propData && queryIsLoading;

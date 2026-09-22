@@ -36,21 +36,26 @@ const CATEGORIES: {
   label: string;
   icon: LucideIcon;
 }[] = [
-  { key: "languages", label: "Languages", icon: Code2 },
-  { key: "frontend", label: "Frontend", icon: Layout },
-  { key: "backend", label: "Backend", icon: Server },
-  { key: "mobile", label: "Mobile", icon: Smartphone },
-  { key: "database", label: "Database", icon: Database },
-  { key: "devops_cloud", label: "DevOps & Cloud", icon: Cloud },
-  { key: "tools", label: "Tools", icon: Wrench },
-];
+    { key: "languages", label: "Languages", icon: Code2 },
+    { key: "frontend", label: "Frontend", icon: Layout },
+    { key: "backend", label: "Backend", icon: Server },
+    { key: "mobile", label: "Mobile", icon: Smartphone },
+    { key: "database", label: "Database", icon: Database },
+    { key: "devops_cloud", label: "DevOps & Cloud", icon: Cloud },
+    { key: "tools", label: "Tools", icon: Wrench },
+  ];
 
 export default function Skills({
   isDarkMode,
   data: propData,
   isLoading: propIsLoading,
 }: SkillsProps) {
-  const { data: queryData, isLoading: queryIsLoading } = useTechStack();
+  const { data: queryData, isLoading: queryIsLoading } = useTechStack(
+    undefined,
+    {
+      enabled: propData === undefined,
+    }
+  );
   const techStack = propData !== undefined ? propData : queryData;
   const isLoadingTechStack =
     propIsLoading !== undefined ? propIsLoading : !propData && queryIsLoading;
@@ -196,11 +201,10 @@ export default function Skills({
                   key={key}
                   type="button"
                   onClick={() => setSelectedCategory(key)}
-                  className={`relative flex shrink-0 items-center gap-1.5 rounded-full px-3 py-2 font-outfit text-xs font-semibold transition-colors duration-300 md:gap-2 md:px-4 md:text-sm ${
-                    isSelected
+                  className={`relative flex shrink-0 items-center gap-1.5 rounded-full px-3 py-2 font-outfit text-xs font-semibold transition-colors duration-300 md:gap-2 md:px-4 md:text-sm ${isSelected
                       ? "text-[#FAF6F0] dark:text-[#1C0F0D]"
                       : "text-[#59493E] hover:text-[#783E30] dark:text-[#C5B8A5] dark:hover:text-[#FAF6F0]"
-                  }`}
+                    }`}
                 >
                   {/* Active Pill Indicator via Framer Motion */}
                   {isSelected && (
@@ -219,11 +223,10 @@ export default function Skills({
                     <IconComponent className="h-3.5 w-3.5 md:h-4 md:w-4" />
                     <span className="whitespace-nowrap">{label}</span>
                     <span
-                      className={`ml-0.5 rounded-full px-1.5 py-0.5 text-[10px] font-bold ${
-                        isSelected
+                      className={`ml-0.5 rounded-full px-1.5 py-0.5 text-[10px] font-bold ${isSelected
                           ? "bg-white/20 text-white dark:bg-black/20 dark:text-[#1C0F0D]"
                           : "bg-[#B39070]/20 text-[#59493E] dark:bg-[#B39070]/20 dark:text-[#C5B8A5]"
-                      }`}
+                        }`}
                     >
                       {count}
                     </span>
@@ -358,11 +361,10 @@ export default function Skills({
                           {Array.from({ length: 5 }).map((_, idx) => (
                             <span
                               key={idx}
-                              className={`h-1 w-1 rounded-full md:h-1.5 md:w-1.5 ${
-                                idx < (tool.proficiencyLevel || 0)
+                              className={`h-1 w-1 rounded-full md:h-1.5 md:w-1.5 ${idx < (tool.proficiencyLevel || 0)
                                   ? "bg-[#783E30] dark:bg-[#B39070]"
                                   : "bg-[#B39070]/25 dark:bg-[#B39070]/20"
-                              }`}
+                                }`}
                             />
                           ))}
                         </div>

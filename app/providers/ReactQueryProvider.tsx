@@ -3,6 +3,7 @@
 import {
   QueryClient,
   QueryClientProvider,
+  MutationCache,
   keepPreviousData,
 } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
@@ -18,6 +19,13 @@ export default function ReactQueryProvider({
   const [queryClient] = useState(
     () =>
       new QueryClient({
+        mutationCache: new MutationCache({
+          onSuccess: () => {
+            if (typeof window !== "undefined") {
+              fetch("/api/revalidate", { method: "POST" }).catch(() => {});
+            }
+          },
+        }),
         defaultOptions: {
           queries: {
             staleTime: 60 * 1000,

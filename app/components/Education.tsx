@@ -66,7 +66,9 @@ export default function Education({
   data: propData,
   isLoading: propIsLoading,
 }: EducationProps) {
-  const { data: queryData, isLoading: queryIsLoading } = useEducations();
+  const { data: queryData, isLoading: queryIsLoading } = useEducations({
+    enabled: propData === undefined,
+  });
   const educations = propData !== undefined ? propData : queryData;
   const isLoading =
     propIsLoading !== undefined ? propIsLoading : !propData && queryIsLoading;
@@ -77,6 +79,17 @@ export default function Education({
   } | null>(null);
 
   const formatDate = (dateString: string) => {
+    if (!dateString) return "";
+    const parts = dateString.split("T")[0].split("-");
+    if (parts.length >= 2) {
+      const year = parseInt(parts[0], 10);
+      const month = parseInt(parts[1], 10) - 1;
+      const day = parts[2] ? parseInt(parts[2], 10) : 1;
+      return new Date(year, month, day).toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "long",
+      });
+    }
     return new Date(dateString).toLocaleDateString("en-US", {
       year: "numeric",
       month: "long",
@@ -88,12 +101,18 @@ export default function Education({
     endDate?: string;
     current: boolean;
   }) => {
+    if (!edu.startDate) return "";
     const start = formatDate(edu.startDate);
-    const end = edu.current
-      ? "Present"
-      : edu.endDate
-        ? formatDate(edu.endDate)
-        : "Present";
+    if (edu.current) {
+      return `${start} - Present`;
+    }
+    if (!edu.endDate) {
+      return start;
+    }
+    const end = formatDate(edu.endDate);
+    if (start === end) {
+      return start;
+    }
     return `${start} - ${end}`;
   };
 
@@ -287,15 +306,17 @@ export default function Education({
                       </div>
                     </div>
 
-                    <div className="mt-2 flex flex-wrap gap-2 md:ml-4 md:mt-0 md:flex-col md:items-end md:gap-1.5">
-                      <span className="shadow-2xs inline-flex items-center gap-1.5 rounded-full border border-[#B39070]/25 bg-[#FAF6F0]/80 px-3 py-1 text-xs font-medium text-[#59493E] dark:border-[#B39070]/20 dark:bg-[#2D1A17]/60 dark:text-[#C5B8A5]">
-                        <Calendar className="h-3.5 w-3.5 text-[#783E30] dark:text-[#B39070]" />
+                    <div className="mt-2 flex shrink-0 flex-wrap items-center gap-2 md:ml-4 md:mt-0 md:flex-col md:items-end md:gap-1.5">
+                      <span className="shadow-2xs inline-flex items-center gap-1.5 whitespace-nowrap rounded-full border border-[#B39070]/25 bg-[#FAF6F0]/80 px-3 py-1 text-xs font-medium text-[#59493E] dark:border-[#B39070]/20 dark:bg-[#2D1A17]/60 dark:text-[#C5B8A5]">
+                        <Calendar className="h-3.5 w-3.5 shrink-0 text-[#783E30] dark:text-[#B39070]" />
                         <span>{getPeriod(edu)}</span>
                       </span>
-                      <span className="shadow-2xs inline-flex items-center gap-1.5 rounded-full border border-[#B39070]/25 bg-[#FAF6F0]/80 px-3 py-1 text-xs font-medium text-[#59493E] dark:border-[#B39070]/20 dark:bg-[#2D1A17]/60 dark:text-[#C5B8A5]">
-                        <MapPin className="h-3.5 w-3.5 text-[#783E30] dark:text-[#B39070]" />
-                        <span>{edu.location}</span>
-                      </span>
+                      {edu.location && (
+                        <span className="shadow-2xs inline-flex items-center gap-1.5 whitespace-nowrap rounded-full border border-[#B39070]/25 bg-[#FAF6F0]/80 px-3 py-1 text-xs font-medium text-[#59493E] dark:border-[#B39070]/20 dark:bg-[#2D1A17]/60 dark:text-[#C5B8A5]">
+                          <MapPin className="h-3.5 w-3.5 shrink-0 text-[#783E30] dark:text-[#B39070]" />
+                          <span>{edu.location}</span>
+                        </span>
+                      )}
                     </div>
                   </div>
 
