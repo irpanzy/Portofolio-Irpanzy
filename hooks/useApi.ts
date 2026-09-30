@@ -34,22 +34,31 @@ export const usePortfolioAll = (initialData?: PortfolioAllData | null) => {
 
   useEffect(() => {
     if (initialData) {
-      if (initialData.hero)
+      if (initialData.hero && !queryClient.getQueryData(queryKeys.hero))
         queryClient.setQueryData(queryKeys.hero, initialData.hero);
-      if (initialData.about)
+      if (initialData.about && !queryClient.getQueryData(queryKeys.about))
         queryClient.setQueryData(queryKeys.about, initialData.about);
-      if (initialData.projects)
+      if (initialData.projects && !queryClient.getQueryData(queryKeys.projects))
         queryClient.setQueryData(queryKeys.projects, initialData.projects);
-      if (initialData.experiences)
+      if (
+        initialData.experiences &&
+        !queryClient.getQueryData(queryKeys.experiences)
+      )
         queryClient.setQueryData(
           queryKeys.experiences,
           initialData.experiences
         );
-      if (initialData.educations)
+      if (
+        initialData.educations &&
+        !queryClient.getQueryData(queryKeys.educations)
+      )
         queryClient.setQueryData(queryKeys.educations, initialData.educations);
-      if (initialData.services)
+      if (initialData.services && !queryClient.getQueryData(queryKeys.services))
         queryClient.setQueryData(queryKeys.services, initialData.services);
-      if (initialData.techstacks)
+      if (
+        initialData.techstacks &&
+        !queryClient.getQueryData(queryKeys.techStack())
+      )
         queryClient.setQueryData(queryKeys.techStack(), initialData.techstacks);
     }
   }, [initialData, queryClient]);
@@ -78,6 +87,7 @@ export const usePortfolioAll = (initialData?: PortfolioAllData | null) => {
       return data;
     },
     initialData: initialData || undefined,
+    initialDataUpdatedAt: 0,
     staleTime: 30 * 1000,
     gcTime: 10 * 60 * 1000,
     refetchOnWindowFocus: true,
@@ -106,7 +116,17 @@ export const useCreateHero = () => {
       const response = await api.hero.create(data);
       return response.data;
     },
-    onSuccess: () => {
+    onSuccess: (newHero) => {
+      if (newHero) {
+        queryClient.setQueryData(queryKeys.hero, newHero);
+        queryClient.setQueryData(
+          queryKeys.portfolioAll,
+          (old: PortfolioAllData | undefined) => {
+            if (!old) return old;
+            return { ...old, hero: newHero };
+          }
+        );
+      }
       queryClient.invalidateQueries({ queryKey: queryKeys.hero });
       queryClient.invalidateQueries({ queryKey: queryKeys.portfolioAll });
       toast.success("Hero data created successfully!");
@@ -131,7 +151,17 @@ export const useUpdateHero = () => {
       const response = await api.hero.update(data);
       return response.data;
     },
-    onSuccess: () => {
+    onSuccess: (updatedHero) => {
+      if (updatedHero) {
+        queryClient.setQueryData(queryKeys.hero, updatedHero);
+        queryClient.setQueryData(
+          queryKeys.portfolioAll,
+          (old: PortfolioAllData | undefined) => {
+            if (!old) return old;
+            return { ...old, hero: updatedHero };
+          }
+        );
+      }
       queryClient.invalidateQueries({ queryKey: queryKeys.hero });
       queryClient.invalidateQueries({ queryKey: queryKeys.portfolioAll });
       toast.success("Hero data updated successfully!");
@@ -263,7 +293,17 @@ export const useCreateAbout = () => {
       const response = await api.about.create(data);
       return response.data;
     },
-    onSuccess: () => {
+    onSuccess: (newAbout) => {
+      if (newAbout) {
+        queryClient.setQueryData(queryKeys.about, newAbout);
+        queryClient.setQueryData(
+          queryKeys.portfolioAll,
+          (old: PortfolioAllData | undefined) => {
+            if (!old) return old;
+            return { ...old, about: newAbout };
+          }
+        );
+      }
       queryClient.invalidateQueries({ queryKey: queryKeys.about });
       queryClient.invalidateQueries({ queryKey: queryKeys.portfolioAll });
       toast.success("About data created successfully!");
@@ -288,7 +328,17 @@ export const useUpdateAbout = () => {
       const response = await api.about.update(data);
       return response.data;
     },
-    onSuccess: () => {
+    onSuccess: (updatedAbout) => {
+      if (updatedAbout) {
+        queryClient.setQueryData(queryKeys.about, updatedAbout);
+        queryClient.setQueryData(
+          queryKeys.portfolioAll,
+          (old: PortfolioAllData | undefined) => {
+            if (!old) return old;
+            return { ...old, about: updatedAbout };
+          }
+        );
+      }
       queryClient.invalidateQueries({ queryKey: queryKeys.about });
       queryClient.invalidateQueries({ queryKey: queryKeys.portfolioAll });
       toast.success("About data updated successfully!");

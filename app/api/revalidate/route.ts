@@ -4,6 +4,7 @@ import { NextResponse } from "next/server";
 export async function POST() {
   try {
     revalidateTag("portfolio-all");
+    revalidatePath("/", "page");
     revalidatePath("/");
     return NextResponse.json({ revalidated: true, now: Date.now() });
   } catch (err: any) {
