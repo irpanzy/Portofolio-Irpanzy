@@ -1,10 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { AnimatePresence } from "framer-motion";
 import Header from "./components/Header";
 import Navbar from "./components/Navbar";
 import MotionProvider from "./components/MotionProvider";
 import AmbientBackground from "./components/AmbientBackground";
+import SplashScreen from "./components/SplashScreen";
 import { usePortfolioAll } from "@/hooks/useApi";
 import type { PortfolioAllData } from "@/types";
 import About from "./components/About";
@@ -23,6 +25,18 @@ export default function HomeClient({ initialData }: HomeClientProps) {
   const { data: portfolio, isLoading } = usePortfolioAll(initialData);
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const [showSplash, setShowSplash] = useState(true);
+
+  useEffect(() => {
+    if (showSplash) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [showSplash]);
 
   useEffect(() => {
     setMounted(true);
@@ -53,6 +67,9 @@ export default function HomeClient({ initialData }: HomeClientProps) {
 
   return (
     <MotionProvider>
+      <AnimatePresence mode="wait">
+        {showSplash && <SplashScreen onComplete={() => setShowSplash(false)} />}
+      </AnimatePresence>
       <AmbientBackground />
       <Navbar isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} />
       <main className="relative z-10">
